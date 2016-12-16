@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<p>What challenge is your team going to tackle?</p>
+
+<form method="post" action="/save-project">
+  <p>
+    <input type="text" placeholder="Project Title" name="title" value="{{ data.project.title }}">
+  </p>
+  <p>
+    <textarea placeholder="Brief Description" name="description">{{ data.project.description }}</textarea>
+  </p>
+  <p>
+    <textarea placeholder="How can the network assist you best?" name="network_help">{{ data.project.network_help }}</textarea>
+  </p>
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+</form>
+
+</body>
+</html>

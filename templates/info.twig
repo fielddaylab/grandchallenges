@@ -7,18 +7,18 @@
 
 <p>Tell us about yourself.</p>
 
-<form method="post" action="/submit-info">
+<form method="post" action="/save-info">
   <p>
-    <input type="text" placeholder="First Name" name="first_name">
+    <input type="text" placeholder="First Name" name="first_name" value="{{ data.info.first_name }}">
   </p>
   <p>
-    <input type="text" placeholder="Last Name" name="last_name">
+    <input type="text" placeholder="Last Name" name="last_name" value="{{ data.info.last_name }}">
   </p>
   <p>
-    <input type="text" placeholder="Email" value="{{ netid }}" name="email">
+    <input type="text" placeholder="Email" value="{{ email }}" name="email">
   </p>
   <p>
-    <textarea placeholder="Bio" name="bio"></textarea>
+    <textarea placeholder="Bio" name="bio">{{ data.info.bio }}</textarea>
   </p>
   <p>
     <button type="submit">Submit</button>

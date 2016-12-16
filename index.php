@@ -45,11 +45,10 @@ if (count($parts) === 0) {
       redirect_to('/info');
     } else if (!array_key_exists('team', $user_data)) {
       redirect_to('/team');
+    } else if (!array_key_exists('project', $user_data)) {
+      redirect_to('/project');
     } else {
-      echo $twig->render('logged-in.twig', array(
-        'netid' => $_SESSION['netid'],
-        'data' => file_get_contents(data_location($_SESSION['netid'])),
-      ));
+      redirect_to('/paper');
     }
   } else {
     echo $twig->render('login.twig', array());
@@ -65,8 +64,10 @@ if (count($parts) === 0) {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
     echo $twig->render('info.twig', array(
       'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+      'email' => array_key_exists('info', $user_data) ? $user_data['info']['email'] : $_SESSION['netid'],
     ));
-  } else if ($parts[0] === 'submit-info') {
+  } else if ($parts[0] === 'save-info') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
     $user_data['info'] = array(
       'first_name' => $_POST['first_name'],
@@ -80,10 +81,47 @@ if (count($parts) === 0) {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
     echo $twig->render('team.twig', array(
       'netid' => $_SESSION['netid'],
+      'data' => $user_data,
     ));
-  } else if ($parts[0] === 'submit-team') {
+  } else if ($parts[0] === 'save-team') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
     $user_data['team'] = $_POST['team'];
+    save_user_data($user_data);
+    redirect_to('/');
+  } else if ($parts[0] === 'project') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
+    echo $twig->render('project.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
+  } else if ($parts[0] === 'save-project') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
+    $user_data['project'] = array(
+      'title' => $_POST['title'],
+      'description' => $_POST['description'],
+      'network_help' => $_POST['network_help'],
+    );
+    save_user_data($user_data);
+    redirect_to('/');
+  } else if ($parts[0] === 'paper') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
+    echo $twig->render('paper.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+      'status' => $user_data['submitted'] ? 'Submitted, review pending' : 'Not submitted',
+    ));
+  } else if ($parts[0] === 'save-paper') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('/');
+    $user_data['paper'] = array(
+      'title' => $_POST['title'],
+      'question1' => $_POST['question1'],
+      'question2' => $_POST['question2'],
+      'question3' => $_POST['question3'],
+      'question4' => $_POST['question4'],
+    );
+    if (array_key_exists('submit_paper', $_POST)) {
+      $user_data['submitted'] = true;
+    }
     save_user_data($user_data);
     redirect_to('/');
   } else {
