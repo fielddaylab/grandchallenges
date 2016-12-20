@@ -1,45 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Grand Challenges</title>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-<p>Let's add some team members.</p>
+<div class="top-nav">
+  <div class="top-nav-half">
+    <div class="top-nav-title">
+      <img src="img/nav-logo.png">
+      Grand Challenges
+    </div>
+    <div class="top-nav-link">
+      Home
+    </div>
+    <div class="top-nav-link">
+      Dashboard
+    </div>
+  </div>
+  <div class="top-nav-half">
+    <div class="top-nav-link">
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+</div>
 
-<form method="post" action="/save-team">
-  <p>
-    <label>
-      <input type="checkbox" name="team[]" value="Apple, Michael W">
-      Apple, Michael W
-    </label>
-  </p>
-  <p>
-    <label>
-      <input type="checkbox" name="team[]" value="Archbold, Ann M">
-      Archbold, Ann M
-    </label>
-  </p>
-  <p>
-    <label>
-      <input type="checkbox" name="team[]" value="Asmus, Jennifer M">
-      Asmus, Jennifer M
-    </label>
-  </p>
-  <p>
-    <label>
-      <input type="checkbox" name="team[]" value="Baker, Bernadette M">
-      Baker, Bernadette M
-    </label>
-  </p>
-  <p>
-    <button type="submit">Submit</button>
-  </p>
-</form>
+<div class="content">
 
-<p>
-  <a href="/logout">Logout</a>
-</p>
+  <h1 class="content-title">Hey John, let's get your team set up.</h1>
+
+  <img class="content-divider" src="img/divider.png">
+
+  <form class="login-form" method="post" action="/save-team">
+    <p>
+      <label>
+        <input type="checkbox" name="team[]" value="Apple, Michael W">
+        Apple, Michael W
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" name="team[]" value="Archbold, Ann M">
+        Archbold, Ann M
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" name="team[]" value="Asmus, Jennifer M">
+        Asmus, Jennifer M
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" name="team[]" value="Baker, Bernadette M">
+        Baker, Bernadette M
+      </label>
+    </p>
+    <p>
+      <button type="submit">Submit</button>
+    </p>
+  </form>
+
+</div>
 
 </body>
 </html>

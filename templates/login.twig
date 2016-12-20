@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Grand Challenges</title>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-<p>Log in</p>
-<form method="post" action="/login">
+<div class="top-nav">
+  <div class="top-nav-half">
+    <div class="top-nav-title">
+      <img src="img/nav-logo.png">
+      Grand Challenges
+    </div>
+    <div class="top-nav-link">
+      Home
+    </div>
+    <div class="top-nav-link">
+      Dashboard
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <h1 class="content-title">Login using your UW NetID</h1>
+
+  <img class="content-divider" src="img/divider.png">
+
+  <form class="login-form" method="post" action="/login">
+    <p>
+      <input type="text" name="netid" placeholder="NetID">
+    </p>
+    <p>
+      <button type="submit">Submit</button>
+    </p>
+  </form>
+
   <p>
-    <input type="text" name="netid">
+    Having problems logging in?
+    Email <a href="#">Sarah</a> at the network and we’ll get it straightened out.
   </p>
-  <p>
-    <button type="submit">Submit</button>
-  </p>
-</form>
+
+</div>
 
 </body>
 </html>

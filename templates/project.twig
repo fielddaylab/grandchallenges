@@ -1,30 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Grand Challenges</title>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-<p>What challenge is your team going to tackle?</p>
+<div class="top-nav">
+  <div class="top-nav-half">
+    <div class="top-nav-title">
+      <img src="img/nav-logo.png">
+      Grand Challenges
+    </div>
+    <div class="top-nav-link">
+      Home
+    </div>
+    <div class="top-nav-link">
+      Dashboard
+    </div>
+  </div>
+  <div class="top-nav-half">
+    <div class="top-nav-link">
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+</div>
 
-<form method="post" action="/save-project">
-  <p>
-    <input type="text" placeholder="Project Title" name="title" value="{{ data.project.title }}">
-  </p>
-  <p>
-    <textarea placeholder="Brief Description" name="description">{{ data.project.description }}</textarea>
-  </p>
-  <p>
-    <textarea placeholder="How can the network assist you best?" name="network_help">{{ data.project.network_help }}</textarea>
-  </p>
-  <p>
-    <button type="submit">Submit</button>
-  </p>
-</form>
+<div class="content">
 
-<p>
-  <a href="/logout">Logout</a>
-</p>
+  <h1 class="content-title">Hey John, let's get your team set up.</h1>
+
+  <img class="content-divider" src="img/divider.png">
+
+  <form class="login-form" method="post" action="/save-project">
+    <p>
+      <input type="text" placeholder="Project Title" name="title" value="{{ data.project.title }}">
+    </p>
+    <p>
+      <textarea placeholder="Brief Description" name="description">{{ data.project.description }}</textarea>
+    </p>
+    <p>
+      <textarea placeholder="How can the network assist you best?" name="network_help">{{ data.project.network_help }}</textarea>
+    </p>
+    <p>
+      <button type="submit">Submit</button>
+    </p>
+  </form>
+
+</div>
 
 </body>
 </html>

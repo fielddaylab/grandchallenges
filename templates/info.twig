@@ -1,33 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Grand Challenges</title>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-<p>Tell us about yourself.</p>
+<div class="top-nav">
+  <div class="top-nav-half">
+    <div class="top-nav-title">
+      <img src="img/nav-logo.png">
+      Grand Challenges
+    </div>
+    <div class="top-nav-link">
+      Home
+    </div>
+    <div class="top-nav-link">
+      Dashboard
+    </div>
+  </div>
+  <div class="top-nav-half">
+    <div class="top-nav-link">
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+</div>
 
-<form method="post" action="/save-info">
-  <p>
-    <input type="text" placeholder="First Name" name="first_name" value="{{ data.info.first_name }}">
-  </p>
-  <p>
-    <input type="text" placeholder="Last Name" name="last_name" value="{{ data.info.last_name }}">
-  </p>
-  <p>
-    <input type="text" placeholder="Email" value="{{ email }}" name="email">
-  </p>
-  <p>
-    <textarea placeholder="Bio" name="bio">{{ data.info.bio }}</textarea>
-  </p>
-  <p>
-    <button type="submit">Submit</button>
-  </p>
-</form>
+<div class="content">
 
-<p>
-  <a href="/logout">Logout</a>
-</p>
+  <h1 class="content-title">Hey John, let's get your team set up.</h1>
+
+  <img class="content-divider" src="img/divider.png">
+
+  <form class="login-form" method="post" action="/save-info">
+    <p>
+      <input type="text" placeholder="First Name" name="first_name" value="{{ data.info.first_name }}">
+    </p>
+    <p>
+      <input type="text" placeholder="Last Name" name="last_name" value="{{ data.info.last_name }}">
+    </p>
+    <p>
+      <input type="text" placeholder="Email" value="{{ email }}" name="email">
+    </p>
+    <p>
+      <textarea placeholder="Bio" name="bio">{{ data.info.bio }}</textarea>
+    </p>
+    <p>
+      <button type="submit">Submit</button>
+    </p>
+  </form>
+
+</div>
 
 </body>
 </html>
+
