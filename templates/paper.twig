@@ -11,7 +11,7 @@
 
 <p>{{ status }}</p>
 
-<form method="post" action="/save-paper">
+<form method="post" action="save-paper">
   <label>
     <h3>Paper Title</h3>
     <input type="text" name="title" value="{{ data.paper.title }}">
@@ -52,7 +52,7 @@ among the fray? How will your solution differentiate itself from other innovatio
 <p><code>{{ data|json_encode }}</code></p>
 
 <p>
-  <a href="/logout">Logout</a>
+  <a href="logout">Logout</a>
 </p>
 
 </body>
