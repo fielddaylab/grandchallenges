@@ -1,3 +1,18 @@
+@font-face {
+  font-family: Halis R Bold;
+  src: url("../fonts/Ahmet Altun - HalisR-Bold.otf");
+}
+
+@font-face {
+  font-family: Aqua Grotesque;
+  src: url("../fonts/aqua.ttf");
+}
+
+@font-face {
+  font-family: Raleway;
+  src: url("../fonts/Raleway-Regular.ttf");
+}
+
 .top-nav {
   display: flex;
   flex-direction: row;
@@ -27,7 +42,9 @@
   align-items: center;
   align-self: stretch;
   margin: 5px;
+  margin-right: 10px;
   font-weight: bold;
+  font-family: Halis R Bold;
 }
 
 .top-nav-title img {
@@ -36,14 +53,15 @@
 }
 
 .top-nav-link {
-  margin: 5px;
+  margin: 0 10px;
 }
 
 body {
   background-color: rgb(244,245,244);
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Raleway;
+  letter-spacing: 0.5px;
 }
 
 .content {
@@ -55,6 +73,9 @@ body {
 
 .content-title {
   text-transform: uppercase;
+  font-family: Aqua Grotesque;
+  font-weight: normal;
+  letter-spacing: 3px;
 }
 
 .content-divider {
@@ -70,4 +91,81 @@ body {
   margin: 20px;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.big-form-header {
+  width: 900px;
+  text-align: center;
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid rgb(228,232,228);
+  padding: 25px;
+  margin-top: 20px;
+  font-family: Aqua Grotesque;
+  text-transform: uppercase;
+}
+
+.big-form-middle {
+  width: 900px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid rgb(228,232,228);
+  border-top: none;
+  border-bottom: none;
+  padding: 25px;
+}
+
+.big-form-footer {
+  width: 900px;
+  text-align: center;
+  background-color: white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 1px solid rgb(228,232,228);
+  padding: 25px;
+  font-family: Aqua Grotesque;
+  text-transform: uppercase;
+}
+
+.big-form-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.big-form-footer-dot {
+  width: 5px;
+  height: 5px;
+  border: 2px solid rgb(209,137,22);
+  display: inline-block;
+  transform: rotate(45deg);
+  margin: 5px;
+}
+
+.big-form-footer-dot-full {
+  background-color: rgb(209,137,22);
+}
+
+.big-form-footer-side {
+  width: 125px;
+  height: 35px;
+}
+
+.next-button {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(60,51,25);
+  border-radius: 999px;
+  border: none;
+  color: white;
+  font-family: Raleway;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.next-button-last {
+  background-color: rgb(209,137,22);
 }

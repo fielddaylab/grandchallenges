@@ -28,23 +28,37 @@
 
 <div class="content">
 
-  <h1 class="content-title">Hey John, let's get your team set up.</h1>
+  <h1 class="content-title">Hey {{ data.info.first_name|default('there') }}, let's get your team set up.</h1>
 
   <img class="content-divider" src="img/divider.png">
 
-  <form class="login-form" method="post" action="save-project">
-    <p>
-      <input type="text" placeholder="Project Title" name="title" value="{{ data.project.title }}">
-    </p>
-    <p>
-      <textarea placeholder="Brief Description" name="description">{{ data.project.description }}</textarea>
-    </p>
-    <p>
-      <textarea placeholder="How can the network assist you best?" name="network_help">{{ data.project.network_help }}</textarea>
-    </p>
-    <p>
-      <button type="submit">Submit</button>
-    </p>
+  <form class="big-form" method="post" action="save-project">
+    <div class="big-form-header">
+      What challenge is your team going to tackle?
+    </div>
+    <div class="big-form-middle">
+      <p>
+        <input type="text" placeholder="Project Title" name="title" value="{{ data.project.title }}">
+      </p>
+      <p>
+        <textarea placeholder="Brief Description" name="description">{{ data.project.description }}</textarea>
+      </p>
+      <p>
+        <textarea placeholder="How can the network assist you best?" name="network_help">{{ data.project.network_help }}</textarea>
+      </p>
+    </div>
+    <div class="big-form-footer">
+      <div class="big-form-footer-side">
+      </div>
+      <div class="big-form-footer-dots">
+        <span class="big-form-footer-dot"></span>
+        <span class="big-form-footer-dot"></span>
+        <span class="big-form-footer-dot big-form-footer-dot-full"></span>
+      </div>
+      <div class="big-form-footer-side">
+        <button class="next-button next-button-last" type="submit">Next</button>
+      </div>
+    </div>
   </form>
 
 </div>

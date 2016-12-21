@@ -65,7 +65,6 @@ if (count($parts) === 0) {
     echo $twig->render('info.twig', array(
       'netid' => $_SESSION['netid'],
       'data' => $user_data,
-      'email' => array_key_exists('info', $user_data) ? $user_data['info']['email'] : $_SESSION['netid'],
     ));
   } else if ($parts[0] === 'save-info') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
