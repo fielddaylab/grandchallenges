@@ -108,12 +108,38 @@ body {
 
 .big-form-middle {
   width: 900px;
-  text-align: center;
   background-color: white;
   border: 1px solid rgb(228,232,228);
   border-top: none;
   border-bottom: none;
   padding: 25px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.big-form-middle > * {
+  width: 400px;
+  box-sizing: border-box;
+}
+
+.big-form-split {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.big-form-split > * {
+  flex: 1;
+}
+
+.big-form-split > :first-child {
+  margin-right: 15px;
 }
 
 .big-form-footer {
@@ -168,4 +194,21 @@ body {
 
 .next-button-last {
   background-color: rgb(209,137,22);
+}
+
+.big-form-middle textarea, .big-form-middle input[type=text] {
+  border: 1px solid rgb(228,232,228);
+  border-radius: 5px;
+  padding: 5px;
+  resize: none;
+  font-size: 13px;
+  font-family: Raleway;
+  letter-spacing: 0.5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.big-form-middle textarea {
+  resize: none;
+  height: 100px;
 }
