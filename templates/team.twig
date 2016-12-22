@@ -1,8 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Grand Challenges</title>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+<title>Grand Challenges</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+
+var available_faculty = [
+  'Apple, Michael W',
+  'Archbold, Ann M',
+  'Asmus, Jennifer M',
+  'Baker, Bernadette M',
+  'Bartlett, Lesley',
+  'Bellmore, Amy D',
+  'Benedict, Ruth',
+  'Bolt, Daniel M',
+];
+
+var faculty = {};
+var community = [];
+
+function clickFaculty(e) {
+  e.preventDefault();
+  $(document.body).addClass('viewing-faculty').removeClass('viewing-community');
+}
+
+function clickCommunity(e) {
+  e.preventDefault();
+  $(document.body).removeClass('viewing-faculty').addClass('viewing-community');
+}
+
+function showList() {
+  $('#members-list').html('');
+}
+
+function toggleFacultyBox(box, name) {
+  if (box.checked) {
+    faculty[name] = true;
+  } else {
+    delete faculty[name];
+  }
+  showList();
+}
+
+function fillFacultyList() {
+  var list = $('#faculty-list');
+  available_faculty.forEach(function(fac){
+    list.append(
+      '<p>' +
+        '<label>' +
+          '<input type="checkbox" onclick="toggleFacultyBox(this, \''+fac+'\')" value="'+fac+'">' +
+          ' ' + fac +
+        '</label>' +
+      '</p>'
+    );
+  });
+}
+
+$(function(){
+  fillFacultyList();
+  $('#add-faculty').click(clickFaculty);
+  $('#add-community').click(clickCommunity);
+  $('#community-plus').click(function(e){
+    e.preventDefault();
+  });
+  $('#next-button').click(function(){
+    alert(3);
+  });
+});
+
+</script>
 </head>
 <body>
 
@@ -32,37 +99,75 @@
 
   <img class="content-divider" src="img/divider.png">
 
-  <form class="big-form" method="post" action="save-team">
-    <div class="big-form-header">
+  <form class="big-form big-form-three" method="post" action="save-team">
+    <div class="big-form-header big-form-header-three">
       Great, let's add some team members
     </div>
-    <div class="big-form-middle">
-      <p>
-        <label>
-          <input type="checkbox" name="team[]" value="Apple, Michael W">
-          Apple, Michael W
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="checkbox" name="team[]" value="Archbold, Ann M">
-          Archbold, Ann M
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="checkbox" name="team[]" value="Asmus, Jennifer M">
-          Asmus, Jennifer M
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="checkbox" name="team[]" value="Baker, Bernadette M">
-          Baker, Bernadette M
-        </label>
-      </p>
+    <div class="big-form-middle-three">
+      <div class="big-form-middle-side">
+      </div>
+      <div class="big-form-middle-trunk">
+        <div class="team-instructions">
+          <p>
+            You can add two different types of team members.
+            Faculty members are any UW faculty.
+            You must have at least 2 different departments represented;
+            remember, we are trying to connect across disciplines.
+            Community partners can be from our local communties,
+            across the state, or around the world.
+          </p>
+        </div>
+        <div class="team-switchers">
+          <a href="#" class="team-switcher" id="add-faculty">
+            Add faculty member
+          </a href="#">
+          <div class="team-switchers-or">
+            or
+          </div>
+          <a href="#" class="team-switcher" id="add-community">
+            Add community partner
+          </a href="#">
+        </div>
+        <div class="team-halves">
+          <div id="faculty-list">
+          </div>
+          <div class="community-form">
+            <div class="big-form-split">
+              <p>
+                <label>
+                  First Name<br>
+                  <input type="text" name="first_name" value="">
+                </label>
+              </p>
+              <p>
+                <label>
+                  Last Name<br>
+                  <input type="text" name="last_name" value="">
+                </label>
+              </p>
+            </div>
+            <p>
+              <label>
+                Email<br>
+                <input type="text" value="" name="email">
+              </label>
+            </p>
+            <p>
+              <label>
+                Bio<br>
+                <textarea name="bio"></textarea>
+              </label>
+            </p>
+            <p>
+              <a href="#" id="community-plus"><img src="img/plus.png"></a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="big-form-middle-side" id="members-list">
+      </div>
     </div>
-    <div class="big-form-footer">
+    <div class="big-form-footer big-form-footer-three">
       <div class="big-form-footer-side">
       </div>
       <div class="big-form-footer-dots">
@@ -71,7 +176,7 @@
         <span class="big-form-footer-dot"></span>
       </div>
       <div class="big-form-footer-side">
-        <button class="next-button" type="submit">Next</button>
+        <button class="next-button" id="next-button" type="button">Next</button>
       </div>
     </div>
   </form>

@@ -62,6 +62,7 @@ body {
   padding: 0;
   font-family: Raleway;
   letter-spacing: 0.5px;
+  color: rgb(60,51,25);
 }
 
 .content {
@@ -123,7 +124,7 @@ body {
 }
 
 .big-form-middle > * {
-  width: 400px;
+  width: 600px;
   box-sizing: border-box;
 }
 
@@ -152,6 +153,7 @@ body {
   padding: 25px;
   font-family: Aqua Grotesque;
   text-transform: uppercase;
+  margin-bottom: 50px;
 }
 
 .big-form-footer {
@@ -196,7 +198,7 @@ body {
   background-color: rgb(209,137,22);
 }
 
-.big-form-middle textarea, .big-form-middle input[type=text] {
+.big-form-middle textarea, .big-form-middle input[type=text], .big-form-middle-three textarea, .big-form-middle-three input[type=text] {
   border: 1px solid rgb(228,232,228);
   border-radius: 5px;
   padding: 5px;
@@ -208,7 +210,135 @@ body {
   box-sizing: border-box;
 }
 
-.big-form-middle textarea {
+.big-form-middle textarea, .big-form-middle-three textarea {
   resize: none;
   height: 100px;
+}
+
+.team-switchers {
+  border: 2px solid rgb(228,232,228);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  position: relative;
+}
+
+.team-switcher {
+  flex: 1;
+  text-align: center;
+  padding: 20px 0;
+  color: rgb(60,51,25);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+#add-faculty {
+  border-right: 2px solid rgb(228,232,228);
+}
+
+body.viewing-faculty #add-faculty, body.viewing-community #add-community {
+  background-color: rgb(198,131,24);
+  color: white;
+}
+
+.team-switchers-or {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 999px;
+  left: 281px;
+  top: 15px;
+  border: 2px solid rgb(228,232,228);
+}
+
+.team-instructions {
+  overflow: hidden;
+  max-height: 300px;
+  transition: max-height 0.25s;
+  text-transform: none;
+  letter-spacing: 1px;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.team-halves {
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+#faculty-list, .community-form {
+  position: absolute;
+  width: 600px;
+  height: 400px;
+  left: 0;
+  transition: left 0.25s;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#faculty-list {
+  border: 2px solid rgb(228,232,228);
+  border-top: none;
+  overflow-y: auto;
+}
+
+#community-plus img {
+  height: 45px;
+}
+
+body:not(.viewing-faculty) #faculty-list {
+  left: -100%;
+}
+
+body:not(.viewing-community) .community-form {
+  left: 100%;
+}
+
+body:not(.viewing-faculty):not(.viewing-community) .team-halves {
+  max-height: 0;
+}
+
+body.viewing-faculty .team-instructions, body.viewing-community .team-instructions {
+  max-height: 0;
+}
+
+.big-form-three {
+  width: calc(100% - 50px);
+  box-sizing: border-box;
+}
+
+.big-form-header-three, .big-form-middle-three, .big-form-footer-three {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.big-form-middle-three {
+  background-color: white;
+  border: 1px solid rgb(228,232,228);
+  border-top: none;
+  border-bottom: none;
+  padding: 25px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.big-form-middle-trunk {
+  width: 600px;
+  box-sizing: border-box;
+}
+
+.big-form-middle-side {
+  flex: 1;
+  padding: 10px;
+  padding-left: 20px;
 }
