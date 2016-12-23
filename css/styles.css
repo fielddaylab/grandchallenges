@@ -342,3 +342,18 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   padding: 10px;
   padding-left: 20px;
 }
+
+.member-entry, .member-x {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.member-x img {
+  height: 15px;
+  margin-right: 10px;
+}
+
+.hidden-form {
+  display: none;
+}

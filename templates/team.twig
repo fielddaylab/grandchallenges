@@ -30,8 +30,28 @@ function clickCommunity(e) {
   $(document.body).removeClass('viewing-faculty').addClass('viewing-community');
 }
 
+function removeFaculty(name) {
+  delete faculty[name];
+  $('#faculty-list input[type=checkbox][value=\"'+name+'\"]').prop('checked', false);
+  showList();
+}
+
+function removeCommunity(index) {
+  community.splice(index, 1);
+  showList();
+}
+
 function showList() {
-  $('#members-list').html('');
+  $('#members-list').html((function(){
+    var str = '';
+    Object.keys(faculty).forEach(function(fac){
+      str += '<p class="member-entry"><a href="#" class="member-x" onClick="removeFaculty(\''+fac+'\'); return false;"><img src="img/x.png"></a><span>'+fac+'</span></p>';
+    });
+    community.forEach(function(com, i){
+      str += '<p class="member-entry"><a href="#" class="member-x" onClick="removeCommunity('+i+'); return false;"><img src="img/x.png"></a><span>' + com.last_name + ', ' + com.first_name + '</span></p>';
+    });
+    return str;
+  })());
 }
 
 function toggleFacultyBox(box, name) {
@@ -63,15 +83,34 @@ $(function(){
   $('#add-community').click(clickCommunity);
   $('#community-plus').click(function(e){
     e.preventDefault();
+    community.push({
+      first_name: $('#community-first-name').val(),
+      last_name: $('#community-last-name').val(),
+      email: $('#community-email').val(),
+      bio: $('#community-bio').val(),
+    });
+    $('#community-first-name').val('');
+    $('#community-last-name').val('');
+    $('#community-email').val('');
+    $('#community-bio').val('');
+    showList();
   });
   $('#next-button').click(function(){
-    alert(3);
+    $('#hidden-json').val(JSON.stringify({
+      faculty: faculty,
+      community: community,
+    }));
+    $('#hidden-form').submit();
   });
 });
 
 </script>
 </head>
 <body>
+
+<form class="hidden-form" id="hidden-form" method="post" action="save-team">
+  <input type="text" name="json" id="hidden-json">
+</form>
 
 <div class="top-nav">
   <div class="top-nav-half">
@@ -99,7 +138,7 @@ $(function(){
 
   <img class="content-divider" src="img/divider.png">
 
-  <form class="big-form big-form-three" method="post" action="save-team">
+  <div class="big-form big-form-three">
     <div class="big-form-header big-form-header-three">
       Great, let's add some team members
     </div>
@@ -136,26 +175,26 @@ $(function(){
               <p>
                 <label>
                   First Name<br>
-                  <input type="text" name="first_name" value="">
+                  <input type="text" id="community-first-name">
                 </label>
               </p>
               <p>
                 <label>
                   Last Name<br>
-                  <input type="text" name="last_name" value="">
+                  <input type="text" id="community-last-name">
                 </label>
               </p>
             </div>
             <p>
               <label>
                 Email<br>
-                <input type="text" value="" name="email">
+                <input type="text" id="community-email">
               </label>
             </p>
             <p>
               <label>
                 Bio<br>
-                <textarea name="bio"></textarea>
+                <textarea id="community-bio"></textarea>
               </label>
             </p>
             <p>
@@ -179,7 +218,7 @@ $(function(){
         <button class="next-button" id="next-button" type="button">Next</button>
       </div>
     </div>
-  </form>
+  </div>
 
 </div>
 

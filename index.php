@@ -85,7 +85,7 @@ if (count($parts) === 0) {
     ));
   } else if ($parts[0] === 'save-team') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    $user_data['team'] = $_POST['team'];
+    $user_data['team'] = json_decode($_POST['json']);
     save_user_data($user_data);
     redirect_to('.');
   } else if ($parts[0] === 'project') {
