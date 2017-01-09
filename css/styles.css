@@ -387,3 +387,69 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   font-style: normal;
   color: rgb(173,110,10);
 }
+
+.concept-hero {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 100px 130px;
+  background-image: url(../img/hero.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.concept-hero-title {
+  color: rgb(226,174,92);
+  font-weight: bold;
+  font-family: Halis R Bold;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0;
+  letter-spacing: 3px;
+  background-image: url(../img/fancy-corner.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 150px;
+  overflow: visible;
+  padding-left: 45px;
+  margin-left: -45px;
+  padding-top: 20px;
+  margin-top: -20px;
+  padding-bottom: 40px;
+  margin-bottom: -40px;
+}
+
+.concept-hero-title h1 {
+  margin-bottom: 5px;
+}
+
+.concept-hero-title h2 {
+  margin-top: 5px;
+  font-size: 15px;
+}
+
+.concept-hero-meter {
+  color: white;
+  text-align: center;
+  font-family: Halis R Bold;
+  text-transform: uppercase;
+  border: 2px solid white;
+  border-radius: 999px;
+  width: 125px;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.concept-hero-meter h1 {
+  font-size: 35px;
+  margin: -3px;
+}
+
+.concept-hero-meter h2 {
+  font-size: 12px;
+  margin: 2px;
+}

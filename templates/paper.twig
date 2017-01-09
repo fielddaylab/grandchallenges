@@ -2,10 +2,42 @@
 <html>
 <head>
   <title></title>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-<h1>{{ title }}</h1>
+<div class="top-nav">
+  <div class="top-nav-half">
+    <div class="top-nav-title">
+      <img src="img/nav-logo.png">
+      Grand Challenges
+    </div>
+    <div class="top-nav-link">
+      Home
+    </div>
+    <div class="top-nav-link">
+      Dashboard
+    </div>
+  </div>
+  <div class="top-nav-half">
+    <div class="top-nav-link">
+      <a href="logout">Logout</a>
+    </div>
+  </div>
+</div>
+
+<div class="concept-hero">
+  <div class="concept-hero-title">
+    <h1>{{ data.project.title }}</h1>
+    <h2>Project Dashboard</h2>
+  </div>
+  <div class="concept-hero-meter">
+    <h1>25%</h1>
+    <h2>completed</h2>
+  </div>
+</div>
+
+<h1>{{ data.project.title }}</h1>
 
 <h2>Concept Paper</h2>
 
