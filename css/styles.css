@@ -128,6 +128,10 @@ body {
   box-sizing: border-box;
 }
 
+.big-form-middle-annotated > * {
+  width: 700px;
+}
+
 .big-form-split {
   display: flex;
   flex-direction: row;
@@ -356,4 +360,30 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
 
 .hidden-form {
   display: none;
+}
+
+.big-form-field {
+  display: flex;
+  flex-direction: row;
+}
+
+.big-form-field label {
+  flex: 1;
+}
+
+.big-form-field-annotation {
+  margin-left: 20px;
+  width: 140px;
+  text-transform: none;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  padding-top: 18px;
+}
+
+.big-form-field-annotation em {
+  text-transform: uppercase;
+  display: block;
+  font-weight: normal;
+  font-style: normal;
+  color: rgb(173,110,10);
 }

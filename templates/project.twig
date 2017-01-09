@@ -36,15 +36,36 @@
     <div class="big-form-header">
       What challenge is your team going to tackle?
     </div>
-    <div class="big-form-middle">
-      <p>
-        <input type="text" placeholder="Project Title" name="title" value="{{ data.project.title }}">
+    <div class="big-form-middle big-form-middle-annotated">
+      <p class="big-form-field">
+        <label>
+          Project Title<br>
+          <input type="text" name="title" value="{{ data.project.title }}">
+        </label>
+        <span class="big-form-field-annotation">
+          <em>Hint:</em>
+          Keep this under 140 characters.
+        </span>
       </p>
-      <p>
-        <textarea placeholder="Brief Description" name="description">{{ data.project.description }}</textarea>
+      <p class="big-form-field">
+        <label>
+          Brief Description<br>
+          <textarea name="description">{{ data.project.description }}</textarea>
+        </label>
+        <span class="big-form-field-annotation">
+          <em>Example:</em>
+          Create new approaches to prepare young children born into poverty for success in school and life.
+        </span>
       </p>
-      <p>
-        <textarea placeholder="How can the network assist you best?" name="network_help">{{ data.project.network_help }}</textarea>
+      <p class="big-form-field">
+        <label>
+          How can the Network assist you best?<br>
+          <textarea name="network_help">{{ data.project.network_help }}</textarea>
+        </label>
+        <span class="big-form-field-annotation">
+          <em>Hint:</em>
+          We're here to help. Seriously.
+        </span>
       </p>
     </div>
     <div class="big-form-footer">
