@@ -37,54 +37,38 @@
   </div>
 </div>
 
-<h1>{{ data.project.title }}</h1>
+<div class="concept-tab-bar">
+  <a href="#" class="concept-tab-bar-item concept-tab-bar-item-active">
+    Dashboard
+  </a>
+  <a href="#" class="concept-tab-bar-item">
+    Calendar
+  </a>
+</div>
 
-<h2>Concept Paper</h2>
+<div class="concept-columns">
+  <div class="concept-column concept-column-left">
+    L
+  </div>
+  <div class="concept-column concept-column-middle">
+    M
+  </div>
+  <div class="concept-column concept-column-right">
+    R
+  </div>
+</div>
 
-<p>{{ status }}</p>
-
-<form method="post" action="save-paper">
-  <label>
-    <h3>Paper Title</h3>
-    <input type="text" name="title" value="{{ data.paper.title }}">
-  </label>
-  <label>
-    <h3>Question 1: Inquiry</h3>
-    <p>What research methods will you use?</p>
-    <textarea name="question1">{{ data.paper.question1 }}</textarea>
-  </label>
-  <label>
-    <h3>Question 2: Impact</h3>
-    <p>What impact do you expect to see this have on the public? And why do you think that?</p>
-    <textarea name="question2">{{ data.paper.question2 }}</textarea>
-  </label>
-  <label>
-    <h3>Question 3: Interdisciplinary</h3>
-    <p>Justify your team members and community partners. What new things will come
-from this mash-up of cross disciplinary connections?</p>
-    <textarea name="question3">{{ data.paper.question3 }}</textarea>
-  </label>
-  <label>
-    <h3>Question 4: Innovation</h3>
-    <p>What market research have you done to ensure that your project will stand out
-among the fray? How will your solution differentiate itself from other innovation? </p>
-    <textarea name="question4">{{ data.paper.question4 }}</textarea>
-  </label>
+<form enctype="multipart/form-data" method="post" action="save-paper">
   <p>
-    <button type="submit">Save Progress</button>
+    <input type="file" name="connect_project">
   </p>
-  <h3>Ready to submit your paper?</h3>
   <p>
-    This will submit your completed questions to the Network Team.
-    We'll review your answers and get back at ya!
+    <button type="submit">Submit</button>
   </p>
-  <button type="submit" name="submit_paper" value="">Submit</button>
 </form>
 
-<p><code>{{ data|json_encode }}</code></p>
-
 <p>
-  <a href="logout">Logout</a>
+  <code>{{ data|json_encode }}</code>
 </p>
 
 </body>

@@ -23,6 +23,19 @@ function data_location($netid) {
   return __DIR__ . '/data/' . $netid . '.json';
 }
 
+function paper_location($netid, $file) {
+  if ($file['type'] === 'application/pdf') {
+    $ext = 'pdf';
+  } else if ($file['type'] === 'application/vnd.oasis.opendocument.text') {
+    $ext = 'odt';
+  } else {
+    echo 'Unsupported file type.<br>';
+    var_dump($file);
+    die();
+  }
+  return __DIR__ . '/data/' . $netid . '.' . $ext;
+}
+
 if (array_key_exists('netid', $_SESSION)) {
   $loc = data_location($_SESSION['netid']);
   if (file_exists($loc)) {
@@ -117,16 +130,11 @@ if (count($parts) === 0) {
     ));
   } else if ($parts[0] === 'save-paper') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    $user_data['paper'] = array(
-      'title' => $_POST['title'],
-      'question1' => $_POST['question1'],
-      'question2' => $_POST['question2'],
-      'question3' => $_POST['question3'],
-      'question4' => $_POST['question4'],
-    );
-    if (array_key_exists('submit_paper', $_POST)) {
-      $user_data['submitted'] = true;
-    }
+    rename
+      ( $_FILES['connect_project']['tmp_name']
+      , paper_location($_SESSION['netid'], $_FILES['connect_project'])
+      );
+    $user_data['submitted'] = true;
     save_user_data($user_data);
     redirect_to('.');
   } else {

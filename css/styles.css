@@ -453,3 +453,26 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   font-size: 12px;
   margin: 2px;
 }
+
+.concept-tab-bar {
+  background-color: rgb(60,51,25);
+  padding: 0 60px;
+}
+
+.concept-tab-bar-item {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: Halis R Bold;
+  font-size: 15px;
+  text-transform: uppercase;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  margin: 0 15px;
+  display: inline-block;
+  border-bottom: 5px solid rgba(0,0,0,0);
+}
+
+.concept-tab-bar-item-active {
+  border-bottom: 5px solid rgb(198,131,24);
+}
