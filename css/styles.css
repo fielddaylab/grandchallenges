@@ -371,6 +371,12 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   display: none;
 }
 
+.big-form-explain {
+  text-transform: none;
+  text-align: center;
+  margin: 0;
+}
+
 .big-form-field {
   display: flex;
   flex-direction: row;
