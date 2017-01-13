@@ -491,6 +491,7 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   flex: 1;
   border-left: 2px solid rgb(223,223,223);
   border-right: 2px solid rgb(223,223,223);
+  padding-bottom: 200px;
 }
 
 .concept-column-middle h2 {
@@ -508,12 +509,68 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   margin-right: 15px;
 }
 
+.concept-column-middle h4 {
+  font-size: 13px;
+  color: rgb(173,110,10);
+  font-style: italic;
+}
+
+.concept-column-middle p {
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.concept-column-middle p a {
+  color: rgb(173,110,10);
+  text-decoration: none;
+}
+
+.concept-column-middle p a:hover {
+  text-decoration: underline;
+}
+
+.concept-column-middle h3 {
+  font-family: Halis R Bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 17px;
+  line-height: 23px;
+}
+
 #drop-area {
   border: 2px dashed rgb(173,110,10);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 30px;
+}
+
+#drop-area.drop-highlight {
+  background-color: white;
+}
+
+#drop-area img {
+  width: 50px;
+}
+
+#drop-area p {
+  margin: 5px;
+  font-size: 16px;
+}
+
+#drop-area a {
+  text-transform: uppercase;
+  color: white;
+  background-color: rgb(60,51,25);
+  padding: 15px 35px;
+  margin-top: 10px;
+  text-decoration: none;
+  border-radius: 999px;
+}
+
+#drop-area a:hover {
+  text-decoration: underline;
 }
 
 .concept-column-right {
@@ -540,6 +597,10 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   text-decoration: none;
 }
 
+.concept-column-right h4 a:hover {
+  text-decoration: underline;
+}
+
 .concept-column-right img {
   width: 100%;
   margin: 10px 0;
@@ -547,4 +608,9 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
 
 .concept-column-right p {
   font-size: 13px;
+  line-height: 22px;
+}
+
+#hidden-form {
+  display: none;
 }

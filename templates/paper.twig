@@ -1,8 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+<title>Grand Challenges</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+  var counter = 0;
+  $('#drop-area').bind({
+    dragover: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    dragenter: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      $('#drop-area').addClass('drop-highlight');
+      counter++;
+    },
+    dragleave: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      counter--;
+      if (counter === 0) {
+        $('#drop-area').removeClass('drop-highlight');
+      }
+    },
+    drop: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      counter = 0;
+      $('#drop-area').removeClass('drop-highlight');
+      var transfer = e.originalEvent ? e.originalEvent.dataTransfer : e.dataTransfer;
+      // originalEvent for jquery (not zepto)
+      if (transfer) {
+        if (transfer.files.length) {
+          $('#hidden-file').prop('files', transfer.files);
+          $('#hidden-form').submit();
+        }
+      }
+    },
+  });
+
+  $('#hidden-file').on('change', function(){
+    if (this.files.length) {
+      $('#hidden-form').submit();
+    }
+  });
+});
+
+function browseFiles() {
+  $('#hidden-file').click();
+}
+
+</script>
 </head>
 <body>
 
@@ -48,7 +100,23 @@
 
 <div class="concept-columns">
   <div class="concept-column concept-column-left">
-    L
+    <ul>
+      <li>Meet with GC Team</li>
+      <li>Project Setup</li>
+      <li>Your Team</li>
+      <li>
+        Connect Phase
+        <ul>
+          <li>Upload Project Paper</li>
+          <li>Review Pending</li>
+          <li>Accepted</li>
+          <li>Video</li>
+          <li>Poster Faire</li>
+        </ul>
+      </li>
+      <li>Engage</li>
+      <li>Transform</li>
+    </ul>
   </div>
   <div class="concept-column concept-column-middle">
     <h2>
@@ -74,9 +142,7 @@
       <p>
         Drag and drop to upload your connect project.
       </p>
-      <p>
-        <a href="#">Or browse files</a>
-      </p>
+      <a href="#" onClick="event.preventDefault(); browseFiles();">Or browse files</a>
     </div>
   </div>
   <div class="concept-column concept-column-right">
@@ -94,18 +160,14 @@
   </div>
 </div>
 
-<form enctype="multipart/form-data" method="post" action="save-paper">
+<form id="hidden-form" enctype="multipart/form-data" method="post" action="save-paper">
   <p>
-    <input type="file" name="connect_project">
+    <input type="file" id="hidden-file" name="connect_project">
   </p>
   <p>
-    <button type="submit">Submit</button>
+    <button type="submit" id="hidden-submit">Submit</button>
   </p>
 </form>
-
-<p>
-  <code>{{ data|json_encode }}</code>
-</p>
 
 </body>
 </html>
