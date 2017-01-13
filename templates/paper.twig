@@ -58,25 +58,7 @@ function browseFiles() {
 </head>
 <body>
 
-<div class="top-nav">
-  <div class="top-nav-half">
-    <div class="top-nav-title">
-      <img src="img/nav-logo.png">
-      Grand Challenges
-    </div>
-    <div class="top-nav-link">
-      Home
-    </div>
-    <div class="top-nav-link">
-      Dashboard
-    </div>
-  </div>
-  <div class="top-nav-half">
-    <div class="top-nav-link">
-      <a href="logout">Logout</a>
-    </div>
-  </div>
-</div>
+{{ include('nav.twig') }}
 
 <div class="concept-hero">
   <div class="concept-hero-title">
@@ -152,10 +134,7 @@ function browseFiles() {
     <h3>Hints:</h3>
     <p>
       This isn't a thesis.
-      The goal here is to end up with a consise, well thought out document to show the state what challenge you intend to tackle.
-    </p>
-    <p>
-      This paper will also be helpful to look back on to focus the project scope.
+      The goal here is to end up with a consise, well thought out document to show what challenge you intend to tackle.
     </p>
   </div>
 </div>
