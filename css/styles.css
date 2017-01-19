@@ -167,9 +167,6 @@ body {
   font-family: Aqua Grotesque;
   text-transform: uppercase;
   margin-bottom: 50px;
-}
-
-.big-form-footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -194,6 +191,10 @@ body {
   height: 35px;
 }
 
+.big-form-footer-full {
+  height: 35px;
+}
+
 .next-button {
   width: 100%;
   height: 100%;
@@ -205,6 +206,10 @@ body {
   text-transform: uppercase;
   font-size: 13px;
   letter-spacing: 2px;
+}
+
+.next-button-full {
+  padding: 0 15px;
 }
 
 .next-button-last {

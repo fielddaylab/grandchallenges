@@ -20,7 +20,12 @@ $loader = new Twig_Loader_Filesystem('templates/');
 $twig = new Twig_Environment($loader);
 
 function data_location($netid) {
+  if (strpos($netid, '..') !== false) exit('Invalid email address.');
   return __DIR__ . '/data/' . $netid . '.json';
+}
+
+function data_simple_location() {
+  return __DIR__ . '/data-simple/' . time() . '.json';
 }
 
 function paper_location($netid, $file) {
@@ -137,6 +142,53 @@ if (count($parts) === 0) {
     $user_data['submitted'] = true;
     save_user_data($user_data);
     redirect_to('.');
+  } else if ($parts[0] === 'proposal') {
+    echo $twig->render('proposal.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
+  } else if ($parts[0] === 'meeting') {
+    echo $twig->render('meeting.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
+  } else if ($parts[0] === 'informed') {
+    echo $twig->render('informed.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
+  } else if ($parts[0] === 'submit-proposal' || $parts[0] === 'submit-meeting' || $parts[0] === 'submit-informed') {
+    foreach (array('email', 'idea', 'collaborators', 'colleagues', 'interests') as $k) {
+      if (isset($_POST[$k])) {
+        $user_data[$k] = $_POST[$k];
+      }
+    }
+    file_put_contents(data_simple_location(), json_encode($user_data));
+    redirect_to('thanks');
+  } else if ($parts[0] === 'thanks') {
+    echo $twig->render('thanks.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
+  } else if ($parts[0] === 'grand-challenges.csv') {
+    $temp = tmpfile();
+    fputcsv($temp, array('Email', 'Idea', 'Collaborators', 'Colleagues', 'Interest'));
+    foreach (scandir(__DIR__ . '/data-simple/') as $f) {
+      $file = __DIR__ . '/data-simple/' . $f;
+      if (preg_match("/\\.json$/", $file)) {
+        $json = json_decode(file_get_contents($file), true);
+        fputcsv($temp, array(
+          $json['email'],
+          $json['idea'],
+          $json['collaborators'],
+          $json['colleagues'],
+          $json['interest'],
+        ));
+      }
+    }
+    fseek($temp, 0);
+    header('Content-type: text/csv');
+    echo fread($temp, 10000000);
   } else {
     $matched = false;
   }
