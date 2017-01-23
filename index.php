@@ -25,7 +25,7 @@ function data_location($netid) {
 }
 
 function data_simple_location() {
-  return __DIR__ . '/data-simple/' . time() . '.json';
+  return __DIR__ . '/data-simple/' . microtime() . '.json';
 }
 
 function paper_location($netid, $file) {
@@ -182,7 +182,7 @@ if (count($parts) === 0) {
           $json['idea'],
           $json['collaborators'],
           $json['colleagues'],
-          $json['interest'],
+          $json['interests'],
         ));
       }
     }
