@@ -58,6 +58,7 @@ function save_user_data($data) {
 
 $matched = true;
 if (count($parts) === 0) {
+  die;
   if (array_key_exists('netid', $_SESSION)) {
     if (!array_key_exists('info', $user_data)) {
       redirect_to('info');
