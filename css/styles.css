@@ -671,3 +671,23 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   max-height: 80px;
   margin: 50px 0;
 }
+
+@media screen and (max-width: 1000px) {
+  .big-form {
+    width: 100%;
+  }
+  .big-form-header, .big-form-middle, .big-form-footer {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .big-form-middle p {
+    width: 100%;
+  }
+  .big-form-field {
+    flex-direction: column;
+  }
+  .big-form-field-annotation {
+    width: 100%;
+    margin: 0;
+  }
+}
