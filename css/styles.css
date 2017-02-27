@@ -208,6 +208,7 @@ body {
   text-transform: uppercase;
   font-size: 13px;
   letter-spacing: 2px;
+  cursor: pointer;
 }
 
 .next-button-full {
@@ -776,4 +777,27 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
 .team-switchers, .team-halves {
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.code-section-hide {
+  display: none;
+}
+
+#code-section input[type=text] {
+  padding: 7px;
+  border: 1px solid rgb(60,51,25);
+  border-radius: 5px;
+}
+
+#code-section button {
+  text-transform: uppercase;
+  background-color: rgb(209,137,22);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 13px;
+  white-space: nowrap;
+  margin-left: 15px;
+  cursor: pointer;
 }

@@ -80,6 +80,11 @@ if (count($parts) === 0) {
       'netid' => $_SESSION['netid'],
       'data' => $user_data,
     ));
+  } else if ($parts[0] === 'save-meeting') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
+    $user_data['code'] = $_POST['code'];
+    save_user_data($user_data);
+    redirect_to('.');
   } else if ($parts[0] === 'bio') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
     echo $twig->render('bio.twig', array(
@@ -98,6 +103,11 @@ if (count($parts) === 0) {
       'netid' => $_SESSION['netid'],
       'data' => $user_data,
     ));
+  } else if ($parts[0] === 'save-team') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
+    $user_data['team'] = json_decode($_POST['json']);
+    save_user_data($user_data);
+    redirect_to('.');
   } else if ($parts[0] === 'support') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
     echo $twig->render('support.twig', array(

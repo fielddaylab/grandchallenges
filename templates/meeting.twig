@@ -4,6 +4,21 @@
 <title>Grand Challenges</title>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 <script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+
+function showCodeField() {
+  $('#button-set-up').removeClass('button-brown-filled');
+  $('#button-already-met').addClass('button-brown-filled');
+  $('#code-section').removeClass('code-section-hide');
+}
+
+function hideCodeField() {
+  $('#button-set-up').addClass('button-brown-filled');
+  $('#button-already-met').removeClass('button-brown-filled');
+  $('#code-section').addClass('code-section-hide');
+}
+
+</script>
 </head>
 <body>
 
@@ -63,9 +78,19 @@
           Before you get started with the Grand Challenges, it's important that you set up a time to meet with us at the Network so we can help you get up and running. After we all sit down and chat, you can get down to work.
         </p>
         <p>
-          <a href="#" class="button-brown button-brown-filled">Set up a meeting</a>
-          <a href="#" class="button-brown">We've already met</a>
+          <a href="mailto:grandchallenges@education.wisc.edu" id="button-set-up" class="button-brown button-brown-filled" onclick="hideCodeField();">Set up a meeting</a>
+          <a href="#" id="button-already-met" class="button-brown" onclick="showCodeField(); return false;">We've already met</a>
         </p>
+        <form id="code-section" class="code-section-hide" method="post" action="save-meeting">
+          <p>
+            Great! You should have received a meeting confirmation code from the Network team to proceed to the next step. Enter it below:
+          </p>
+          <p>
+            confirmation code:<br>
+            <input type="text" name="code">
+            <button type="submit">Submit</button>
+          </p>
+        </form>
       </div>
       <div class="concept-column concept-column-right">
         <h3>But I'm soooo busy.</h3>
