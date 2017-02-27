@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Grand Challenges</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+
+function showCodeField() {
+  $('#button-already-met').removeClass('button-brown-filled');
+  $('#button-set-up').addClass('button-brown-filled');
+  $('#support-section').removeClass('support-section-hide');
+}
+
+function hideCodeField() {
+  $('#button-already-met').addClass('button-brown-filled');
+  $('#button-set-up').removeClass('button-brown-filled');
+  $('#support-section').addClass('support-section-hide');
+}
+
+</script>
+</head>
+<body>
+
+{{ include('nav.twig') }}
+
+<div class="concept-hero">
+  <div class="concept-hero-title">
+    <h1>Hello {{ data.info.first_name }}</h1>
+    <h2>Welcome to the Grand Challenges</h2>
+  </div>
+</div>
+
+<div class="concept-tab-bar">
+  <a href="#" class="concept-tab-bar-item concept-tab-bar-item-active">
+    Dashboard
+  </a>
+</div>
+
+<div class="concept-columns">
+  <div class="concept-column concept-column-left">
+    <div class="concept-map-chunk">
+      <img src="img/map-pipe.png">
+    </div>
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-checked.png">
+      <span>Meet with Network</span>
+    </div>
+    <div class="concept-map-chunk">
+      <img src="img/map-checked.png">
+      <span>Your Team</span>
+    </div>
+    <div class="concept-map-chunk">
+      <img src="img/map-orange.png">
+      <span>Optional Support</span>
+    </div>
+    <div class="concept-map-chunk">
+      <img src="img/map-gray-end.png">
+      <span>Choose your path</span>
+    </div>
+  </div>
+  <div style="width: 100%;">
+    <div class="concept-columns-nav">
+      <div class="concept-columns-nav-side">
+      </div>
+      <div class="concept-columns-nav-side concept-columns-nav-side-right">
+        <span>Your Team</span>
+        <img src="img/arrow-gray-right.png">
+      </div>
+    </div>
+    <div class="concept-columns">
+      <div class="concept-column concept-column-middle">
+        <h2>
+          <img src="img/connect-dot.png">
+          Optional support
+        </h2>
+        <p>
+          Some teams could use a bit of a boost to get going. It can be costly to set up meetings, create proposals, and formulate an idea. Would you like to apply for $1,000 to get you up and running?
+        </p>
+        <p>
+          <a href="mailto:grandchallenges@education.wisc.edu" id="button-set-up" class="button-brown button-brown-filled" onclick="showCodeField(); return false;">Apply for support</a>
+          <a href="line" id="button-already-met" class="button-brown">I don't need support</a>
+        </p>
+        <form id="support-section" class="support-section-hide" method="post" action="save-meeting">
+          <p>
+            Write a short description of how you will use this funding.
+          </p>
+          <p>
+            <textarea name="support"></textarea>
+          </p>
+          <p>
+            <button type="submit">Submit</button>
+          </p>
+        </form>
+      </div>
+      <div class="concept-column concept-column-right">
+        <h3>Optional support?</h3>
+        <p>
+          Yes.
+        </p>
+        <h3>As in, money?</h3>
+        <p>
+          Yes.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ include('footer.twig') }}
+
+</body>
+</html>

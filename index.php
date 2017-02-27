@@ -122,9 +122,6 @@ if (count($parts) === 0) {
     ));
   } else if ($parts[0] === 'paper') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    if (!array_key_exists('info', $user_data)) redirect_to('info');
-    if (!array_key_exists('team', $user_data)) redirect_to('team');
-    if (!array_key_exists('project', $user_data)) redirect_to('project');
     echo $twig->render('paper.twig', array(
       'netid' => $_SESSION['netid'],
       'data' => $user_data,

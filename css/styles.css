@@ -751,7 +751,7 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
 
 .concept-column-left {
   padding-top: 0;
-  padding-right: 60px;
+  padding-right: 40px;
   padding-left: 40px;
 }
 
@@ -770,8 +770,21 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   height: 51px;
 }
 
-.concept-map-current {
+.concept-map-chunk span {
+  margin-left: 10px;
+}
+
+.concept-map-current span {
   color: rgb(209,137,22);
+}
+
+.concept-map-line-start span {
+  color: rgb(193,66,30);
+  margin-left: -48px;
+}
+
+.concept-map-line-current span {
+  color: black;
 }
 
 .team-switchers, .team-halves {
@@ -779,7 +792,7 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   letter-spacing: 1px;
 }
 
-.code-section-hide {
+.code-section-hide, .support-section-hide {
   display: none;
 }
 
@@ -789,7 +802,13 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   border-radius: 5px;
 }
 
-#code-section button {
+#support-section textarea {
+  width: 100%;
+  resize: none;
+  height: 100px;
+}
+
+#code-section button, #support-section button {
   text-transform: uppercase;
   background-color: rgb(209,137,22);
   color: white;
@@ -798,6 +817,9 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   padding: 7px 14px;
   font-size: 13px;
   white-space: nowrap;
-  margin-left: 15px;
   cursor: pointer;
+}
+
+#code-section button {
+  margin-left: 15px;
 }
