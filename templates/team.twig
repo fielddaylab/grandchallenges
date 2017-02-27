@@ -4,6 +4,7 @@
 <title>Grand Challenges</title>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 <script type="text/javascript" src="js/zepto.min.js"></script>
+
 <script type="text/javascript">
 
 var available_faculty = [
@@ -105,102 +106,153 @@ $(function(){
 });
 
 </script>
+
 </head>
 <body>
 
-<form class="hidden-form" id="hidden-form" method="post" action="save-team">
-  <input type="text" name="json" id="hidden-json">
-</form>
-
 {{ include('nav.twig') }}
 
-<div class="content">
+<div class="concept-hero">
+  <div class="concept-hero-title">
+    <h1>Hello {{ data.info.first_name }}</h1>
+    <h2>Welcome to the Grand Challenges</h2>
+  </div>
+</div>
 
-  <h1 class="content-title">Hey {{ data.info.first_name|default('there') }}, let's get your team set up.</h1>
+<div class="concept-tab-bar">
+  <a href="#" class="concept-tab-bar-item concept-tab-bar-item-active">
+    Dashboard
+  </a>
+</div>
 
-  <img class="content-divider" src="img/divider.png">
-
-  <div class="big-form big-form-three">
-    <div class="big-form-header big-form-header-three">
-      Great, let's add some team members
+<div class="concept-columns">
+  <div class="concept-column concept-column-left">
+    <div class="concept-map-chunk">
+      <img src="img/map-pipe.png">
     </div>
-    <div class="big-form-middle-three">
-      <div class="big-form-middle-side">
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-checked.png">
+      <span>Meet with Network</span>
+    </div>
+    <div class="concept-map-chunk">
+      <img src="img/map-orange.png">
+      <span>Your Team</span>
+    </div>
+    <div class="concept-map-chunk">
+      <img src="img/map-gray.png">
+      <span>Optional Support</span>
+    </div>
+    <div class="concept-map-chunk">
+      <img src="img/map-gray-end.png">
+      <span>Choose your path</span>
+    </div>
+  </div>
+  <div style="width: 100%;">
+    <div class="concept-columns-nav">
+      <div class="concept-columns-nav-side concept-columns-nav-side-left">
+        <img src="img/arrow-gold-left.png">
+        <span>Set Up Meeting</span>
       </div>
-      <div class="big-form-middle-trunk">
-        <div class="team-instructions">
-          <p>
-            You can add two different types of team members.
-            Faculty members are any School of Education faculty.
-            Community partners can be from other UW departments,
-            our local communties, across the state, or around the world.
-          </p>
-        </div>
-        <div class="team-switchers">
-          <a href="#" class="team-switcher" id="add-faculty">
-            Add SOE faculty
-          </a href="#">
-          <div class="team-switchers-or">
-            or
+      <div class="concept-columns-nav-side concept-columns-nav-side-right">
+        <span>Project Setup</span>
+        <img src="img/arrow-gray-right.png">
+      </div>
+    </div>
+    <div class="concept-columns">
+      <div class="concept-column concept-column-middle">
+        <h2>
+          <img src="img/connect-dot.png">
+          Set up your team
+        </h2>
+
+        <div class="big-form-middle-trunk">
+          <div class="team-instructions">
+            <p>
+              You can add two different types of team members.
+              Faculty members are any School of Education faculty.
+              Community partners can be from other UW departments,
+              our local communties, across the state, or around the world.
+            </p>
           </div>
-          <a href="#" class="team-switcher" id="add-community">
-            Add community partner
-          </a href="#">
-        </div>
-        <div class="team-halves">
-          <div id="faculty-list">
+          <div class="team-switchers">
+            <a href="#" class="team-switcher" id="add-faculty">
+              Add SOE faculty
+            </a href="#">
+            <div class="team-switchers-or">
+              or
+            </div>
+            <a href="#" class="team-switcher" id="add-community">
+              Add community partner
+            </a href="#">
           </div>
-          <div class="community-form">
-            <div class="big-form-split">
+          <div class="team-halves">
+            <div id="faculty-list">
+            </div>
+            <div class="community-form">
+              <div class="big-form-split">
+                <p>
+                  <label>
+                    First Name<br>
+                    <input type="text" id="community-first-name">
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    Last Name<br>
+                    <input type="text" id="community-last-name">
+                  </label>
+                </p>
+              </div>
               <p>
                 <label>
-                  First Name<br>
-                  <input type="text" id="community-first-name">
+                  Email<br>
+                  <input type="text" id="community-email">
                 </label>
               </p>
               <p>
                 <label>
-                  Last Name<br>
-                  <input type="text" id="community-last-name">
+                  Bio<br>
+                  <textarea id="community-bio"></textarea>
                 </label>
+              </p>
+              <p>
+                <a href="#" id="community-plus"><img src="img/plus.png"></a>
               </p>
             </div>
-            <p>
-              <label>
-                Email<br>
-                <input type="text" id="community-email">
-              </label>
-            </p>
-            <p>
-              <label>
-                Bio<br>
-                <textarea id="community-bio"></textarea>
-              </label>
-            </p>
-            <p>
-              <a href="#" id="community-plus"><img src="img/plus.png"></a>
-            </p>
+          </div>
+          <div class="big-form-footer big-form-footer-three">
+            <div class="big-form-footer-side">
+            </div>
+            <div class="big-form-footer-dots">
+              <span class="big-form-footer-dot"></span>
+              <span class="big-form-footer-dot big-form-footer-dot-full"></span>
+              <span class="big-form-footer-dot"></span>
+            </div>
+            <div class="big-form-footer-side">
+              <button class="next-button" id="next-button" type="button">Next</button>
+            </div>
           </div>
         </div>
+
       </div>
-      <div class="big-form-middle-side" id="members-list">
-      </div>
-    </div>
-    <div class="big-form-footer big-form-footer-three">
-      <div class="big-form-footer-side">
-      </div>
-      <div class="big-form-footer-dots">
-        <span class="big-form-footer-dot"></span>
-        <span class="big-form-footer-dot big-form-footer-dot-full"></span>
-        <span class="big-form-footer-dot"></span>
-      </div>
-      <div class="big-form-footer-side">
-        <button class="next-button" id="next-button" type="button">Next</button>
+      <div class="concept-column concept-column-right">
+        <h3>Your team:</h3>
+        <div class="big-form-middle-side">
+          <p class="member-entry">
+            <a href="#" class="member-x" onclick="return false;">
+              <img src="img/x.png">
+            </a>
+            <span>{{ data.info.last_name }}, {{ data.info.first_name }} (You)</span>
+          </p>
+          <div id="members-list">
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </div>
+
+{{ include('footer.twig') }}
 
 </body>
 </html>

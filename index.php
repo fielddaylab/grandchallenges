@@ -58,14 +58,9 @@ function save_user_data($data) {
 
 $matched = true;
 if (count($parts) === 0) {
-  die;
   if (array_key_exists('netid', $_SESSION)) {
-    if (!array_key_exists('info', $user_data)) {
-      redirect_to('info');
-    } else if (!array_key_exists('team', $user_data)) {
-      redirect_to('team');
-    } else if (!array_key_exists('project', $user_data)) {
-      redirect_to('project');
+    if (!array_key_exists('met-with-network', $user_data)) {
+      redirect_to('meeting');
     } else {
       redirect_to('paper');
     }
@@ -79,51 +74,42 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'login') {
     $_SESSION['netid'] = $_POST['netid'];
     redirect_to('.');
-  } else if ($parts[0] === 'info') {
+  } else if ($parts[0] === 'meeting') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    echo $twig->render('info.twig', array(
+    echo $twig->render('meeting.twig', array(
       'netid' => $_SESSION['netid'],
       'data' => $user_data,
     ));
-  } else if ($parts[0] === 'save-info') {
+  } else if ($parts[0] === 'bio') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    $user_data['info'] = array(
-      'first_name' => $_POST['first_name'],
-      'last_name' => $_POST['last_name'],
-      'email' => $_POST['email'],
-      'bio' => $_POST['bio'],
-    );
-    save_user_data($user_data);
-    redirect_to('.');
-  } else if ($parts[0] === 'team') {
-    if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    if (!array_key_exists('info', $user_data)) redirect_to('info');
-    echo $twig->render('team.twig', array(
+    echo $twig->render('bio.twig', array(
       'netid' => $_SESSION['netid'],
       'data' => $user_data,
     ));
-  } else if ($parts[0] === 'save-team') {
-    if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    $user_data['team'] = json_decode($_POST['json']);
-    save_user_data($user_data);
-    redirect_to('.');
   } else if ($parts[0] === 'project') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    if (!array_key_exists('info', $user_data)) redirect_to('info');
-    if (!array_key_exists('team', $user_data)) redirect_to('team');
     echo $twig->render('project.twig', array(
       'netid' => $_SESSION['netid'],
       'data' => $user_data,
     ));
-  } else if ($parts[0] === 'save-project') {
+  } else if ($parts[0] === 'team') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
-    $user_data['project'] = array(
-      'title' => $_POST['title'],
-      'description' => $_POST['description'],
-      'network_help' => $_POST['network_help'],
-    );
-    save_user_data($user_data);
-    redirect_to('.');
+    echo $twig->render('team.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
+  } else if ($parts[0] === 'support') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
+    echo $twig->render('support.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
+  } else if ($parts[0] === 'line') {
+    if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
+    echo $twig->render('line.twig', array(
+      'netid' => $_SESSION['netid'],
+      'data' => $user_data,
+    ));
   } else if ($parts[0] === 'paper') {
     if (!array_key_exists('netid', $_SESSION)) redirect_to('.');
     if (!array_key_exists('info', $user_data)) redirect_to('info');
@@ -143,23 +129,13 @@ if (count($parts) === 0) {
     $user_data['submitted'] = true;
     save_user_data($user_data);
     redirect_to('.');
-  } else if ($parts[0] === 'proposal') {
-    echo $twig->render('proposal.twig', array(
-      'netid' => $_SESSION['netid'],
-      'data' => $user_data,
-    ));
-  } else if ($parts[0] === 'meeting') {
-    echo $twig->render('meeting.twig', array(
-      'netid' => $_SESSION['netid'],
-      'data' => $user_data,
-    ));
   } else if ($parts[0] === 'informed') {
     echo $twig->render('informed.twig', array(
       'netid' => $_SESSION['netid'],
       'data' => $user_data,
     ));
-  } else if ($parts[0] === 'submit-proposal' || $parts[0] === 'submit-meeting' || $parts[0] === 'submit-informed') {
-    foreach (array('email', 'idea', 'collaborators', 'colleagues', 'interests') as $k) {
+  } else if ($parts[0] === 'submit-informed') {
+    foreach (array('email', 'interests') as $k) {
       if (isset($_POST[$k])) {
         $user_data[$k] = $_POST[$k];
       }

@@ -28,11 +28,11 @@
       <img src="img/map-pipe.png">
     </div>
     <div class="concept-map-chunk concept-map-current">
-      <img src="img/map-orange.png">
+      <img src="img/map-checked.png">
       <span>Meet with Network</span>
     </div>
     <div class="concept-map-chunk">
-      <img src="img/map-gray.png">
+      <img src="img/map-orange.png">
       <span>Your Team</span>
     </div>
     <div class="concept-map-chunk">
@@ -46,10 +46,12 @@
   </div>
   <div style="width: 100%;">
     <div class="concept-columns-nav">
-      <div class="concept-columns-nav-side">
+      <div class="concept-columns-nav-side concept-columns-nav-side-left">
+        <img src="img/arrow-gold-left.png">
+        <span>Set Up Meeting</span>
       </div>
       <div class="concept-columns-nav-side concept-columns-nav-side-right">
-        <span>Your Team</span>
+        <span>Project Setup</span>
         <img src="img/arrow-gray-right.png">
       </div>
     </div>
@@ -57,27 +59,22 @@
       <div class="concept-column concept-column-middle">
         <h2>
           <img src="img/connect-dot.png">
-          Set up a meeting with the Network team
+          Set up your team
         </h2>
         <p>
-          Before you get started with the Grand Challenges, it's important that you set up a time to meet with us at the Network so we can help you get up and running. After we all sit down and chat, you can get down to work.
-        </p>
-        <p>
-          <a href="#" class="button-brown button-brown-filled">Set up a meeting</a>
-          <a href="#" class="button-brown">We've already met</a>
+          Let's get your team all set up. We'll start with you! Write a short description about yourself:
         </p>
       </div>
       <div class="concept-column concept-column-right">
-        <h3>But I'm soooo busy.</h3>
-        <p>
-          We know you've got a busy schedule, but we can work around it. We want to make sure you get up and running fast, and we're ready to answer all of your questions.
-        </p>
-        <h3>What if I don't have a team?</h3>
-        <p>
-          Then we'll help you find one! One of the strengths of the Grand Challenges initiative is its multidisciplinary approach.
-        </p>
-        <h3>But there is a cat on my lap.</h3>
-        <p>That's fair.</p>
+        <h3>Your team:</h3>
+        <div class="big-form-middle-side">
+          <p class="member-entry">
+            <a href="#" class="member-x" onclick="return false;">
+              <img src="img/x.png">
+            </a>
+            <span>{{ data.info.last_name }}, {{ data.info.first_name }} (You)</span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
