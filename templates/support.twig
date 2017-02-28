@@ -6,16 +6,10 @@
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script type="text/javascript">
 
-function showCodeField() {
+function showSupportField() {
   $('#button-already-met').removeClass('button-brown-filled');
   $('#button-set-up').addClass('button-brown-filled');
   $('#support-section').removeClass('support-section-hide');
-}
-
-function hideCodeField() {
-  $('#button-already-met').addClass('button-brown-filled');
-  $('#button-set-up').removeClass('button-brown-filled');
-  $('#support-section').addClass('support-section-hide');
 }
 
 </script>
@@ -46,11 +40,11 @@ function hideCodeField() {
       <img src="img/map-checked.png">
       <span>Meet with Network</span>
     </div>
-    <div class="concept-map-chunk">
+    <div class="concept-map-chunk concept-map-current">
       <img src="img/map-checked.png">
       <span>Your Team</span>
     </div>
-    <div class="concept-map-chunk">
+    <div class="concept-map-chunk concept-map-current">
       <img src="img/map-orange.png">
       <span>Optional Support</span>
     </div>
@@ -78,15 +72,15 @@ function hideCodeField() {
           Some teams could use a bit of a boost to get going. It can be costly to set up meetings, create proposals, and formulate an idea. Would you like to apply for $1,000 to get you up and running?
         </p>
         <p>
-          <a href="mailto:grandchallenges@education.wisc.edu" id="button-set-up" class="button-brown button-brown-filled" onclick="showCodeField(); return false;">Apply for support</a>
-          <a href="line" id="button-already-met" class="button-brown">I don't need support</a>
+          <a href="#" id="button-set-up" class="button-brown button-brown-filled" onclick="showSupportField(); return false;">Apply for support</a>
+          <a href="save-no-support" id="button-already-met" class="button-brown">I don't need support</a>
         </p>
-        <form id="support-section" class="support-section-hide" method="post" action="save-meeting">
+        <form id="support-section" class="support-section-hide" method="post" action="save-support">
           <p>
             Write a short description of how you will use this funding.
           </p>
           <p>
-            <textarea name="support"></textarea>
+            <textarea name="support">{{ data.support }}</textarea>
           </p>
           <p>
             <button type="submit">Submit</button>
