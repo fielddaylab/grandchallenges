@@ -774,6 +774,11 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   margin-left: 10px;
 }
 
+.concept-map-chunk a {
+  text-decoration: none;
+  color: rgb(173,168,168);
+}
+
 .concept-map-current span {
   color: rgb(209,137,22);
 }
