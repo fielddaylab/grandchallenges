@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Grand Challenges</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<script type="text/javascript" src="js/zepto.min.js"></script>
+</head>
+<body>
+
+{{ include('nav.twig') }}
+
+<div class="concept-hero">
+  <div class="concept-hero-title">
+    <h1>Hello {{ data.info.first_name }}</h1>
+    <h2>Welcome to the Grand Challenges</h2>
+  </div>
+</div>
+
+<div class="concept-tab-bar">
+  <a href="#" class="concept-tab-bar-item concept-tab-bar-item-active">
+    Dashboard
+  </a>
+</div>
+
+<div class="concept-columns">
+  <div class="concept-column concept-column-left">
+    <div class="concept-map-chunk">
+      <img src="img/map-pipe.png">
+    </div>
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-checked.png">
+      <span>Meet with Network</span>
+    </div>
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-checked.png">
+      <span>Your Team</span>
+    </div>
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-checked.png">
+      <span>Optional Support</span>
+    </div>
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-orange-end.png">
+      <span>Choose your path</span>
+    </div>
+  </div>
+  <div style="width: 100%;">
+    <div class="concept-columns-nav">
+      <div class="concept-columns-nav-side concept-columns-nav-side-left">
+        <img src="img/arrow-gold-left.png">
+        <span>Your Team</span>
+      </div>
+      <div class="concept-columns-nav-side">
+      </div>
+    </div>
+    <div class="concept-columns">
+      <div class="concept-column concept-column-middle">
+        <h2>
+          <img src="img/connect-dot.png">
+          Choose your line
+        </h2>
+        <p>
+          Text goes here to explain the two lines.
+        </p>
+      </div>
+      <div class="concept-column concept-column-right">
+        <h3>My line?</h3>
+        <p>
+          The two different grant programs for Grand Challenges serve two different kinds of projects. More description here would be useful.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ include('footer.twig') }}
+
+</body>
+</html>

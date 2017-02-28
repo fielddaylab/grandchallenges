@@ -4,6 +4,43 @@
 <title>Grand Challenges</title>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 <script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+
+  $('#text-bio').on('input', function(e){
+    var maxLength = 160;
+    var len = e.target.value.length;
+    if (len > maxLength) {
+      $(e.target).val(e.target.value.substr(0, maxLength));
+      len = maxLength;
+    }
+    $('#chars-bio').text(maxLength - len);
+  });
+
+  $('#text-title').on('input', function(e){
+    var maxLength = 140;
+    var len = e.target.value.length;
+    if (len > maxLength) {
+      $(e.target).val(e.target.value.substr(0, maxLength));
+      len = maxLength;
+    }
+    $('#chars-title').text(maxLength - len);
+  });
+
+  $('#text-description').on('input', function(e){
+    var maxLength = 500;
+    var len = e.target.value.length;
+    if (len > maxLength) {
+      $(e.target).val(e.target.value.substr(0, maxLength));
+      len = maxLength;
+    }
+    $('#chars-description').text(maxLength - len);
+  });
+
+});
+
+</script>
 </head>
 <body>
 
@@ -56,7 +93,7 @@
       </div>
     </div>
     <div class="concept-columns">
-      <div class="concept-column concept-column-middle">
+      <form class="concept-column concept-column-middle bio-form" method="post" action="save-bio">
         <h2>
           <img src="img/connect-dot.png">
           Set up your team
@@ -64,7 +101,26 @@
         <p>
           Let's get your team all set up. We'll start with you! Write a short description about yourself:
         </p>
-      </div>
+        <p>
+          <span>A short bio about yourself (<span id="chars-bio">160</span> characters left)</span><br>
+          <textarea id="text-bio" name="bio"></textarea>
+        </p>
+        <p>
+          Next, give your project a title:
+        </p>
+        <p>
+          <span>Project title (<span id="chars-title">140</span> characters left)</span><br>
+          <textarea id="text-title" name="project-title"></textarea>
+        </p>
+        <p>
+          Finally, write a short description of your project:
+        </p>
+        <p>
+          <span>A sentence or two about your project (<span id="chars-description">500</span> characters left)</span><br>
+          <textarea id="text-description" name="project-description"></textarea>
+        </p>
+        <button type="submit">Submit</button>
+      </form>
       <div class="concept-column concept-column-right">
         <h3>Your team:</h3>
         <div class="big-form-middle-side">
