@@ -53,7 +53,7 @@ function save_user_data($data) {
   file_put_contents(data_location($_SESSION['netid']), json_encode($data));
 }
 
-$meeting_code = 'thecode';
+$meeting_code = 'discoball';
 
 function can_access($page) {
   global $user_data, $meeting_code;
@@ -86,10 +86,17 @@ function can_access($page) {
   if ($level >= 4 && !array_key_exists('team', $user_data)) return false;
   if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
   if ($level >= 6 && !array_key_exists('line', $user_data)) return false;
-  if ($level >= 7 &&
-    (  !array_key_exists('submitted', $user_data)
-    || !$user_data['submitted']
-    )) return false;
+  if ($user_data['line'] === 'transform') {
+    if ($level >= 7 &&
+      (  !array_key_exists('submitted', $user_data)
+      || !$user_data['submitted']
+      )) return false;
+  } else {
+    if ($level >= 7 &&
+      (  !array_key_exists('engage-proposal', $user_data)
+      || !$user_data['engage-proposal']
+      )) return false;
+  }
   return true;
 }
 
@@ -167,17 +174,21 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-engage') {
     $user_data['line'] = 'engage';
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('paper');
   } else if ($parts[0] === 'save-transform') {
     $user_data['line'] = 'transform';
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('paper');
   } else if ($parts[0] === 'paper') {
     if ($user_data['line'] === 'engage') {
       render_page('paper-engage.twig');
     } else {
       render_page('paper-transform.twig');
     }
+  } else if ($parts[0] === 'save-paper-engage') {
+    $user_data['engage-proposal'] = $_POST['engage-proposal'];
+    save_user_data($user_data);
+    redirect_to('.');
   } else if ($parts[0] === 'save-paper-transform') {
     rename
       ( $_FILES['connect_project']['tmp_name']
