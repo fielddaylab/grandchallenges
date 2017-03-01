@@ -725,6 +725,10 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   align-items: stretch;
 }
 
+.concept-columns-nav a {
+  text-decoration: none;
+}
+
 .concept-columns-nav-side {
   display: flex;
   flex-direction: row;
@@ -742,7 +746,7 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
 }
 
 .concept-columns-nav-side-right {
-  color: rgb(207,207,207);
+  color: rgb(209,137,22);
 }
 
 .concept-columns-nav-side-left {

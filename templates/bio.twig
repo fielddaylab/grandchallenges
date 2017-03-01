@@ -54,7 +54,7 @@ $(function(){
 </div>
 
 <div class="concept-tab-bar">
-  <a href="#" class="concept-tab-bar-item concept-tab-bar-item-active">
+  <a href="." class="concept-tab-bar-item concept-tab-bar-item-active">
     Dashboard
   </a>
 </div>
@@ -87,20 +87,24 @@ $(function(){
   </div>
   <div style="width: 100%;">
     <div class="concept-columns-nav">
-      <div class="concept-columns-nav-side concept-columns-nav-side-left">
-        <img src="img/arrow-gold-left.png">
-        <span>Set Up Meeting</span>
-      </div>
-      <div class="concept-columns-nav-side concept-columns-nav-side-right">
-        <span>Project Setup</span>
-        <img src="img/arrow-gray-right.png">
-      </div>
+      <a href="meeting">
+        <div class="concept-columns-nav-side concept-columns-nav-side-left">
+          <img src="img/arrow-gold-left.png">
+          <span>Meet With Network</span>
+        </div>
+      </a>
+      <a href="team">
+        <div class="concept-columns-nav-side concept-columns-nav-side-right">
+          <span>Your Team</span>
+          <img src="img/arrow-gold-right.png">
+        </div>
+      </a>
     </div>
     <div class="concept-columns">
       <form class="concept-column concept-column-middle bio-form" method="post" action="save-bio">
         <h2>
           <img src="img/connect-dot.png">
-          Set up your team
+          Complete bio
         </h2>
         <p>
           Let's get your team all set up. We'll start with you! Write a short description about yourself:

@@ -72,7 +72,7 @@ function can_access($page) {
     case  'save-transform': $level = 5; break;
     case           'paper': $level = 6; break;
     case      'save-paper': $level = 6; break;
-    default:             return true;
+    default               : return true;
   }
   if ($level >= 1 && !array_key_exists('netid', $_SESSION)) return false;
   if ($level >= 2 && $user_data['code'] !== $meeting_code) return false;
