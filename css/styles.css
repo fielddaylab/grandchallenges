@@ -824,7 +824,7 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   height: 100px;
 }
 
-#code-section button, #support-section button, .bio-form button {
+#code-section button, #support-section button, .bio-form button, .engage-form button {
   text-transform: uppercase;
   background-color: rgb(209,137,22);
   color: white;
@@ -890,4 +890,14 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   padding: 5px 13px;
   letter-spacing: 1px;
   font-size: 13px;
+}
+
+.engage-form textarea {
+  width: 100%;
+  resize: none;
+  height: 80vh;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid rgb(60,51,25);
+  border-radius: 5px;
 }

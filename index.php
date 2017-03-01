@@ -58,21 +58,23 @@ $meeting_code = 'thecode';
 function can_access($page) {
   global $user_data, $meeting_code;
   switch ($page) {
-    case    'save-meeting': $level = 1; break;
-    case         'meeting': $level = 1; break;
-    case             'bio': $level = 2; break;
-    case        'save-bio': $level = 2; break;
-    case            'team': $level = 3; break;
-    case       'save-team': $level = 3; break;
-    case         'support': $level = 4; break;
-    case    'save-support': $level = 4; break;
-    case 'save-no-support': $level = 4; break;
-    case            'line': $level = 5; break;
-    case     'save-engage': $level = 5; break;
-    case  'save-transform': $level = 5; break;
-    case           'paper': $level = 6; break;
-    case      'save-paper': $level = 6; break;
-    default               : return true;
+    case         'save-meeting': $level = 1; break;
+    case              'meeting': $level = 1; break;
+    case                  'bio': $level = 2; break;
+    case             'save-bio': $level = 2; break;
+    case                 'team': $level = 3; break;
+    case            'save-team': $level = 3; break;
+    case              'support': $level = 4; break;
+    case         'save-support': $level = 4; break;
+    case      'save-no-support': $level = 4; break;
+    case                 'line': $level = 5; break;
+    case          'save-engage': $level = 5; break;
+    case       'save-transform': $level = 5; break;
+    case                'paper': $level = 6; break;
+    case 'save-paper-transform': $level = 6; break;
+    case    'save-paper-engage': $level = 6; break;
+    case                 'gala': $level = 7; break;
+    default                    : return true;
   }
   if ($level >= 1 && !array_key_exists('netid', $_SESSION)) return false;
   if ($level >= 2 && $user_data['code'] !== $meeting_code) return false;
@@ -84,6 +86,10 @@ function can_access($page) {
   if ($level >= 4 && !array_key_exists('team', $user_data)) return false;
   if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
   if ($level >= 6 && !array_key_exists('line', $user_data)) return false;
+  if ($level >= 7 &&
+    (  !array_key_exists('submitted', $user_data)
+    || !$user_data['submitted']
+    )) return false;
   return true;
 }
 
@@ -98,11 +104,15 @@ function render_page($twig_name) {
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? 'Submitted, review pending'
       : 'Not submitted',
+    'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
+      ? 'red'
+      : 'blue',
   ));
 }
 
 $matched = true;
 if (count($parts) === 0) {
+  if (can_access('gala')) redirect_to('gala');
   if (can_access('paper')) redirect_to('paper');
   if (can_access('line')) redirect_to('line');
   if (can_access('support')) redirect_to('support');
@@ -163,8 +173,12 @@ if (count($parts) === 0) {
     save_user_data($user_data);
     redirect_to('.');
   } else if ($parts[0] === 'paper') {
-    render_page('paper.twig');
-  } else if ($parts[0] === 'save-paper') {
+    if ($user_data['line'] === 'engage') {
+      render_page('paper-engage.twig');
+    } else {
+      render_page('paper-transform.twig');
+    }
+  } else if ($parts[0] === 'save-paper-transform') {
     rename
       ( $_FILES['connect_project']['tmp_name']
       , paper_location($_SESSION['netid'], $_FILES['connect_project'])
@@ -172,6 +186,8 @@ if (count($parts) === 0) {
     $user_data['submitted'] = true;
     save_user_data($user_data);
     redirect_to('.');
+  } else if ($parts[0] === 'gala') {
+    render_page('gala.twig');
   } else if ($parts[0] === 'informed') {
     render_page('informed.twig');
   } else if ($parts[0] === 'submit-informed') {
