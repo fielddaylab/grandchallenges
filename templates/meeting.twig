@@ -10,12 +10,14 @@ function showCodeField() {
   $('#button-set-up').removeClass('button-brown-filled');
   $('#button-already-met').addClass('button-brown-filled');
   $('#code-section').removeClass('code-section-hide');
+  $('#email-section').addClass('code-section-hide');
 }
 
 function hideCodeField() {
   $('#button-set-up').addClass('button-brown-filled');
   $('#button-already-met').removeClass('button-brown-filled');
   $('#code-section').addClass('code-section-hide');
+  $('#email-section').removeClass('code-section-hide');
 }
 
 {% if data.code %}
@@ -32,7 +34,7 @@ $(function(){
 
 <div class="concept-hero">
   <div class="concept-hero-title">
-    <h1>Hello {{ data.info.first_name }}</h1>
+    <h1>Hello {{ netid }}</h1>
     <h2>Welcome to the Grand Challenges</h2>
   </div>
 </div>
@@ -90,9 +92,14 @@ $(function(){
           Before you get started with the Grand Challenges, it's important that you set up a time to meet with us at the Network so we can help you get up and running. After we all sit down and chat, you can get down to work.
         </p>
         <p>
-          <a href="mailto:grandchallenges@education.wisc.edu" id="button-set-up" class="button-brown button-brown-filled" onclick="hideCodeField();">Set up a meeting</a>
+          <a href="#" id="button-set-up" class="button-brown" onclick="hideCodeField(); return false;">Set up a meeting</a>
           <a href="#" id="button-already-met" class="button-brown" onclick="showCodeField(); return false;">We've already met</a>
         </p>
+        <div id="email-section" class="code-section-hide">
+          <p>
+            Email <a href="mailto:grandchallenges@education.wisc.edu">grandchallenges@education.wisc.edu</a> to set up your meeting.
+          </p>
+        </div>
         <form id="code-section" class="code-section-hide" method="post" action="save-meeting">
           <p>
             Great! You should have received a meeting confirmation code from the Network team to proceed to the next step. Enter it below:
@@ -100,7 +107,7 @@ $(function(){
           <p>
             confirmation code:<br>
             <input type="text" name="code" value="{{ data.code }}">
-            <button type="submit">Submit</button>
+            <button type="submit">Save and Continue</button>
           </p>
           {% if data.code and data.code != correct_code %}
             <p>

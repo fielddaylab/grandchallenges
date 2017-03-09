@@ -20,11 +20,9 @@ function showNoSupportField() {
   $('#no-support-section').removeClass('support-section-hide');
 }
 
-{% if data.support == false %}
+{% if data.support is same as(false) %}
 $(showNoSupportField);
-{% endif %}
-
-{% if data.support == true %}
+{% elseif data.support is not same as(null) %}
 $(showSupportField);
 {% endif %}
 
@@ -36,7 +34,7 @@ $(showSupportField);
 
 <div class="concept-hero">
   <div class="concept-hero-title">
-    <h1>Hello {{ data.info.first_name }}</h1>
+    <h1>Hello {{ netid }}</h1>
     <h2>Welcome to the Grand Challenges</h2>
   </div>
 </div>
@@ -109,12 +107,12 @@ $(showSupportField);
             <textarea name="support">{{ data.support }}</textarea>
           </p>
           <p>
-            <button type="submit">Submit</button>
+            <button type="submit">Save and Continue</button>
           </p>
         </form>
         <form id="no-support-section" class="support-section-hide" method="post" action="save-no-support">
           <p>
-            <button type="submit">Submit</button>
+            <button type="submit">Save and Continue</button>
           </p>
         </form>
       </div>

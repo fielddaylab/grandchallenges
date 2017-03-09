@@ -38,8 +38,12 @@ function paper_location($netid, $file) {
   return __DIR__ . '/data/' . $netid . '.' . $ext;
 }
 
-if (array_key_exists('netid', $_SESSION)) {
-  $loc = data_location($_SESSION['netid']);
+$logged_in_netid = null;
+if (array_key_exists('netid', $_SESSION)) $logged_in_netid = $_SESSION['netid'];
+if (array_key_exists('uid', $_SERVER)) $logged_in_netid = $_SERVER['uid'];
+
+if ($logged_in_netid !== null) {
+  $loc = data_location($logged_in_netid);
   if (file_exists($loc)) {
     $user_data = json_decode(file_get_contents($loc), true);
   } else {
@@ -50,13 +54,14 @@ if (array_key_exists('netid', $_SESSION)) {
 }
 
 function save_user_data($data) {
-  file_put_contents(data_location($_SESSION['netid']), json_encode($data));
+  global $logged_in_netid;
+  file_put_contents(data_location($logged_in_netid), json_encode($data));
 }
 
 $meeting_code = 'discoball';
 
 function can_access($page) {
-  global $user_data, $meeting_code;
+  global $user_data, $meeting_code, $logged_in_netid;
   switch ($page) {
     case         'save-meeting': $level = 1; break;
     case              'meeting': $level = 1; break;
@@ -76,7 +81,7 @@ function can_access($page) {
     case                 'gala': $level = 7; break;
     default                    : return true;
   }
-  if ($level >= 1 && !array_key_exists('netid', $_SESSION)) return false;
+  if ($level >= 1 && $logged_in_netid === null) return false;
   if ($level >= 2 && $user_data['code'] !== $meeting_code) return false;
   if ($level >= 3 &&
     (  !array_key_exists('bio', $user_data)
@@ -101,11 +106,11 @@ function can_access($page) {
 }
 
 function render_page($twig_name) {
-  global $user_data, $meeting_code;
+  global $user_data, $meeting_code, $logged_in_netid;
   $loader = new Twig_Loader_Filesystem('templates/');
   $twig = new Twig_Environment($loader);
   echo $twig->render($twig_name, array(
-    'netid' => $_SESSION['netid'],
+    'netid' => $logged_in_netid,
     'data' => $user_data,
     'paper_status' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
@@ -134,6 +139,16 @@ if (count($parts) === 0) {
 
   if ($parts[0] === 'logout') {
     unset($_SESSION['netid']);
+    // unset cookies
+    if (isset($_SERVER['HTTP_COOKIE'])) {
+        $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+        foreach($cookies as $cookie) {
+            $parts = explode('=', $cookie);
+            $name = trim($parts[0]);
+            setcookie($name, '', time()-1000);
+            setcookie($name, '', time()-1000, '/');
+        }
+    }
     redirect_to('.');
   } else if ($parts[0] === 'login') {
     $_SESSION['netid'] = $_POST['netid'];
@@ -143,7 +158,7 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-meeting') {
     $user_data['code'] = $_POST['code'];
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('bio');
   } else if ($parts[0] === 'bio') {
     render_page('bio.twig');
   } else if ($parts[0] === 'save-bio') {
@@ -151,13 +166,13 @@ if (count($parts) === 0) {
     $user_data['project_title'] = $_POST['project_title'];
     $user_data['project_description'] = $_POST['project_description'];
     save_user_data($user_data);
-    redirect_to('bio');
+    redirect_to('team');
   } else if ($parts[0] === 'team') {
     render_page('team.twig');
   } else if ($parts[0] === 'save-team') {
     $user_data['team'] = json_decode($_POST['json']);
     save_user_data($user_data);
-    redirect_to('team');
+    redirect_to('support');
   } else if ($parts[0] === 'support') {
     render_page('support.twig');
   } else if ($parts[0] === 'save-support') {
@@ -187,15 +202,15 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-paper-engage') {
     $user_data['engage_proposal'] = $_POST['engage_proposal'];
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('gala');
   } else if ($parts[0] === 'save-paper-transform') {
     rename
       ( $_FILES['connect_project']['tmp_name']
-      , paper_location($_SESSION['netid'], $_FILES['connect_project'])
+      , paper_location($logged_in_netid, $_FILES['connect_project'])
       );
     $user_data['submitted'] = true;
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('gala');
   } else if ($parts[0] === 'gala') {
     render_page('gala.twig');
   } else if ($parts[0] === 'informed') {

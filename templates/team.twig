@@ -129,7 +129,7 @@ $(function(){
 
 <div class="concept-hero">
   <div class="concept-hero-title">
-    <h1>Hello {{ data.info.first_name }}</h1>
+    <h1>Hello {{ netid }}</h1>
     <h2>Welcome to the Grand Challenges</h2>
   </div>
 </div>
@@ -224,7 +224,7 @@ $(function(){
           </p>
         </div>
         <p>
-          <button class="button-brown button-brown-filled" id="next-button" type="button">Save</button>
+          <button class="button-brown button-brown-filled" id="next-button" type="button">Save and Continue</button>
         </p>
       </div>
       <div class="concept-column concept-column-right">
@@ -234,7 +234,7 @@ $(function(){
             <a href="#" class="member-x" onclick="return false;">
               <img src="img/x.png">
             </a>
-            <span>{{ data.info.last_name }}, {{ data.info.first_name }} (You)</span>
+            <span>{{ netid }} (You)</span>
           </p>
           <div id="members-list">
           </div>

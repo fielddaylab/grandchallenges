@@ -64,7 +64,7 @@ function browseFiles() {
 
 <div class="concept-hero">
   <div class="concept-hero-title">
-    <h1>Hello {{ data.info.first_name }}</h1>
+    <h1>Hello {{ netid }}</h1>
     <h2>Welcome to the Grand Challenges</h2>
   </div>
 </div>
@@ -133,9 +133,12 @@ function browseFiles() {
         <p>
           The Engage grant is a collboratively-written paper that describes the core features of the idea. Your proposal should address three key concepts: Inquiry, Innovation, and Impact. We go into greater detail of what we're expecting in the <a href="https://docs.google.com/document/d/1U-sR1mV5xSI9YVihJVxC690s8dBXtMhm_VZqM8-vE1c/edit">RFP</a>.
         </p>
+        <p>
+          The Engage proposal due date is <b>July 14<sup>th</sup>, 2017</b>.
+        </p>
         <textarea class="engage-proposal" name="engage_proposal">{{ data.engage_proposal }}</textarea>
         <p>
-          <button type="submit">Submit</button>
+          <button type="submit">Save and Continue</button>
         </p>
       </form>
       <div class="concept-column concept-column-right">
