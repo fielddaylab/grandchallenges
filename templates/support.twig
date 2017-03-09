@@ -10,7 +10,23 @@ function showSupportField() {
   $('#button-already-met').removeClass('button-brown-filled');
   $('#button-set-up').addClass('button-brown-filled');
   $('#support-section').removeClass('support-section-hide');
+  $('#no-support-section').addClass('support-section-hide');
 }
+
+function showNoSupportField() {
+  $('#button-already-met').addClass('button-brown-filled');
+  $('#button-set-up').removeClass('button-brown-filled');
+  $('#support-section').addClass('support-section-hide');
+  $('#no-support-section').removeClass('support-section-hide');
+}
+
+{% if data.support == false %}
+$(showNoSupportField);
+{% endif %}
+
+{% if data.support == true %}
+$(showSupportField);
+{% endif %}
 
 </script>
 </head>
@@ -82,8 +98,8 @@ function showSupportField() {
           Some teams could use a bit of a boost to get going. It can be costly to set up meetings, create proposals, and formulate an idea. Would you like to apply for $1,000 to get you up and running?
         </p>
         <p>
-          <a href="#" id="button-set-up" class="button-brown button-brown-filled" onclick="showSupportField(); return false;">Apply for support</a>
-          <a href="save-no-support" id="button-already-met" class="button-brown">I don't need support</a>
+          <a href="#" id="button-set-up" class="button-brown" onclick="showSupportField(); return false;">Apply for support</a>
+          <a href="#" id="button-already-met" class="button-brown" onclick="showNoSupportField(); return false;">I don't need support</a>
         </p>
         <form id="support-section" class="support-section-hide" method="post" action="save-support">
           <p>
@@ -96,6 +112,11 @@ function showSupportField() {
             <button type="submit">Submit</button>
           </p>
         </form>
+        <form id="no-support-section" class="support-section-hide" method="post" action="save-no-support">
+          <p>
+            <button type="submit">Submit</button>
+          </p>
+        </form>
       </div>
       <div class="concept-column concept-column-right">
         <h3>Can I use the Money for Travel?</h3>
@@ -104,8 +125,6 @@ function showSupportField() {
         <p>Works for us.</p>
         <h3>Meetings or meals?</h3>
         <p>Go for it.</p>
-        <h3>Materials?</h3>
-        <p>Tell us why.</p>
       </div>
     </div>
   </div>

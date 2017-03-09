@@ -80,8 +80,8 @@ function can_access($page) {
   if ($level >= 2 && $user_data['code'] !== $meeting_code) return false;
   if ($level >= 3 &&
     (  !array_key_exists('bio', $user_data)
-    || !array_key_exists('project-description', $user_data)
-    || !array_key_exists('project-title', $user_data)
+    || !array_key_exists('project_description', $user_data)
+    || !array_key_exists('project_title', $user_data)
     )) return false;
   if ($level >= 4 && !array_key_exists('team', $user_data)) return false;
   if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
@@ -93,15 +93,15 @@ function can_access($page) {
       )) return false;
   } else {
     if ($level >= 7 &&
-      (  !array_key_exists('engage-proposal', $user_data)
-      || !$user_data['engage-proposal']
+      (  !array_key_exists('engage_proposal', $user_data)
+      || !$user_data['engage_proposal']
       )) return false;
   }
   return true;
 }
 
 function render_page($twig_name) {
-  global $user_data;
+  global $user_data, $meeting_code;
   $loader = new Twig_Loader_Filesystem('templates/');
   $twig = new Twig_Environment($loader);
   echo $twig->render($twig_name, array(
@@ -114,6 +114,7 @@ function render_page($twig_name) {
     'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
       ? 'red'
       : 'blue',
+    'correct_code' => $meeting_code,
   ));
 }
 
@@ -142,13 +143,13 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-meeting') {
     $user_data['code'] = $_POST['code'];
     save_user_data($user_data);
-    redirect_to('meeting');
+    redirect_to('.');
   } else if ($parts[0] === 'bio') {
     render_page('bio.twig');
   } else if ($parts[0] === 'save-bio') {
     $user_data['bio'] = $_POST['bio'];
-    $user_data['project-title'] = $_POST['project-title'];
-    $user_data['project-description'] = $_POST['project-description'];
+    $user_data['project_title'] = $_POST['project_title'];
+    $user_data['project_description'] = $_POST['project_description'];
     save_user_data($user_data);
     redirect_to('bio');
   } else if ($parts[0] === 'team') {
@@ -184,7 +185,7 @@ if (count($parts) === 0) {
       render_page('paper-transform.twig');
     }
   } else if ($parts[0] === 'save-paper-engage') {
-    $user_data['engage-proposal'] = $_POST['engage-proposal'];
+    $user_data['engage_proposal'] = $_POST['engage_proposal'];
     save_user_data($user_data);
     redirect_to('.');
   } else if ($parts[0] === 'save-paper-transform') {

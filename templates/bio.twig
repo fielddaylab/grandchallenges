@@ -38,6 +38,10 @@ $(function(){
     $('#chars-description').text(maxLength - len);
   });
 
+  $('#chars-bio').text(160 - $('#text-bio').val().length);
+  $('#chars-title').text(140 - $('#text-title').val().length);
+  $('#chars-description').text(500 - $('#text-description').val().length);
+
 });
 
 </script>
@@ -111,23 +115,23 @@ $(function(){
         </p>
         <p>
           <span>Principal investigator: a short bio about yourself (<span id="chars-bio">160</span> characters left)</span><br>
-          <textarea id="text-bio" name="bio"></textarea>
+          <textarea id="text-bio" name="bio">{{ data.bio }}</textarea>
         </p>
         <p>
           Next, give your Grand Challenge a title:
         </p>
         <p>
           <span>Project title (<span id="chars-title">140</span> characters left)</span><br>
-          <textarea id="text-title" name="project-title"></textarea>
+          <textarea id="text-title" name="project_title">{{ data.project_title }}</textarea>
         </p>
         <p>
           Finally, write a short description of your project:
         </p>
         <p>
           <span>A sentence or two about your project (<span id="chars-description">500</span> characters left)</span><br>
-          <textarea id="text-description" name="project-description"></textarea>
+          <textarea id="text-description" name="project_description">{{ data.project_description }}</textarea>
         </p>
-        <button type="submit">Submit</button>
+        <button type="submit">Save</button>
       </form>
       <div class="concept-column concept-column-right">
         <h3>Your team:</h3>

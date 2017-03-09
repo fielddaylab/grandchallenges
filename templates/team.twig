@@ -8,18 +8,18 @@
 <script type="text/javascript">
 
 var available_faculty = [
-  'Apple, Michael W',
-  'Archbold, Ann M',
-  'Asmus, Jennifer M',
-  'Baker, Bernadette M',
-  'Bartlett, Lesley',
-  'Bellmore, Amy D',
-  'Benedict, Ruth',
-  'Bolt, Daniel M',
 ];
 
-var faculty = {{ data.team.faculty|json_encode()|raw }};
-var community = {{ data.team.community|json_encode()|raw }};;
+var faculty = {% if data.team.faculty %}
+  {{ data.team.faculty|json_encode()|raw }}
+{% else %}
+  {}
+{% endif %};
+var community = {% if data.team.community %}
+  {{ data.team.community|json_encode()|raw }}
+{% else %}
+  []
+{% endif %};
 
 function clickFaculty(e) {
   e.preventDefault();
@@ -85,12 +85,22 @@ $(function(){
   $('#add-community').click(clickCommunity);
   $('#community-plus').click(function(e){
     e.preventDefault();
-    community.push({
+    var obj = {
       first_name: $('#community-first-name').val(),
       last_name: $('#community-last-name').val(),
       email: $('#community-email').val(),
       bio: $('#community-bio').val(),
-    });
+    };
+    var empty = [];
+    if (!obj.first_name.match(/\S/)) empty.push('first name');
+    if (!obj.last_name.match(/\S/)) empty.push('last name');
+    if (!obj.email.match(/\S/)) empty.push('email address');
+    if (!obj.bio.match(/\S/)) empty.push('team contribution');
+    if (empty.length !== 0) {
+      alert('Please fill out these missing fields: ' + empty.join(', ') + '.');
+      return;
+    }
+    community.push(obj);
     $('#community-first-name').val('');
     $('#community-last-name').val('');
     $('#community-email').val('');

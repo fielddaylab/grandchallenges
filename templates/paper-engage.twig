@@ -106,7 +106,7 @@ function browseFiles() {
     </div>
     <div class="concept-map-chunk">
       <img src="img/map-red-3.png">
-      <a href="gala"><span>Attend Gala</span></a>
+      <a href="gala"><span>Attend Poster Fair</span></a>
     </div>
   </div>
   <div style="width: 100%">
@@ -119,13 +119,13 @@ function browseFiles() {
       </a>
       <a href="gala">
         <div class="concept-columns-nav-side concept-columns-nav-side-right">
-          <span>Attend Gala</span>
+          <span>Attend Poster Fair</span>
           <img src="img/arrow-gold-right.png">
         </div>
       </a>
     </div>
     <div class="concept-columns">
-      <form class="concept-column concept-column-middle engage-form">
+      <form class="concept-column concept-column-middle engage-form" method="post" action="save-paper-engage">
         <h2>
           <img src="img/connect-dot.png">
           Submit Proposal
@@ -133,7 +133,7 @@ function browseFiles() {
         <p>
           The Engage grant is a collboratively-written paper that describes the core features of the idea. Your proposal should address three key concepts: Inquiry, Innovation, and Impact. We go into greater detail of what we're expecting in the <a href="https://docs.google.com/document/d/1U-sR1mV5xSI9YVihJVxC690s8dBXtMhm_VZqM8-vE1c/edit">RFP</a>.
         </p>
-        <textarea class="engage-proposal" name="engage-proposal"></textarea>
+        <textarea class="engage-proposal" name="engage_proposal">{{ data.engage_proposal }}</textarea>
         <p>
           <button type="submit">Submit</button>
         </p>

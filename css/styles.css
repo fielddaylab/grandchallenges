@@ -799,7 +799,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   height: 100px;
 }
 
-#code-section button, #support-section button, .bio-form button, .engage-form button {
+#code-section button, #support-section button, #no-support-section button, .bio-form button, .engage-form button {
   text-transform: uppercase;
   background-color: rgb(209,137,22);
   color: white;

@@ -18,6 +18,12 @@ function hideCodeField() {
   $('#code-section').addClass('code-section-hide');
 }
 
+{% if data.code %}
+$(function(){
+  showCodeField();
+});
+{% endif %}
+
 </script>
 </head>
 <body>
@@ -96,6 +102,11 @@ function hideCodeField() {
             <input type="text" name="code" value="{{ data.code }}">
             <button type="submit">Submit</button>
           </p>
+          {% if data.code and data.code != correct_code %}
+            <p>
+              Incorrect code! Try again.
+            </p>
+          {% endif %}
         </form>
       </div>
       <div class="concept-column concept-column-right">
