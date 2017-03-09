@@ -282,19 +282,10 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
 }
 
 .team-instructions {
-  overflow: hidden;
-  max-height: 300px;
-  transition: max-height 0.25s;
   text-transform: none;
   letter-spacing: 1px;
   font-size: 13px;
   line-height: 20px;
-}
-
-.team-halves {
-  height: 400px;
-  overflow: hidden;
-  position: relative;
 }
 
 #faculty-list, .community-form {
@@ -315,22 +306,6 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
 
 #community-plus img {
   height: 45px;
-}
-
-body:not(.viewing-faculty) #faculty-list {
-  left: -100%;
-}
-
-body:not(.viewing-community) .community-form {
-  left: 100%;
-}
-
-body:not(.viewing-faculty):not(.viewing-community) .team-halves {
-  max-height: 0;
-}
-
-body.viewing-faculty .team-instructions, body.viewing-community .team-instructions {
-  max-height: 0;
 }
 
 .big-form-three {
@@ -844,6 +819,14 @@ body.viewing-faculty .team-instructions, body.viewing-community .team-instructio
   width: 100%;
   resize: none;
   height: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid rgb(60,51,25);
+  border-radius: 5px;
+}
+
+.bio-form input[type=text] {
+  width: 100%;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid rgb(60,51,25);

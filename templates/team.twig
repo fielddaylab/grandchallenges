@@ -18,8 +18,8 @@ var available_faculty = [
   'Bolt, Daniel M',
 ];
 
-var faculty = {};
-var community = [];
+var faculty = {{ data.team.faculty|json_encode()|raw }};
+var community = {{ data.team.community|json_encode()|raw }};;
 
 function clickFaculty(e) {
   e.preventDefault();
@@ -80,6 +80,7 @@ function fillFacultyList() {
 
 $(function(){
   fillFacultyList();
+  showList();
   $('#add-faculty').click(clickFaculty);
   $('#add-community').click(clickCommunity);
   $('#community-plus').click(function(e){
@@ -171,81 +172,50 @@ $(function(){
       </a>
     </div>
     <div class="concept-columns">
-      <div class="concept-column concept-column-middle">
+      <div class="concept-column concept-column-middle bio-form">
         <h2>
           <img src="img/connect-dot.png">
           Set up your team
         </h2>
-
-        <div class="big-form-middle-trunk">
-          <div class="team-instructions">
+        <div class="team-instructions">
+          <p>
+            Each team must include at least two members of the UW-SOE faculty and/or staff community. If the focus of your Grand Challenge is community impact, please include relevant community partners on your team.
+          </p>
+        </div>
+        <div class="team-halves">
+          <div class="big-form-split">
             <p>
-              You can add two different types of team members.
-              Faculty members are any School of Education faculty.
-              Community partners can be from other UW departments,
-              our local communties, across the state, or around the world.
+              <label>
+                First Name<br>
+                <input type="text" id="community-first-name">
+              </label>
+            </p>
+            <p>
+              <label>
+                Last Name<br>
+                <input type="text" id="community-last-name">
+              </label>
             </p>
           </div>
-          <div class="team-switchers">
-            <a href="#" class="team-switcher" id="add-faculty">
-              Add SOE faculty
-            </a href="#">
-            <div class="team-switchers-or">
-              or
-            </div>
-            <a href="#" class="team-switcher" id="add-community">
-              Add community partner
-            </a href="#">
-          </div>
-          <div class="team-halves">
-            <div id="faculty-list">
-            </div>
-            <div class="community-form">
-              <div class="big-form-split">
-                <p>
-                  <label>
-                    First Name<br>
-                    <input type="text" id="community-first-name">
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    Last Name<br>
-                    <input type="text" id="community-last-name">
-                  </label>
-                </p>
-              </div>
-              <p>
-                <label>
-                  Email<br>
-                  <input type="text" id="community-email">
-                </label>
-              </p>
-              <p>
-                <label>
-                  What does this person bring to the team? (140 chars)<br>
-                  <textarea id="community-bio"></textarea>
-                </label>
-              </p>
-              <p>
-                <a href="#" id="community-plus"><img src="img/plus.png"></a>
-              </p>
-            </div>
-          </div>
-          <div class="big-form-footer big-form-footer-three">
-            <div class="big-form-footer-side">
-            </div>
-            <div class="big-form-footer-dots">
-              <span class="big-form-footer-dot"></span>
-              <span class="big-form-footer-dot big-form-footer-dot-full"></span>
-              <span class="big-form-footer-dot"></span>
-            </div>
-            <div class="big-form-footer-side">
-              <button class="next-button" id="next-button" type="button">Next</button>
-            </div>
-          </div>
+          <p>
+            <label>
+              Email<br>
+              <input type="text" id="community-email">
+            </label>
+          </p>
+          <p>
+            <label>
+              What does this person bring to the team? (140 chars)<br>
+              <textarea id="community-bio"></textarea>
+            </label>
+          </p>
+          <p>
+            <a href="#" id="community-plus"><img src="img/plus.png"></a>
+          </p>
         </div>
-
+        <p>
+          <button class="button-brown button-brown-filled" id="next-button" type="button">Save</button>
+        </p>
       </div>
       <div class="concept-column concept-column-right">
         <h3>Your team:</h3>

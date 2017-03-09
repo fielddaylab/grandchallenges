@@ -142,7 +142,7 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-meeting') {
     $user_data['code'] = $_POST['code'];
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('meeting');
   } else if ($parts[0] === 'bio') {
     render_page('bio.twig');
   } else if ($parts[0] === 'save-bio') {
@@ -150,25 +150,23 @@ if (count($parts) === 0) {
     $user_data['project-title'] = $_POST['project-title'];
     $user_data['project-description'] = $_POST['project-description'];
     save_user_data($user_data);
-    redirect_to('.');
-  } else if ($parts[0] === 'project') {
-    render_page('project.twig');
+    redirect_to('bio');
   } else if ($parts[0] === 'team') {
     render_page('team.twig');
   } else if ($parts[0] === 'save-team') {
     $user_data['team'] = json_decode($_POST['json']);
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('team');
   } else if ($parts[0] === 'support') {
     render_page('support.twig');
   } else if ($parts[0] === 'save-support') {
     $user_data['support'] = $_POST['support'];
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('line');
   } else if ($parts[0] === 'save-no-support') {
     $user_data['support'] = false;
     save_user_data($user_data);
-    redirect_to('.');
+    redirect_to('line');
   } else if ($parts[0] === 'line') {
     render_page('line.twig');
   } else if ($parts[0] === 'save-engage') {
