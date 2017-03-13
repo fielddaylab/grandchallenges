@@ -224,12 +224,15 @@ body {
 .big-form-middle-three textarea,
 .big-form-middle-three input[type=text],
 .team-halves textarea,
-.team-halves input[type=text] {
-  border: 1px solid rgb(228,232,228);
+.team-halves input[type=text],
+.bio-form textarea,
+.engage-proposal,
+#support-section textarea {
+  border: 1px solid black;
   border-radius: 5px;
   padding: 5px;
   resize: none;
-  font-size: 13px;
+  font-size: 16px;
   font-family: Raleway;
   letter-spacing: 0.5px;
   width: 100%;
