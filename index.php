@@ -1,10 +1,12 @@
 <?php
 
-if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
+if (strpos($_SERVER['HTTP_HOST'], 'localhost') === false) {
+  if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
     $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    header('HTTP/1.1 301 Moved Permanently');
+    header('HTTP/1.1 302 Moved Temporarily');
     header('Location: ' . $redirect);
     exit();
+  }
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -130,6 +132,10 @@ function render_page($twig_name) {
   ));
 }
 
+function index_then_key($array, $index, $key) {
+  return array_key_exists($index, $array) ? $array[$index][$key] : '';
+}
+
 $matched = true;
 if (count($parts) === 0) {
   if (can_access('gala')) redirect_to('gala');
@@ -246,6 +252,84 @@ if (count($parts) === 0) {
           $json['colleagues'],
           $json['interests'],
         ));
+      }
+    }
+    fseek($temp, 0);
+    header('Content-type: text/csv');
+    echo fread($temp, 10000000);
+  } else if ($parts[0] === 'proposals.csv') {
+    $temp = tmpfile();
+    fputcsv($temp, array
+      ( 'NetID'
+      , 'Bio'
+      , 'Project title'
+      , 'Project description'
+      , 'Team 1 first name'
+      , 'Team 1 last name'
+      , 'Team 1 email'
+      , 'Team 1 contribution'
+      , 'Team 2 first name'
+      , 'Team 2 last name'
+      , 'Team 2 email'
+      , 'Team 2 contribution'
+      , 'Team 3 first name'
+      , 'Team 3 last name'
+      , 'Team 3 email'
+      , 'Team 3 contribution'
+      , 'Team 4 first name'
+      , 'Team 4 last name'
+      , 'Team 4 email'
+      , 'Team 4 contribution'
+      , 'Team 5 first name'
+      , 'Team 5 last name'
+      , 'Team 5 email'
+      , 'Team 5 contribution'
+      , 'Team other members'
+      , 'Need extra support?'
+      , 'Line'
+      , 'Proposal'
+      ));
+    foreach (scandir(__DIR__ . '/data/') as $f) {
+      $file = __DIR__ . '/data/' . $f;
+      if (preg_match("/\\.json$/", $file)) {
+        $json = json_decode(file_get_contents($file), true);
+        $netid = pathinfo($f, PATHINFO_FILENAME);
+        fputcsv($temp, array
+          ( $netid
+          , $json['bio']
+          , $json['project_title']
+          , $json['project_description']
+          , index_then_key($json['team']['community'], 0, 'first_name')
+          , index_then_key($json['team']['community'], 0, 'last_name')
+          , index_then_key($json['team']['community'], 0, 'email')
+          , index_then_key($json['team']['community'], 0, 'bio')
+          , index_then_key($json['team']['community'], 1, 'first_name')
+          , index_then_key($json['team']['community'], 1, 'last_name')
+          , index_then_key($json['team']['community'], 1, 'email')
+          , index_then_key($json['team']['community'], 1, 'bio')
+          , index_then_key($json['team']['community'], 2, 'first_name')
+          , index_then_key($json['team']['community'], 2, 'last_name')
+          , index_then_key($json['team']['community'], 2, 'email')
+          , index_then_key($json['team']['community'], 2, 'bio')
+          , index_then_key($json['team']['community'], 3, 'first_name')
+          , index_then_key($json['team']['community'], 3, 'last_name')
+          , index_then_key($json['team']['community'], 3, 'email')
+          , index_then_key($json['team']['community'], 3, 'bio')
+          , index_then_key($json['team']['community'], 4, 'first_name')
+          , index_then_key($json['team']['community'], 4, 'last_name')
+          , index_then_key($json['team']['community'], 4, 'email')
+          , index_then_key($json['team']['community'], 4, 'bio')
+          , json_encode(array_slice($json['team']['community'], 5))
+          , ($json['support'] !== false ? $json['support'] : '')
+          , $json['line']
+          , ( $json['line'] === 'engage'
+            ? $json['engage_proposal']
+            : ( $json['submitted']
+              ? 'https://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '.pdf'
+              : ''
+              )
+            )
+          ));
       }
     }
     fseek($temp, 0);
