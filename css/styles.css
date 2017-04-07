@@ -887,3 +887,26 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   border: 1px solid rgb(60,51,25);
   border-radius: 5px;
 }
+
+.controls-line * {
+  display: inline-block;
+}
+
+@media screen and (max-width: 900px) {
+  .concept-columns {
+    flex-direction: column;
+  }
+  .concept-column-middle {
+    padding-bottom: 10px;
+  }
+  .concept-hero {
+    padding: 15px;
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .line-cards {
+    flex-direction: column;
+  }
+}
