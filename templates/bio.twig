@@ -22,10 +22,10 @@ function showList() {
   $('#members-list').html((function(){
     var str = '';
     Object.keys(faculty).forEach(function(fac){
-      str += '<p class="member-entry"><a href="#" class="member-x" onClick="return false;" style="opacity: 0;"><img src="img/x.png"></a><span>'+fac+'</span></p>';
+      str += '<p class="member-entry"><a class="member-x" onClick="return false;" style="opacity: 0;"><img src="img/x.png"></a><span>'+fac+'</span></p>';
     });
     community.forEach(function(com, i){
-      str += '<p class="member-entry"><a href="#" class="member-x" onClick="return false;" style="opacity: 0;"><img src="img/x.png"></a><span>' + com.last_name + ', ' + com.first_name + '</span></p>';
+      str += '<p class="member-entry"><a class="member-x" onClick="return false;" style="opacity: 0;"><img src="img/x.png"></a><span>' + com.last_name + ', ' + com.first_name + '</span></p>';
     });
     return str;
   })());
@@ -164,7 +164,7 @@ $(function(){
         <h3>Your team:</h3>
         <div class="big-form-middle-side">
           <p class="member-entry">
-            <a href="#" class="member-x" onclick="return false;" style="opacity: 0;">
+            <a class="member-x" onclick="return false;" style="opacity: 0;">
               <img src="img/x.png">
             </a>
             <span>{{ netid }} (You)</span>

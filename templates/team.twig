@@ -79,6 +79,21 @@ function fillFacultyList() {
   });
 }
 
+function saveAndGo(dest) {
+  if ($('#community-first-name').val() && $('#community-last-name').val() && $('#community-email').val() && $('#community-bio').val()) {
+    // if they forgot to hit the plus, do that
+    $('#community-plus').click();
+  }
+  $('#hidden-json').val(JSON.stringify({
+    faculty: faculty,
+    community: community,
+  }));
+  if (dest) {
+    $('#hidden-redirect').val(dest);
+  }
+  $('#hidden-form').submit();
+}
+
 $(function(){
   fillFacultyList();
   showList();
@@ -109,11 +124,7 @@ $(function(){
     showList();
   });
   $('#next-button').click(function(){
-    $('#hidden-json').val(JSON.stringify({
-      faculty: faculty,
-      community: community,
-    }));
-    $('#hidden-form').submit();
+    saveAndGo();
   });
 });
 
@@ -124,6 +135,7 @@ $(function(){
 
 <form class="hidden-form" id="hidden-form" method="post" action="save-team">
   <input type="text" name="json" id="hidden-json">
+  <input type="text" name="redirect" id="hidden-redirect" value="">
 </form>
 
 {{ include('nav.twig') }}
@@ -136,7 +148,7 @@ $(function(){
 </div>
 
 <div class="concept-tab-bar">
-  <a href="." class="concept-tab-bar-item concept-tab-bar-item-active">
+  <a href="." onclick="saveAndGo(); return false;" class="concept-tab-bar-item concept-tab-bar-item-active">
     Dashboard
   </a>
 </div>
@@ -148,34 +160,34 @@ $(function(){
     </div>
     <div class="concept-map-chunk concept-map-current">
       <img src="img/map-checked.png">
-      <a href="meeting"><span>Meet with Network</span></a>
+      <a href="meeting" onclick="saveAndGo('meeting'); return false;"><span>Meet with Network</span></a>
     </div>
     <div class="concept-map-chunk concept-map-current">
       <img src="img/map-checked.png">
-      <a href="bio"><span>Project Info</span></a>
+      <a href="bio" onclick="saveAndGo('bio'); return false;"><span>Project Info</span></a>
     </div>
     <div class="concept-map-chunk concept-map-current">
       <img src="img/map-orange.png">
-      <a href="team"><span>Your Team</span></a>
+      <a href="team" onclick="saveAndGo('team'); return false;"><span>Your Team</span></a>
     </div>
     <div class="concept-map-chunk">
       <img src="img/map-gray.png">
-      <a href="support"><span>Optional Support</span></a>
+      <a href="support" onclick="saveAndGo('support'); return false;"><span>Optional Support</span></a>
     </div>
     <div class="concept-map-chunk">
       <img src="img/map-gray-end.png">
-      <a href="line"><span>Choose Your Path</span></a>
+      <a href="line" onclick="saveAndGo('line'); return false;"><span>Choose Your Path</span></a>
     </div>
   </div>
   <div style="width: 100%;">
     <div class="concept-columns-nav">
-      <a href="bio">
+      <a href="bio" onclick="saveAndGo('bio'); return false;">
         <div class="concept-columns-nav-side concept-columns-nav-side-left">
           <img src="img/arrow-gold-left.png">
           <span>Project Info</span>
         </div>
       </a>
-      <a href="support">
+      <a href="support" onclick="saveAndGo('support'); return false;">
         <div class="concept-columns-nav-side concept-columns-nav-side-right">
           <span>Optional Support</span>
           <img src="img/arrow-gold-right.png">
@@ -232,7 +244,7 @@ $(function(){
         <h3>Your team:</h3>
         <div class="big-form-middle-side">
           <p class="member-entry">
-            <a href="#" class="member-x" onclick="return false;" style="opacity: 0;">
+            <a class="member-x" onclick="return false;" style="opacity: 0;">
               <img src="img/x.png">
             </a>
             <span>{{ netid }} (You)</span>

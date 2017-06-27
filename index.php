@@ -185,7 +185,7 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-team') {
     $user_data['team'] = json_decode($_POST['json']);
     save_user_data($user_data);
-    redirect_to('support');
+    redirect_to(isset($_POST['redirect']) && $_POST['redirect'] ? $_POST['redirect'] : 'support');
   } else if ($parts[0] === 'support') {
     render_page('support.twig');
   } else if ($parts[0] === 'save-support') {
