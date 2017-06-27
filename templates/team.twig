@@ -79,7 +79,7 @@ function fillFacultyList() {
   });
 }
 
-function saveAndGo(dest) {
+function saveAndGo(destination) {
   if ($('#community-first-name').val() && $('#community-last-name').val() && $('#community-email').val() && $('#community-bio').val()) {
     // if they forgot to hit the plus, do that
     $('#community-plus').click();
@@ -88,8 +88,8 @@ function saveAndGo(dest) {
     faculty: faculty,
     community: community,
   }));
-  if (dest) {
-    $('#hidden-redirect').val(dest);
+  if (destination) {
+    $('#hidden-redirect').val(destination);
   }
   $('#hidden-form').submit();
 }
