@@ -37,14 +37,15 @@ function data_simple_location() {
 function paper_location($netid, $file) {
   if ($file['type'] === 'application/pdf') {
     $ext = 'pdf';
-  } else if ($file['type'] === 'application/vnd.oasis.opendocument.text') {
-    $ext = 'odt';
   } else {
-    echo 'Unsupported file type.<br>';
-    var_dump($file);
+    echo 'Unsupported file type. Please upload a PDF file.';
     die();
   }
   return __DIR__ . '/data/' . $netid . '.' . $ext;
+}
+
+function paper_url($netid) {
+  return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '.pdf';
 }
 
 $logged_in_netid = null;
@@ -100,17 +101,10 @@ function can_access($page) {
   if ($level >= 4 && !array_key_exists('team', $user_data)) return false;
   if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
   if ($level >= 6 && !array_key_exists('line', $user_data)) return false;
-  if ($user_data['line'] === 'transform') {
-    if ($level >= 7 &&
-      (  !array_key_exists('submitted', $user_data)
-      || !$user_data['submitted']
-      )) return false;
-  } else {
-    if ($level >= 7 &&
-      (  !array_key_exists('engage_proposal', $user_data)
-      || !$user_data['engage_proposal']
-      )) return false;
-  }
+  if ($level >= 7 &&
+    (  !array_key_exists('submitted', $user_data)
+    || !$user_data['submitted']
+    )) return false;
   return true;
 }
 
@@ -129,6 +123,10 @@ function render_page($twig_name) {
       ? 'red'
       : 'blue',
     'correct_code' => $meeting_code,
+    'paper_url' =>
+      (array_key_exists('submitted', $user_data) && $user_data['submitted'])
+      ? paper_url($logged_in_netid)
+      : null,
   ));
 }
 
@@ -322,13 +320,7 @@ if (count($parts) === 0) {
           , json_encode(array_slice($json['team']['community'], 5))
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
-          , ( $json['line'] === 'engage'
-            ? $json['engage_proposal']
-            : ( $json['submitted']
-              ? 'https://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '.pdf'
-              : ''
-              )
-            )
+          , ($json['submitted'] ? paper_url($netid) : '')
           ));
       }
     }
