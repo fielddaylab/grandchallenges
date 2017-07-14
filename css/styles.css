@@ -657,6 +657,15 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   margin: 50px 0;
 }
 
+@media only screen and (max-width: 800px) {
+  .footer-black-row a {
+    display: block;
+  }
+  .footer-white {
+    flex-direction: column;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   .big-form {
     width: 100%;
