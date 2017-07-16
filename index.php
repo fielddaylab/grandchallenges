@@ -177,7 +177,7 @@ if (count($parts) === 0) {
     $user_data['project_title'] = $_POST['project_title'];
     $user_data['project_description'] = $_POST['project_description'];
     save_user_data($user_data);
-    redirect_to('team');
+    redirect_to(isset($_POST['redirect']) && $_POST['redirect'] ? $_POST['redirect'] : 'team');
   } else if ($parts[0] === 'team') {
     render_page('team.twig');
   } else if ($parts[0] === 'save-team') {
