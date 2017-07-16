@@ -86,8 +86,7 @@ function can_access($page) {
     case          'save-engage': $level = 5; break;
     case       'save-transform': $level = 5; break;
     case                'paper': $level = 6; break;
-    case 'save-paper-transform': $level = 6; break;
-    case    'save-paper-engage': $level = 6; break;
+    case           'save-paper': $level = 6; break;
     case                 'gala': $level = 7; break;
     default                    : return true;
   }
@@ -205,16 +204,8 @@ if (count($parts) === 0) {
     save_user_data($user_data);
     redirect_to('paper');
   } else if ($parts[0] === 'paper') {
-    if ($user_data['line'] === 'engage') {
-      render_page('paper-engage.twig');
-    } else {
-      render_page('paper-transform.twig');
-    }
-  } else if ($parts[0] === 'save-paper-engage') {
-    $user_data['engage_proposal'] = $_POST['engage_proposal'];
-    save_user_data($user_data);
-    redirect_to('gala');
-  } else if ($parts[0] === 'save-paper-transform') {
+    render_page('paper.twig');
+  } else if ($parts[0] === 'save-paper') {
     rename
       ( $_FILES['connect_project']['tmp_name']
       , paper_location($logged_in_netid, $_FILES['connect_project'])
