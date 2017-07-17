@@ -230,16 +230,20 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'paper') {
     render_page('paper.twig');
   } else if ($parts[0] === 'save-paper') {
-    rename
-      ( $_FILES['connect_project']['tmp_name']
-      , paper_location($logged_in_netid, $_FILES['connect_project'])
-      );
-    rename
-      ( $_FILES['budget']['tmp_name']
-      , budget_location($logged_in_netid, $_FILES['budget'])
-      );
-    $user_data['submitted'] = true;
-    $user_data['submitted_budget'] = true;
+    if (isset($_FILES['connect_project']) && $_FILES['connect_project']['tmp_name']) {
+      rename
+        ( $_FILES['connect_project']['tmp_name']
+        , paper_location($logged_in_netid, $_FILES['connect_project'])
+        );
+      $user_data['submitted'] = true;
+    }
+    if (isset($_FILES['budget']) && $_FILES['budget']['tmp_name']) {
+      rename
+        ( $_FILES['budget']['tmp_name']
+        , budget_location($logged_in_netid, $_FILES['budget'])
+        );
+      $user_data['submitted_budget'] = true;
+    }
     save_user_data($user_data);
     redirect_to('gala');
   } else if ($parts[0] === 'gala') {
