@@ -9,7 +9,7 @@
 
 $(function(){
   var counter = 0;
-  $('#drop-area').bind({
+  $('#drop-area-proposal').bind({
     dragover: function(e){
       e.preventDefault();
       e.stopPropagation();
@@ -17,7 +17,7 @@ $(function(){
     dragenter: function(e){
       e.preventDefault();
       e.stopPropagation();
-      $('#drop-area').addClass('drop-highlight');
+      $('#drop-area-proposal').addClass('drop-highlight');
       counter++;
     },
     dragleave: function(e){
@@ -25,36 +25,83 @@ $(function(){
       e.stopPropagation();
       counter--;
       if (counter === 0) {
-        $('#drop-area').removeClass('drop-highlight');
+        $('#drop-area-proposal').removeClass('drop-highlight');
       }
     },
     drop: function(e){
       e.preventDefault();
       e.stopPropagation();
       counter = 0;
-      $('#drop-area').removeClass('drop-highlight');
+      $('#drop-area-proposal').removeClass('drop-highlight');
       var transfer = e.originalEvent ? e.originalEvent.dataTransfer : e.dataTransfer;
       // originalEvent for jquery (not zepto)
       if (transfer) {
         if (transfer.files.length) {
-          $('#hidden-file').prop('files', transfer.files);
-          console.log($('#hidden-file').prop('files'));
-          return;
-          $('#hidden-form').submit();
+          $('#hidden-proposal').prop('files', transfer.files);
+        }
+      }
+    },
+  });
+  $('#drop-area-budget').bind({
+    dragover: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    dragenter: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      $('#drop-area-budget').addClass('drop-highlight');
+      counter++;
+    },
+    dragleave: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      counter--;
+      if (counter === 0) {
+        $('#drop-area-budget').removeClass('drop-highlight');
+      }
+    },
+    drop: function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      counter = 0;
+      $('#drop-area-budget').removeClass('drop-highlight');
+      var transfer = e.originalEvent ? e.originalEvent.dataTransfer : e.dataTransfer;
+      // originalEvent for jquery (not zepto)
+      if (transfer) {
+        if (transfer.files.length) {
+          $('#hidden-budget').prop('files', transfer.files);
         }
       }
     },
   });
 
-  $('#hidden-file').on('change', function(){
+  $('#hidden-proposal').on('change', function(){
     if (this.files.length) {
-      $('#hidden-form').submit();
+      $('#message-proposal').text('Proposal ready to upload!');
+    } else {
+      $('#message-proposal').text('Drag and drop to upload your proposal.');
+    }
+  });
+  $('#hidden-budget').on('change', function(){
+    if (this.files.length) {
+      $('#message-budget').text('Budget ready to upload!');
+    } else {
+      $('#message-budget').text('Drag and drop to upload your budget.');
     }
   });
 });
 
-function browseFiles() {
-  $('#hidden-file').click();
+function submitDocs() {
+  $('#hidden-form').submit();
+}
+
+function browseProposal() {
+  $('#hidden-proposal').click();
+}
+
+function browseBudget() {
+  $('#hidden-budget').click();
 }
 
 </script>
@@ -102,18 +149,20 @@ function browseFiles() {
       <a href="line"><span>{{ data.line|capitalize }} Line</span></a>
     </div>
     <div class="concept-map-chunk concept-map-line-current">
-      <img src="img/map-{{ color }}-2-checked.png">
+      <img src="img/map-{{ color }}-2.png">
       <a href="paper"><span>Submit Proposal</span></a>
     </div>
     <div class="concept-map-chunk concept-map-line-current">
-      <img src="img/map-{{ color }}-3-current.png">
-      <span>
-        {% if data.line == 'engage' %}
-          Attend Poster Fair
-        {% else %}
-          Attend Gala
-        {% endif %}
-      </span>
+      <img src="img/map-{{ color }}-3.png">
+      <a href="gala">
+        <span>
+          {% if data.line == 'engage' %}
+            Attend Poster Fair
+          {% else %}
+            Attend Gala
+          {% endif %}
+        </span>
+      </a>
     </div>
   </div>
   <div style="width: 100%">
@@ -146,6 +195,9 @@ function browseFiles() {
         <h4>
           {{ paper_status }}
         </h4>
+        <h4>
+          {{ budget_status }}
+        </h4>
         {% if data.line == 'engage' %}
           <p>
             The Engage grant is a collboratively-written paper that describes the core features of the idea. Your proposal should address three key concepts: Inquiry, Innovation, and Impact. We go into greater detail of what we're expecting in the <a href="https://docs.google.com/document/d/1U-sR1mV5xSI9YVihJVxC690s8dBXtMhm_VZqM8-vE1c/edit">RFP</a>.
@@ -166,21 +218,41 @@ function browseFiles() {
         {% endif %}
         {% if paper_url %}
           <p>
-            <a href="{{ paper_url }}">Your previously submitted PDF</a>
+            <a href="{{ paper_url }}">Download your previously submitted proposal</a>
+          </p>
+        {% endif %}
+        {% if budget_url %}
+          <p>
+            <a href="{{ budget_url }}">Download your previously submitted budget</a>
           </p>
         {% endif %}
         <h3>
           When you're ready to submit, drop it here:
         </h3>
-        <div id="drop-area">
+        <div class="drop-area" id="drop-area-proposal">
           <p>
             <img src="img/pdf-file.png">
           </p>
-          <p>
+          <p id="message-proposal">
             Drag and drop to upload your proposal.
           </p>
-          <a href="#" onClick="event.preventDefault(); browseFiles();">Or browse files</a>
+          <a href="#" onClick="event.preventDefault(); browseProposal();">Or browse files</a>
         </div>
+        <h3>
+          Also submit your budget spreadsheet:
+        </h3>
+        <div class="drop-area" id="drop-area-budget">
+          <p>
+            <img src="img/pdf-file.png">
+          </p>
+          <p id="message-budget">
+            Drag and drop to upload your budget.
+          </p>
+          <a href="#" onClick="event.preventDefault(); browseBudget();">Or browse files</a>
+        </div>
+        <p>
+          <button class="submit-proposal" type="button" onclick="submitDocs();">Submit</button>
+        </p>
       </div>
       <div class="concept-column concept-column-right">
         <h3>What are we looking for?</h3>
@@ -189,6 +261,7 @@ function browseFiles() {
         {% if data.line == 'engage' %}
           <h4><a href="https://docs.google.com/document/d/1yu_Xb-rYp0183OYeIFIdmV4bLaoH7IImwNJIsysJkZ4/edit" target="_blank">Engage Grant Submission Template</a></h4>
         {% endif %}
+        <h4><a href="https://docs.google.com/spreadsheets/d/1pHt4-Dm5FMe7E35AQibK2RCAdhedvrwqbwONmplKMTc/edit" target="_blank">Budget spreadsheet</a></h4>
       </div>
     </div>
   </div>
@@ -196,7 +269,10 @@ function browseFiles() {
 
 <form id="hidden-form" enctype="multipart/form-data" method="post" action="save-paper">
   <p>
-    <input type="file" id="hidden-file" name="connect_project">
+    <input type="file" id="hidden-proposal" name="connect_project">
+  </p>
+  <p>
+    <input type="file" id="hidden-budget" name="budget">
   </p>
   <p>
     <button type="submit" id="hidden-submit">Submit</button>

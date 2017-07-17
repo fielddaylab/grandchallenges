@@ -48,6 +48,20 @@ function paper_url($netid) {
   return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '.pdf';
 }
 
+function budget_location($netid, $file) {
+  if ($file['type'] === 'application/pdf') {
+    $ext = 'pdf';
+  } else {
+    echo 'Unsupported file type. Please upload a PDF file.';
+    die();
+  }
+  return __DIR__ . '/data/' . $netid . '-budget.' . $ext;
+}
+
+function budget_url($netid) {
+  return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '-budget.pdf';
+}
+
 $logged_in_netid = null;
 if (array_key_exists('netid', $_SESSION)) $logged_in_netid = $_SESSION['netid'];
 if (array_key_exists('uid', $_SERVER)) $logged_in_netid = $_SERVER['uid'];
@@ -103,6 +117,8 @@ function can_access($page) {
   if ($level >= 7 &&
     (  !array_key_exists('submitted', $user_data)
     || !$user_data['submitted']
+    || !array_key_exists('submitted_budget', $user_data)
+    || !$user_data['submitted_budget']
     )) return false;
   return true;
 }
@@ -118,6 +134,10 @@ function render_page($twig_name) {
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? 'Submitted, review pending'
       : 'Not submitted',
+    'budget_status' =>
+      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
+      ? 'Budget submitted'
+      : 'Budget not submitted',
     'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
       ? 'red'
       : 'blue',
@@ -125,6 +145,10 @@ function render_page($twig_name) {
     'paper_url' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? paper_url($logged_in_netid)
+      : null,
+    'budget_url' =>
+      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
+      ? budget_url($logged_in_netid)
       : null,
   ));
 }
@@ -210,7 +234,12 @@ if (count($parts) === 0) {
       ( $_FILES['connect_project']['tmp_name']
       , paper_location($logged_in_netid, $_FILES['connect_project'])
       );
+    rename
+      ( $_FILES['budget']['tmp_name']
+      , budget_location($logged_in_netid, $_FILES['budget'])
+      );
     $user_data['submitted'] = true;
+    $user_data['submitted_budget'] = true;
     save_user_data($user_data);
     redirect_to('gala');
   } else if ($parts[0] === 'gala') {
@@ -277,6 +306,7 @@ if (count($parts) === 0) {
       , 'Need extra support?'
       , 'Line'
       , 'Proposal'
+      , 'Budget'
       ));
     foreach (scandir(__DIR__ . '/data/') as $f) {
       $file = __DIR__ . '/data/' . $f;
@@ -312,6 +342,7 @@ if (count($parts) === 0) {
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
           , ($json['submitted'] ? paper_url($netid) : '')
+          , ($json['submitted_budget'] ? budget_url($netid) : '')
           ));
       }
     }

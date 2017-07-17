@@ -546,7 +546,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   line-height: 23px;
 }
 
-#drop-area {
+.drop-area {
   border: 2px dashed rgb(173,110,10);
   display: flex;
   flex-direction: column;
@@ -555,20 +555,20 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   padding: 30px;
 }
 
-#drop-area.drop-highlight {
-  background-color: white;
+.drop-area.drop-highlight {
+  background-color: #eee;
 }
 
-#drop-area img {
+.drop-area img {
   width: 50px;
 }
 
-#drop-area p {
+.drop-area p {
   margin: 5px;
   font-size: 16px;
 }
 
-#drop-area a {
+.drop-area a {
   text-transform: uppercase;
   color: white;
   background-color: rgb(60,51,25);
@@ -578,7 +578,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   border-radius: 999px;
 }
 
-#drop-area a:hover {
+.drop-area a:hover {
   text-decoration: underline;
 }
 
@@ -811,7 +811,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   height: 100px;
 }
 
-#code-section button, #support-section button, #no-support-section button, .bio-form button, .engage-form button {
+#code-section button, #support-section button, #no-support-section button, .bio-form button, .engage-form button, button.submit-proposal {
   text-transform: uppercase;
   background-color: rgb(209,137,22);
   color: white;
