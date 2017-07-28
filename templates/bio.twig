@@ -38,15 +38,18 @@ function saveAndGo(destination) {
   $('.bio-form').submit();
 }
 
+function countWords(str) {
+  return str.split(/\s+/).filter(function(x){ return x !== ''; }).length;
+}
+
 $(function(){
 
   showList();
 
   $('#text-bio').on('input', function(e){
-    var maxLength = 160;
-    var len = e.target.value.length;
+    var maxLength = 200;
+    var len = countWords(e.target.value);
     if (len > maxLength) {
-      $(e.target).val(e.target.value.substr(0, maxLength));
       len = maxLength;
     }
     $('#chars-bio').text(maxLength - len);
@@ -72,7 +75,7 @@ $(function(){
     $('#chars-description').text(maxLength - len);
   });
 
-  $('#chars-bio').text(160 - $('#text-bio').val().length);
+  $('#chars-bio').text(200 - countWords($('#text-bio').val()));
   $('#chars-title').text(140 - $('#text-title').val().length);
   $('#chars-description').text(500 - $('#text-description').val().length);
 
@@ -148,7 +151,7 @@ $(function(){
           Let's get your team all set up. We'll start with you! Write a short description about yourself:
         </p>
         <p>
-          <span>Principal investigator: a short bio about yourself (<span id="chars-bio">160</span> characters left)</span><br>
+          <span>Principal investigator: a short bio about yourself (<span id="chars-bio">200</span> words left)</span><br>
           <textarea id="text-bio" name="bio">{{ data.bio }}</textarea>
         </p>
         <p>
