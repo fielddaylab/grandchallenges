@@ -49,17 +49,12 @@ function paper_url($netid) {
 }
 
 function budget_location($netid, $file) {
-  if ($file['type'] === 'application/pdf') {
-    $ext = 'pdf';
-  } else {
-    echo 'Unsupported file type. Please upload a PDF file.';
-    die();
-  }
+  $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
   return __DIR__ . '/data/' . $netid . '-budget.' . $ext;
 }
 
-function budget_url($netid) {
-  return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '-budget.pdf';
+function budget_url($netid, $ext) {
+  return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '-budget.' . ($ext === true ? 'pdf' : $ext);
 }
 
 $logged_in_netid = null;
@@ -148,7 +143,7 @@ function render_page($twig_name) {
       : null,
     'budget_url' =>
       (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
-      ? budget_url($logged_in_netid)
+      ? budget_url($logged_in_netid, $user_data['submitted_budget'])
       : null,
   ));
 }
@@ -242,7 +237,8 @@ if (count($parts) === 0) {
         ( $_FILES['budget']['tmp_name']
         , budget_location($logged_in_netid, $_FILES['budget'])
         );
-      $user_data['submitted_budget'] = true;
+      $ext = pathinfo($_FILES['budget']['name'], PATHINFO_EXTENSION);
+      $user_data['submitted_budget'] = $ext;
     }
     save_user_data($user_data);
     redirect_to('gala');
@@ -346,7 +342,7 @@ if (count($parts) === 0) {
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
           , ($json['submitted'] ? paper_url($netid) : '')
-          , ($json['submitted_budget'] ? budget_url($netid) : '')
+          , ($json['submitted_budget'] ? budget_url($netid, $json['submitted_budget']) : '')
           ));
       }
     }
