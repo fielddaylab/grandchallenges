@@ -35,6 +35,10 @@
   padding: 0;
 }
 
+.grayed{
+  color: #979797 !important;
+}
+
 .top-nav-title {
   display: flex;
   flex-direction: row;
@@ -887,6 +891,16 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   font-size: 13px;
 }
 
+.button {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+  border: 1px solid rgb(60,51,25);
+  border-radius: 999px;
+  padding: 5px 13px;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
 .engage-form textarea {
   width: 100%;
   resize: none;
