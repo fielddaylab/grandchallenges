@@ -35,6 +35,10 @@
   padding: 0;
 }
 
+.grayed{
+  color: #979797 !important;
+}
+
 .top-nav-title {
   display: flex;
   flex-direction: row;
@@ -427,6 +431,12 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   margin-bottom: -40px;
 }
 
+@media only screen and (max-width: 900px) {
+  .concept-hero-title {
+    background-image:none;
+  }
+}
+
 .concept-hero-title h1 {
   margin-bottom: 5px;
 }
@@ -546,7 +556,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   line-height: 23px;
 }
 
-#drop-area {
+.drop-area {
   border: 2px dashed rgb(173,110,10);
   display: flex;
   flex-direction: column;
@@ -555,20 +565,20 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   padding: 30px;
 }
 
-#drop-area.drop-highlight {
-  background-color: white;
+.drop-area.drop-highlight {
+  background-color: #eee;
 }
 
-#drop-area img {
+.drop-area img {
   width: 50px;
 }
 
-#drop-area p {
+.drop-area p {
   margin: 5px;
   font-size: 16px;
 }
 
-#drop-area a {
+.drop-area a {
   text-transform: uppercase;
   color: white;
   background-color: rgb(60,51,25);
@@ -578,7 +588,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   border-radius: 999px;
 }
 
-#drop-area a:hover {
+.drop-area a:hover {
   text-decoration: underline;
 }
 
@@ -655,6 +665,15 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   max-width: 200px;
   max-height: 80px;
   margin: 50px 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .footer-black-row a {
+    display: block;
+  }
+  .footer-white {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -802,7 +821,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   height: 100px;
 }
 
-#code-section button, #support-section button, #no-support-section button, .bio-form button, .engage-form button {
+#code-section button, #support-section button, #no-support-section button, .bio-form button, .engage-form button, button.submit-proposal {
   text-transform: uppercase;
   background-color: rgb(209,137,22);
   color: white;
@@ -878,6 +897,16 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   font-size: 13px;
 }
 
+.button {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+  border: 1px solid rgb(60,51,25);
+  border-radius: 999px;
+  padding: 5px 13px;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
 .engage-form textarea {
   width: 100%;
   resize: none;
@@ -886,4 +915,27 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   box-sizing: border-box;
   border: 1px solid rgb(60,51,25);
   border-radius: 5px;
+}
+
+.controls-line * {
+  display: inline-block;
+}
+
+@media screen and (max-width: 900px) {
+  .concept-columns {
+    flex-direction: column;
+  }
+  .concept-column-middle {
+    padding-bottom: 10px;
+  }
+  .concept-hero {
+    padding: 15px;
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .line-cards {
+    flex-direction: column;
+  }
 }

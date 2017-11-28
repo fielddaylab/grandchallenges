@@ -37,14 +37,24 @@ function data_simple_location() {
 function paper_location($netid, $file) {
   if ($file['type'] === 'application/pdf') {
     $ext = 'pdf';
-  } else if ($file['type'] === 'application/vnd.oasis.opendocument.text') {
-    $ext = 'odt';
   } else {
-    echo 'Unsupported file type.<br>';
-    var_dump($file);
+    echo 'Unsupported file type. Please upload a PDF file.';
     die();
   }
   return __DIR__ . '/data/' . $netid . '.' . $ext;
+}
+
+function paper_url($netid) {
+  return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '.pdf';
+}
+
+function budget_location($netid, $file) {
+  $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+  return __DIR__ . '/data/' . $netid . '-budget.' . $ext;
+}
+
+function budget_url($netid, $ext) {
+  return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '-budget.' . ($ext === true ? 'pdf' : $ext);
 }
 
 $logged_in_netid = null;
@@ -85,8 +95,7 @@ function can_access($page) {
     case          'save-engage': $level = 5; break;
     case       'save-transform': $level = 5; break;
     case                'paper': $level = 6; break;
-    case 'save-paper-transform': $level = 6; break;
-    case    'save-paper-engage': $level = 6; break;
+    case           'save-paper': $level = 6; break;
     case                 'gala': $level = 7; break;
     default                    : return true;
   }
@@ -100,17 +109,12 @@ function can_access($page) {
   if ($level >= 4 && !array_key_exists('team', $user_data)) return false;
   if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
   if ($level >= 6 && !array_key_exists('line', $user_data)) return false;
-  if ($user_data['line'] === 'transform') {
-    if ($level >= 7 &&
-      (  !array_key_exists('submitted', $user_data)
-      || !$user_data['submitted']
-      )) return false;
-  } else {
-    if ($level >= 7 &&
-      (  !array_key_exists('engage_proposal', $user_data)
-      || !$user_data['engage_proposal']
-      )) return false;
-  }
+  if ($level >= 7 &&
+    (  !array_key_exists('submitted', $user_data)
+    || !$user_data['submitted']
+    || !array_key_exists('submitted_budget', $user_data)
+    || !$user_data['submitted_budget']
+    )) return false;
   return true;
 }
 
@@ -125,10 +129,22 @@ function render_page($twig_name) {
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? 'Submitted, review pending'
       : 'Not submitted',
+    'budget_status' =>
+      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
+      ? 'Budget submitted'
+      : 'Budget not submitted',
     'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
       ? 'red'
       : 'blue',
     'correct_code' => $meeting_code,
+    'paper_url' =>
+      (array_key_exists('submitted', $user_data) && $user_data['submitted'])
+      ? paper_url($logged_in_netid)
+      : null,
+    'budget_url' =>
+      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
+      ? budget_url($logged_in_netid, $user_data['submitted_budget'])
+      : null,
   ));
 }
 
@@ -179,13 +195,13 @@ if (count($parts) === 0) {
     $user_data['project_title'] = $_POST['project_title'];
     $user_data['project_description'] = $_POST['project_description'];
     save_user_data($user_data);
-    redirect_to('team');
+    redirect_to(isset($_POST['redirect']) && $_POST['redirect'] ? $_POST['redirect'] : 'team');
   } else if ($parts[0] === 'team') {
     render_page('team.twig');
   } else if ($parts[0] === 'save-team') {
     $user_data['team'] = json_decode($_POST['json']);
     save_user_data($user_data);
-    redirect_to('support');
+    redirect_to(isset($_POST['redirect']) && $_POST['redirect'] ? $_POST['redirect'] : 'support');
   } else if ($parts[0] === 'support') {
     render_page('support.twig');
   } else if ($parts[0] === 'save-support') {
@@ -207,21 +223,23 @@ if (count($parts) === 0) {
     save_user_data($user_data);
     redirect_to('paper');
   } else if ($parts[0] === 'paper') {
-    if ($user_data['line'] === 'engage') {
-      render_page('paper-engage.twig');
-    } else {
-      render_page('paper-transform.twig');
+    render_page('paper.twig');
+  } else if ($parts[0] === 'save-paper') {
+    if (isset($_FILES['connect_project']) && $_FILES['connect_project']['tmp_name']) {
+      rename
+        ( $_FILES['connect_project']['tmp_name']
+        , paper_location($logged_in_netid, $_FILES['connect_project'])
+        );
+      $user_data['submitted'] = true;
     }
-  } else if ($parts[0] === 'save-paper-engage') {
-    $user_data['engage_proposal'] = $_POST['engage_proposal'];
-    save_user_data($user_data);
-    redirect_to('gala');
-  } else if ($parts[0] === 'save-paper-transform') {
-    rename
-      ( $_FILES['connect_project']['tmp_name']
-      , paper_location($logged_in_netid, $_FILES['connect_project'])
-      );
-    $user_data['submitted'] = true;
+    if (isset($_FILES['budget']) && $_FILES['budget']['tmp_name']) {
+      rename
+        ( $_FILES['budget']['tmp_name']
+        , budget_location($logged_in_netid, $_FILES['budget'])
+        );
+      $ext = pathinfo($_FILES['budget']['name'], PATHINFO_EXTENSION);
+      $user_data['submitted_budget'] = $ext;
+    }
     save_user_data($user_data);
     redirect_to('gala');
   } else if ($parts[0] === 'gala') {
@@ -288,6 +306,7 @@ if (count($parts) === 0) {
       , 'Need extra support?'
       , 'Line'
       , 'Proposal'
+      , 'Budget'
       ));
     foreach (scandir(__DIR__ . '/data/') as $f) {
       $file = __DIR__ . '/data/' . $f;
@@ -322,13 +341,8 @@ if (count($parts) === 0) {
           , json_encode(array_slice($json['team']['community'], 5))
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
-          , ( $json['line'] === 'engage'
-            ? $json['engage_proposal']
-            : ( $json['submitted']
-              ? 'https://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '.pdf'
-              : ''
-              )
-            )
+          , ($json['submitted'] ? paper_url($netid) : '')
+          , ($json['submitted_budget'] ? budget_url($netid, $json['submitted_budget']) : '')
           ));
       }
     }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
 <title>Grand Challenges</title>
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 <script type="text/javascript" src="js/zepto.min.js"></script>
@@ -19,6 +20,14 @@ function hideCodeField() {
   $('#code-section').addClass('code-section-hide');
   $('#email-section').removeClass('code-section-hide');
   window.location.href = 'mailto:grandchallenges@education.wisc.edu';
+}
+
+function checkPassword(event) {
+  if (!($('#code-field').val())) {
+    alert('Please enter a confirmation code before proceeding.');
+    event.stopPropagation();
+    event.preventDefault();
+  }
 }
 
 {% if data.code %}
@@ -55,7 +64,7 @@ $(function(){
       <img src="img/map-orange.png">
       <a href="meeting"><span>Meet with Network</span></a>
     </div>
-    <div class="concept-map-chunk">
+    <div class="concept-map-chunk" onclick="checkPassword(event);">
       <img src="img/map-gray.png">
       <a href="bio"><span>Project Info</span></a>
     </div>
@@ -76,7 +85,7 @@ $(function(){
     <div class="concept-columns-nav">
       <div class="concept-columns-nav-side">
       </div>
-      <a href="bio">
+      <a href="bio" onclick="checkPassword(event);">
         <div class="concept-columns-nav-side concept-columns-nav-side-right">
           <span>Project Info</span>
           <img src="img/arrow-gold-right.png">
@@ -92,7 +101,7 @@ $(function(){
         <p>
           Before you get started with the Grand Challenges, it's important that you set up a time to meet with us at the Network so we can help you get up and running. After we all sit down and chat, you can get down to work.
         </p>
-        <p>
+        <p class="controls-line">
           <a href="#" id="button-set-up" class="button-brown" onclick="hideCodeField(); return false;">Set up a meeting</a>
           <a href="#" id="button-already-met" class="button-brown" onclick="showCodeField(); return false;">We've already met</a>
         </p>
@@ -107,7 +116,7 @@ $(function(){
           </p>
           <p>
             confirmation code:<br>
-            <input type="text" name="code" value="{{ data.code }}">
+            <input id="code-field" type="text" name="code" value="{{ data.code }}">
             <button type="submit">Save and Continue</button>
           </p>
           {% if data.code and data.code != correct_code %}
