@@ -431,6 +431,12 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   margin-bottom: -40px;
 }
 
+@media only screen and (max-width: 900px) {
+  .concept-hero-title {
+    background-image:none;
+  }
+}
+
 .concept-hero-title h1 {
   margin-bottom: 5px;
 }
