@@ -275,7 +275,7 @@ if (count($parts) === 0) {
     fseek($temp, 0);
     header('Content-type: text/csv');
     echo fread($temp, 10000000);
-  } else if ($parts[0] === 'proposals.csv') {
+  } else if ($parts[0] === 'proposals.csv' || $parts[0] === 'transform.csv') {
     $temp = tmpfile();
     fputcsv($temp, array
       ( 'NetID'
@@ -313,6 +313,9 @@ if (count($parts) === 0) {
       if (preg_match("/\\.json$/", $file)) {
         $json = json_decode(file_get_contents($file), true);
         $netid = pathinfo($f, PATHINFO_FILENAME);
+        if ($parts[0] === 'transform.csv' && $json['line'] !== 'transform') {
+          continue;
+        }
         fputcsv($temp, array
           ( $netid
           , $json['bio']
