@@ -1,5 +1,8 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if (strpos($_SERVER['HTTP_HOST'], 'localhost') === false) {
   if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
     $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -274,6 +277,33 @@ if (count($parts) === 0) {
     $user_data['certify_complete'] = $_POST['certify_complete'];
     $user_data['certify_team'] = $_POST['certify_team'];
     save_user_data($user_data);
+
+    if ( isset($user_data['submitted']) && $user_data['submitted']
+      && isset($user_data['submitted_budget']) && $user_data['submitted_budget']
+      && isset($user_data['submitted_timeline']) && $user_data['submitted_timeline']
+      && $user_data['certify_complete']
+      && $user_data['certify_complete']) {
+
+      $subject = "Grand Challenges Submission";
+
+      $body = "Thank you for submitting your proposal to Grand Challenges!";
+      $body .= "\r\n";
+      $body .= "\r\n" . paper_url($logged_in_netid);
+      $body .= "\r\n";
+      $body .= "\r\nPlease contact us with any questions at grandchallenges@education.wisc.edu.";
+      $body .= "\r\n";
+      $body .= "\r\nSincerely,";
+      $body .= "\r\nThe Grand Challenges Team";
+
+      $mail = new PHPMailer;
+      $mail->setFrom('grandchallenges@education.wisc.edu', 'Grand Challenges');
+      $mail->addAddress($logged_in_netid . "@wisc.edu", $logged_in_netid);
+      $mail->Subject = $subject;
+      $mail->Body = $body;
+      $mail->send();
+
+    }
+
     redirect_to('gala');
   } else if ($parts[0] === 'gala') {
     render_page('gala.twig');
