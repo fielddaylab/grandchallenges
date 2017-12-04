@@ -69,6 +69,8 @@ $(function(){
 });
 
 function submitDocs() {
+  $('#hidden-certify-complete').prop('checked', $('#certify-complete').prop('checked'));
+  $('#hidden-certify-team').prop('checked', $('#certify-team').prop('checked'));
   $('#hidden-form').submit();
 }
 
@@ -201,21 +203,6 @@ function browseTimeline() {
             The Transform proposal due date is <b>February 1<sup>st</sup>, 2018</b>.
           </p>
         {% endif %}
-        {% if paper_url %}
-          <p>
-            <a href="{{ paper_url }}">Download your previously submitted proposal</a>
-          </p>
-        {% endif %}
-        {% if budget_url %}
-          <p>
-            <a href="{{ budget_url }}">Download your previously submitted budget</a>
-          </p>
-        {% endif %}
-        {% if timeline_url %}
-          <p>
-            <a href="{{ timeline_url }}">Download your previously submitted timeline</a>
-          </p>
-        {% endif %}
         <h3>
           When you're ready to submit, drop it here:
         </h3>
@@ -228,6 +215,11 @@ function browseTimeline() {
           </p>
           <a href="#" onClick="event.preventDefault(); browseProposal();">Or browse files</a>
         </div>
+        {% if paper_url %}
+          <p>
+            <a href="{{ paper_url }}">Download your previously submitted proposal</a>
+          </p>
+        {% endif %}
         <h3>
           Also submit your budget spreadsheet:
         </h3>
@@ -240,6 +232,11 @@ function browseTimeline() {
           </p>
           <a href="#" onClick="event.preventDefault(); browseBudget();">Or browse files</a>
         </div>
+        {% if budget_url %}
+          <p>
+            <a href="{{ budget_url }}">Download your previously submitted budget</a>
+          </p>
+        {% endif %}
         <h3>
           Also submit your timeline:
         </h3>
@@ -252,6 +249,31 @@ function browseTimeline() {
           </p>
           <a href="#" onClick="event.preventDefault(); browseTimeline();">Or browse files</a>
         </div>
+        {% if timeline_url %}
+          <p>
+            <a href="{{ timeline_url }}">Download your previously submitted timeline</a>
+          </p>
+        {% endif %}
+        <p>
+          <label>
+            {% if certify_complete %}
+              <input type="checkbox" id="certify-complete" name="certify_complete" checked>
+            {% else %}
+              <input type="checkbox" id="certify-complete" name="certify_complete">
+            {% endif %}
+            I certify that this proposal is complete and am ready to submit it for review.
+          </label>
+        </p>
+        <p>
+          <label>
+            {% if certify_team %}
+              <input type="checkbox" id="certify-team" name="certify_team" checked>
+            {% else %}
+              <input type="checkbox" id="certify-team" name="certify_team">
+            {% endif %}
+            I certify that all team members have read and approve the full proposal.
+          </label>
+        </p>
         <p>
           <button class="submit-proposal" type="button" onclick="submitDocs();">Submit</button>
         </p>
@@ -278,12 +300,10 @@ function browseTimeline() {
 <form id="hidden-form" enctype="multipart/form-data" method="post" action="save-paper">
   <p>
     <input type="file" id="hidden-proposal" name="connect_project">
-  </p>
-  <p>
     <input type="file" id="hidden-budget" name="budget">
-  </p>
-  <p>
     <input type="file" id="hidden-timeline" name="timeline">
+    <input type="checkbox" id="hidden-certify-complete" name="certify_complete">
+    <input type="checkbox" id="hidden-certify-team" name="certify_team">
   </p>
   <p>
     <button type="submit" id="hidden-submit">Submit</button>

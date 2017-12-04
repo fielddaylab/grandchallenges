@@ -125,6 +125,8 @@ function can_access($page) {
     || !$user_data['submitted_budget']
     || !array_key_exists('submitted_timeline', $user_data)
     || !$user_data['submitted_timeline']
+    || !$user_data['certify_complete']
+    || !$user_data['certify_team']
     )) return false;
   return true;
 }
@@ -138,16 +140,16 @@ function render_page($twig_name) {
     'data' => $user_data,
     'paper_status' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
-      ? 'Submitted, review pending'
-      : 'Not submitted',
+      ? 'Proposal uploaded'
+      : 'Proposal not uploaded',
     'budget_status' =>
       (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
-      ? 'Budget submitted'
-      : 'Budget not submitted',
+      ? 'Budget uploaded'
+      : 'Budget not uploaded',
     'timeline_status' =>
       (array_key_exists('submitted_timeline', $user_data) && $user_data['submitted_timeline'])
-      ? 'Timeline submitted'
-      : 'Timeline not submitted',
+      ? 'Timeline uploaded'
+      : 'Timeline not uploaded',
     'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
       ? 'red'
       : 'blue',
@@ -164,6 +166,8 @@ function render_page($twig_name) {
       (array_key_exists('submitted_timeline', $user_data) && $user_data['submitted_timeline'])
       ? timeline_url($logged_in_netid, $user_data['submitted_timeline'])
       : null,
+    'certify_complete' => array_key_exists('certify_complete', $user_data) && $user_data['certify_complete'],
+    'certify_team' => array_key_exists('certify_team', $user_data) && $user_data['certify_team'],
   ));
 }
 
@@ -267,6 +271,8 @@ if (count($parts) === 0) {
       $ext = pathinfo($_FILES['timeline']['name'], PATHINFO_EXTENSION);
       $user_data['submitted_timeline'] = $ext;
     }
+    $user_data['certify_complete'] = $_POST['certify_complete'];
+    $user_data['certify_team'] = $_POST['certify_team'];
     save_user_data($user_data);
     redirect_to('gala');
   } else if ($parts[0] === 'gala') {
@@ -335,6 +341,7 @@ if (count($parts) === 0) {
       , 'Proposal'
       , 'Budget'
       , 'Timeline'
+      , 'Submission is final'
       ));
     foreach (scandir(__DIR__ . '/data/') as $f) {
       $file = __DIR__ . '/data/' . $f;
@@ -375,6 +382,7 @@ if (count($parts) === 0) {
           , ($json['submitted'] ? paper_url($netid) : '')
           , ($json['submitted_budget'] ? budget_url($netid, $json['submitted_budget']) : '')
           , ($json['submitted_timeline'] ? timeline_url($netid, $json['submitted_timeline']) : '')
+          , ($json['certify_complete'] && $json['certify_team'] ? 'X' : '')
           ));
       }
     }
