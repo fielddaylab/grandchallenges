@@ -9,71 +9,40 @@
 
 $(function(){
   var counter = 0;
-  $('#drop-area-proposal').bind({
-    dragover: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-    },
-    dragenter: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      $('#drop-area-proposal').addClass('drop-highlight');
-      counter++;
-    },
-    dragleave: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      counter--;
-      if (counter === 0) {
-        $('#drop-area-proposal').removeClass('drop-highlight');
-      }
-    },
-    drop: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      counter = 0;
-      $('#drop-area-proposal').removeClass('drop-highlight');
-      var transfer = e.originalEvent ? e.originalEvent.dataTransfer : e.dataTransfer;
-      // originalEvent for jquery (not zepto)
-      if (transfer) {
-        if (transfer.files.length) {
-          $('#hidden-proposal').prop('files', transfer.files);
+  ['proposal', 'budget', 'timeline'].forEach(function(doc){
+    $('#drop-area-' + doc).bind({
+      dragover: function(e){
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      dragenter: function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        $('#drop-area-' + doc).addClass('drop-highlight');
+        counter++;
+      },
+      dragleave: function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        counter--;
+        if (counter === 0) {
+          $('#drop-area-' + doc).removeClass('drop-highlight');
         }
-      }
-    },
-  });
-  $('#drop-area-budget').bind({
-    dragover: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-    },
-    dragenter: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      $('#drop-area-budget').addClass('drop-highlight');
-      counter++;
-    },
-    dragleave: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      counter--;
-      if (counter === 0) {
-        $('#drop-area-budget').removeClass('drop-highlight');
-      }
-    },
-    drop: function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      counter = 0;
-      $('#drop-area-budget').removeClass('drop-highlight');
-      var transfer = e.originalEvent ? e.originalEvent.dataTransfer : e.dataTransfer;
-      // originalEvent for jquery (not zepto)
-      if (transfer) {
-        if (transfer.files.length) {
-          $('#hidden-budget').prop('files', transfer.files);
+      },
+      drop: function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        counter = 0;
+        $('#drop-area-' + doc).removeClass('drop-highlight');
+        var transfer = e.originalEvent ? e.originalEvent.dataTransfer : e.dataTransfer;
+        // originalEvent for jquery (not zepto)
+        if (transfer) {
+          if (transfer.files.length) {
+            $('#hidden-' + doc).prop('files', transfer.files);
+          }
         }
-      }
-    },
+      },
+    });
   });
 
   $('#hidden-proposal').on('change', function(){
@@ -90,6 +59,13 @@ $(function(){
       $('#message-budget').text('Drag and drop to upload your budget.');
     }
   });
+  $('#hidden-timeline').on('change', function(){
+    if (this.files.length) {
+      $('#message-timeline').text('Timeline ready to upload!');
+    } else {
+      $('#message-timeline').text('Drag and drop to upload your timeline.');
+    }
+  });
 });
 
 function submitDocs() {
@@ -102,6 +78,10 @@ function browseProposal() {
 
 function browseBudget() {
   $('#hidden-budget').click();
+}
+
+function browseTimeline() {
+  $('#hidden-timeline').click();
 }
 
 </script>
@@ -198,6 +178,9 @@ function browseBudget() {
         <h4>
           {{ budget_status }}
         </h4>
+        <h4>
+          {{ timeline_status }}
+        </h4>
         {% if data.line == 'engage' %}
           <p>
             The Engage grant is a collboratively-written paper that describes the core features of the idea. Your proposal should address three key concepts: Inquiry, Innovation, and Impact. Download and complete the <a href="https://docs.google.com/document/d/1yu_Xb-rYp0183OYeIFIdmV4bLaoH7IImwNJIsysJkZ4/edit">Engage Grant Submission Template</a> and <a href="https://docs.google.com/spreadsheets/d/1pHt4-Dm5FMe7E35AQibK2RCAdhedvrwqbwONmplKMTc/edit">Budget Template</a> to guide your submission.
@@ -206,7 +189,7 @@ function browseBudget() {
             The Engage proposal due date is <b>August 1<sup>st</sup>, 2017</b>.
           </p>
           <p>
-            The PDF of your proposal is limited to 8 pages total, including appendices. The budget document that you upload separately does not count in the total.
+            The PDF of your proposal is limited to 8 pages total, including appendices. The budget and timeline documents that you upload separately do not count in the total.
           </p>
         {% else %}
           <p>
@@ -226,6 +209,11 @@ function browseBudget() {
         {% if budget_url %}
           <p>
             <a href="{{ budget_url }}">Download your previously submitted budget</a>
+          </p>
+        {% endif %}
+        {% if timeline_url %}
+          <p>
+            <a href="{{ timeline_url }}">Download your previously submitted timeline</a>
           </p>
         {% endif %}
         <h3>
@@ -251,6 +239,18 @@ function browseBudget() {
             Drag and drop to upload your budget.
           </p>
           <a href="#" onClick="event.preventDefault(); browseBudget();">Or browse files</a>
+        </div>
+        <h3>
+          Also submit your timeline:
+        </h3>
+        <div class="drop-area" id="drop-area-timeline">
+          <p>
+            <img src="img/blank-file.png">
+          </p>
+          <p id="message-timeline">
+            Drag and drop to upload your timeline.
+          </p>
+          <a href="#" onClick="event.preventDefault(); browseTimeline();">Or browse files</a>
         </div>
         <p>
           <button class="submit-proposal" type="button" onclick="submitDocs();">Submit</button>
@@ -281,6 +281,9 @@ function browseBudget() {
   </p>
   <p>
     <input type="file" id="hidden-budget" name="budget">
+  </p>
+  <p>
+    <input type="file" id="hidden-timeline" name="timeline">
   </p>
   <p>
     <button type="submit" id="hidden-submit">Submit</button>

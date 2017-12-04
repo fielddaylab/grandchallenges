@@ -57,6 +57,15 @@ function budget_url($netid, $ext) {
   return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '-budget.' . ($ext === true ? 'pdf' : $ext);
 }
 
+function timeline_location($netid, $file) {
+  $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+  return __DIR__ . '/data/' . $netid . '-timeline.' . $ext;
+}
+
+function timeline_url($netid, $ext) {
+  return 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . '/data/' . $netid . '-timeline.' . ($ext === true ? 'pdf' : $ext);
+}
+
 $logged_in_netid = null;
 if (array_key_exists('netid', $_SESSION)) $logged_in_netid = $_SESSION['netid'];
 if (array_key_exists('uid', $_SERVER)) $logged_in_netid = $_SERVER['uid'];
@@ -114,6 +123,8 @@ function can_access($page) {
     || !$user_data['submitted']
     || !array_key_exists('submitted_budget', $user_data)
     || !$user_data['submitted_budget']
+    || !array_key_exists('submitted_timeline', $user_data)
+    || !$user_data['submitted_timeline']
     )) return false;
   return true;
 }
@@ -133,6 +144,10 @@ function render_page($twig_name) {
       (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
       ? 'Budget submitted'
       : 'Budget not submitted',
+    'timeline_status' =>
+      (array_key_exists('submitted_timeline', $user_data) && $user_data['submitted_timeline'])
+      ? 'Timeline submitted'
+      : 'Timeline not submitted',
     'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
       ? 'red'
       : 'blue',
@@ -144,6 +159,10 @@ function render_page($twig_name) {
     'budget_url' =>
       (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
       ? budget_url($logged_in_netid, $user_data['submitted_budget'])
+      : null,
+    'timeline_url' =>
+      (array_key_exists('submitted_timeline', $user_data) && $user_data['submitted_timeline'])
+      ? timeline_url($logged_in_netid, $user_data['submitted_timeline'])
       : null,
   ));
 }
@@ -240,6 +259,14 @@ if (count($parts) === 0) {
       $ext = pathinfo($_FILES['budget']['name'], PATHINFO_EXTENSION);
       $user_data['submitted_budget'] = $ext;
     }
+    if (isset($_FILES['timeline']) && $_FILES['timeline']['tmp_name']) {
+      rename
+        ( $_FILES['timeline']['tmp_name']
+        , timeline_location($logged_in_netid, $_FILES['timeline'])
+        );
+      $ext = pathinfo($_FILES['timeline']['name'], PATHINFO_EXTENSION);
+      $user_data['submitted_timeline'] = $ext;
+    }
     save_user_data($user_data);
     redirect_to('gala');
   } else if ($parts[0] === 'gala') {
@@ -307,6 +334,7 @@ if (count($parts) === 0) {
       , 'Line'
       , 'Proposal'
       , 'Budget'
+      , 'Timeline'
       ));
     foreach (scandir(__DIR__ . '/data/') as $f) {
       $file = __DIR__ . '/data/' . $f;
@@ -346,6 +374,7 @@ if (count($parts) === 0) {
           , $json['line']
           , ($json['submitted'] ? paper_url($netid) : '')
           , ($json['submitted_budget'] ? budget_url($netid, $json['submitted_budget']) : '')
+          , ($json['submitted_timeline'] ? timeline_url($netid, $json['submitted_timeline']) : '')
           ));
       }
     }
