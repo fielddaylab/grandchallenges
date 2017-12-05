@@ -298,6 +298,7 @@ if (count($parts) === 0) {
       $mail = new PHPMailer;
       $mail->setFrom('grandchallenges@education.wisc.edu', 'Grand Challenges');
       $mail->addAddress($logged_in_netid . "@wisc.edu", $logged_in_netid);
+      $mail->addCC('grandchallenges@education.wisc.edu');
       $mail->Subject = $subject;
       $mail->Body = $body;
       $mail->send();
