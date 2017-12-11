@@ -8,34 +8,33 @@
 
 <script type="text/javascript">
 
-var available_faculty = [
-];
-
-var faculty = {% if data.team.faculty %}
-  {{ data.team.faculty|json_encode()|raw }}
-{% else %}
-  {}
-{% endif %};
 var community = {% if data.team.community %}
   {{ data.team.community|json_encode()|raw }}
 {% else %}
   []
 {% endif %};
 
-function clickFaculty(e) {
-  e.preventDefault();
-  $(document.body).addClass('viewing-faculty').removeClass('viewing-community');
-}
-
-function clickCommunity(e) {
-  e.preventDefault();
-  $(document.body).removeClass('viewing-faculty').addClass('viewing-community');
-}
-
-function removeFaculty(name) {
-  delete faculty[name];
-  $('#faculty-list input[type=checkbox][value=\"'+name+'\"]').prop('checked', false);
-  showList();
+function makePersonObject() {
+  var obj = {
+    first_name: $('#community-first-name').val(),
+    last_name: $('#community-last-name').val(),
+    email: $('#community-email').val(),
+    bio: $('#community-bio').val(),
+  };
+  var empty = [];
+  if (!obj.first_name.match(/\S/)) empty.push('first name');
+  if (!obj.last_name.match(/\S/)) empty.push('last name');
+  if (!obj.email.match(/\S/)) empty.push('email address');
+  if (!obj.bio.match(/\S/)) empty.push('team contribution');
+  if (empty.length !== 0) {
+    alert('Please fill out these missing fields: ' + empty.join(', ') + '.');
+    return null;
+  }
+  $('#community-first-name').val('');
+  $('#community-last-name').val('');
+  $('#community-email').val('');
+  $('#community-bio').val('');
+  return obj;
 }
 
 function removeCommunity(index) {
@@ -43,40 +42,48 @@ function removeCommunity(index) {
   showList();
 }
 
+var editing_index = null;
+
+function startEditing(index) {
+  var person = community[index];
+  if (person == null) return;
+  editing_index = index;
+  $('#community-first-name').val(person.first_name);
+  $('#community-last-name').val(person.last_name);
+  $('#community-email').val(person.email);
+  $('#community-bio').val(person.bio);
+  $('#edit-controls').css('display', 'block');
+  $('#community-plus-p').css('display', 'none');
+  $('#next-button-p').css('display', 'none');
+}
+
+function saveEdit() {
+  var obj = makePersonObject();
+  if (obj == null) return;
+  community[editing_index] = obj;
+  showList();
+  cancelEdit();
+}
+
+function cancelEdit() {
+  editing_index = null;
+  $('#edit-controls').css('display', 'none');
+  $('#community-plus-p').css('display', 'block');
+  $('#next-button-p').css('display', 'block');
+  $('#community-first-name').val('');
+  $('#community-last-name').val('');
+  $('#community-email').val('');
+  $('#community-bio').val('');
+}
+
 function showList() {
   $('#members-list').html((function(){
     var str = '';
-    Object.keys(faculty).forEach(function(fac){
-      str += '<p class="member-entry"><a href="#" class="member-x" onClick="removeFaculty(\''+fac+'\'); return false;"><img src="img/x.png"></a><span>'+fac+'</span></p>';
-    });
     community.forEach(function(com, i){
-      str += '<p class="member-entry"><a href="#" class="member-x" onClick="removeCommunity('+i+'); return false;"><img src="img/x.png"></a><span>' + com.last_name + ', ' + com.first_name + '</span></p>';
+      str += '<p class="member-entry"><a href="#" class="member-x" onClick="removeCommunity('+i+'); return false;"><img src="img/x.png"></a><span>' + com.last_name + ', ' + com.first_name + ' <a href="#" onClick="startEditing('+i+'); return false;">(edit)</a></span></p>';
     });
     return str;
   })());
-}
-
-function toggleFacultyBox(box, name) {
-  if (box.checked) {
-    faculty[name] = true;
-  } else {
-    delete faculty[name];
-  }
-  showList();
-}
-
-function fillFacultyList() {
-  var list = $('#faculty-list');
-  available_faculty.forEach(function(fac){
-    list.append(
-      '<p>' +
-        '<label>' +
-          '<input type="checkbox" onclick="toggleFacultyBox(this, \''+fac+'\')" value="'+fac+'">' +
-          ' ' + fac +
-        '</label>' +
-      '</p>'
-    );
-  });
 }
 
 function saveAndGo(destination) {
@@ -85,7 +92,6 @@ function saveAndGo(destination) {
     $('#community-plus').click();
   }
   $('#hidden-json').val(JSON.stringify({
-    faculty: faculty,
     community: community,
   }));
   if (destination) {
@@ -95,36 +101,24 @@ function saveAndGo(destination) {
 }
 
 $(function(){
-  fillFacultyList();
   showList();
-  $('#add-faculty').click(clickFaculty);
-  $('#add-community').click(clickCommunity);
   $('#community-plus').click(function(e){
     e.preventDefault();
-    var obj = {
-      first_name: $('#community-first-name').val(),
-      last_name: $('#community-last-name').val(),
-      email: $('#community-email').val(),
-      bio: $('#community-bio').val(),
-    };
-    var empty = [];
-    if (!obj.first_name.match(/\S/)) empty.push('first name');
-    if (!obj.last_name.match(/\S/)) empty.push('last name');
-    if (!obj.email.match(/\S/)) empty.push('email address');
-    if (!obj.bio.match(/\S/)) empty.push('team contribution');
-    if (empty.length !== 0) {
-      alert('Please fill out these missing fields: ' + empty.join(', ') + '.');
-      return;
-    }
+    var obj = makePersonObject();
+    if (obj == null) return;
     community.push(obj);
-    $('#community-first-name').val('');
-    $('#community-last-name').val('');
-    $('#community-email').val('');
-    $('#community-bio').val('');
     showList();
   });
   $('#next-button').click(function(){
     saveAndGo();
+  });
+  $('#save-edits').click(function(e){
+    e.preventDefault();
+    saveEdit();
+  });
+  $('#cancel-edits').click(function(e){
+    e.preventDefault();
+    cancelEdit();
   });
 });
 
@@ -232,11 +226,19 @@ $(function(){
               <textarea id="community-bio"></textarea>
             </label>
           </p>
-          <p>
+          <p id="community-plus-p">
             <a href="#" id="community-plus"><img src="img/plus.png"></a>
           </p>
         </div>
-        <p>
+        <div id="edit-controls" style="display: none;">
+          <p>
+            <button class="button-brown button-brown-filled" id="save-edits" type="button">Save this team member</button>
+          </p>
+          <p>
+            <button class="button-brown button-brown-filled" id="cancel-edits" type="button">Cancel changes</button>
+          </p>
+        </div>
+        <p id="next-button-p">
           <button class="button-brown button-brown-filled" id="next-button" type="button">Save and Continue</button>
         </p>
       </div>

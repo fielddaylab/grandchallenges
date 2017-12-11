@@ -266,15 +266,6 @@ body {
   font-size: 13px;
 }
 
-#add-faculty {
-  border-right: 2px solid rgb(228,232,228);
-}
-
-body.viewing-faculty #add-faculty, body.viewing-community #add-community {
-  background-color: rgb(198,131,24);
-  color: white;
-}
-
 .team-switchers-or {
   position: absolute;
   width: 30px;
@@ -295,7 +286,7 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   line-height: 20px;
 }
 
-#faculty-list, .community-form {
+.community-form {
   position: absolute;
   width: 600px;
   height: 400px;
@@ -303,12 +294,6 @@ body.viewing-faculty #add-faculty, body.viewing-community #add-community {
   transition: left 0.25s;
   padding: 10px;
   box-sizing: border-box;
-}
-
-#faculty-list {
-  border: 2px solid rgb(228,232,228);
-  border-top: none;
-  overflow-y: auto;
 }
 
 #community-plus img {
