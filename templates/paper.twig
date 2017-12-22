@@ -69,6 +69,7 @@ $(function(){
 });
 
 function submitDocs() {
+  $('#hidden-experts').val($('#experts').val());
   $('#hidden-certify-complete').prop('checked', $('#certify-complete').prop('checked'));
   $('#hidden-certify-team').prop('checked', $('#certify-team').prop('checked'));
   $('#hidden-form').submit();
@@ -255,6 +256,15 @@ function browseTimeline() {
           </p>
         {% endif %}
         <p>
+          The Grand Challenges Transform Review Process includes evaluation by a
+          national expert outside of UW-Madison. Please nominate up to four
+          experts in your field who are qualified to provide arms-length
+          feedback on the strength of your proposal. If you have already
+          submitted your nominations via email, please write "Previously
+          Submitted" below.
+        </p>
+        <textarea id="experts">{{ experts }}</textarea>
+        <p>
           <label>
             {% if certify_complete %}
               <input type="checkbox" id="certify-complete" name="certify_complete" checked>
@@ -291,6 +301,7 @@ function browseTimeline() {
           <h4><a href="https://docs.google.com/document/d/1EJdFQuo4NbQOVzEbvqRlkafO01WRstA8Dwl39WaL7gI/edit" target="_blank">Download the RFP (request for proposal)</a></h4>
           <h4><a href="https://docs.google.com/spreadsheets/d/1pHt4-Dm5FMe7E35AQibK2RCAdhedvrwqbwONmplKMTc/edit" target="_blank">Budget spreadsheet</a></h4>
           <h4><a href="https://docs.google.com/document/d/1we6wx4PptwGKtfdB2dTpwMR0wfpARk-K7E9Dz_U3ZsE/edit" target="_blank">Transform Guidelines for Use of Funds</a></h4>
+          <h4><a href="https://drive.google.com/file/d/0B3bFHX1q3Ck1TG5CaTZvUFdadTg/view" target="_blank">Timeline Template</a></h4>
         {% endif %}
       </div>
     </div>
@@ -302,6 +313,7 @@ function browseTimeline() {
     <input type="file" id="hidden-proposal" name="connect_project">
     <input type="file" id="hidden-budget" name="budget">
     <input type="file" id="hidden-timeline" name="timeline">
+    <input type="text" id="hidden-experts" name="experts">
     <input type="checkbox" id="hidden-certify-complete" name="certify_complete">
     <input type="checkbox" id="hidden-certify-team" name="certify_team">
   </p>

@@ -231,7 +231,8 @@ body {
 .team-halves input[type=text],
 .bio-form textarea,
 .engage-proposal,
-#support-section textarea {
+#support-section textarea,
+textarea#experts {
   border: 1px solid black;
   border-radius: 5px;
   padding: 5px;
@@ -241,6 +242,11 @@ body {
   letter-spacing: 0.5px;
   width: 100%;
   box-sizing: border-box;
+}
+
+textarea#experts {
+  resize: none;
+  height: 200px;
 }
 
 .big-form-middle textarea, .big-form-middle-three textarea {

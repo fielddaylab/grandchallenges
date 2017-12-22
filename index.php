@@ -169,6 +169,7 @@ function render_page($twig_name) {
       (array_key_exists('submitted_timeline', $user_data) && $user_data['submitted_timeline'])
       ? timeline_url($logged_in_netid, $user_data['submitted_timeline'])
       : null,
+    'experts' => array_key_exists('experts', $user_data) ? $user_data['experts'] : '',
     'certify_complete' => array_key_exists('certify_complete', $user_data) && $user_data['certify_complete'],
     'certify_team' => array_key_exists('certify_team', $user_data) && $user_data['certify_team'],
   ));
@@ -274,6 +275,7 @@ if (count($parts) === 0) {
       $ext = pathinfo($_FILES['timeline']['name'], PATHINFO_EXTENSION);
       $user_data['submitted_timeline'] = $ext;
     }
+    $user_data['experts'] = $_POST['experts'];
     $user_data['certify_complete'] = $_POST['certify_complete'];
     $user_data['certify_team'] = $_POST['certify_team'];
     save_user_data($user_data);
@@ -282,7 +284,7 @@ if (count($parts) === 0) {
       && isset($user_data['submitted_budget']) && $user_data['submitted_budget']
       && isset($user_data['submitted_timeline']) && $user_data['submitted_timeline']
       && $user_data['certify_complete']
-      && $user_data['certify_complete']) {
+      && $user_data['certify_team']) {
 
       $subject = "Grand Challenges Submission";
 
@@ -372,6 +374,7 @@ if (count($parts) === 0) {
       , 'Proposal'
       , 'Budget'
       , 'Timeline'
+      , 'Experts'
       , 'Submission is final'
       ));
     foreach (scandir(__DIR__ . '/data/') as $f) {
@@ -413,6 +416,7 @@ if (count($parts) === 0) {
           , ($json['submitted'] ? paper_url($netid) : '')
           , ($json['submitted_budget'] ? budget_url($netid, $json['submitted_budget']) : '')
           , ($json['submitted_timeline'] ? timeline_url($netid, $json['submitted_timeline']) : '')
+          , $json['experts']
           , ($json['certify_complete'] && $json['certify_team'] ? 'X' : '')
           ));
       }
