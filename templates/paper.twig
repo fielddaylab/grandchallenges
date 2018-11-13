@@ -133,7 +133,7 @@ function browseTimeline() {
     </div>
     <div class="concept-map-chunk concept-map-line-current">
       <img src="img/map-{{ color }}-2.png">
-      <a href="paper"><span>Submit Proposal</span></a>
+      <a href="paper"><span>Submit Pre-Proposal</span></a>
     </div>
     <div class="concept-map-chunk concept-map-line-current">
       <img src="img/map-{{ color }}-3.png">
@@ -173,37 +173,16 @@ function browseTimeline() {
       <div class="concept-column concept-column-middle">
         <h2>
           <img src="img/connect-dot.png">
-          Submit Proposal
+          Submit Pre-Proposal
         </h2>
         <h4>
           {{ paper_status }}
         </h4>
-        <h4>
-          {{ budget_status }}
-        </h4>
-        <h4>
-          {{ timeline_status }}
-        </h4>
-        {% if data.line == 'engage' %}
-          <p>
-            The Engage grant is a collboratively-written paper that describes the core features of the idea. Your proposal should address three key concepts: Inquiry, Innovation, and Impact. Download and complete the <a href="https://docs.google.com/document/d/1yu_Xb-rYp0183OYeIFIdmV4bLaoH7IImwNJIsysJkZ4/edit">Engage Grant Submission Template</a> and <a href="https://drive.google.com/file/d/0B49SOkXBGNxMdHFCYlRvMS1WZU0/view">Budget Template</a> to guide your submission.
-          </p>
-          <p>
-            The Engage proposal due date is <b>August 1<sup>st</sup>, 2017</b>.
-          </p>
-          <p>
-            The PDF of your proposal is limited to 8 pages total, including appendices. The budget and timeline documents that you upload separately do not count in the total.
-          </p>
-        {% else %}
-          <p>
-            The Transform grant is a collboratively-written paper that describes the core features of the idea.
-            Your proposal should address four key concepts: Inquiry, Innovation, Impact, and Interdisciplinarity.
-            We go into greater detail of what we're expecting in the <a href="https://docs.google.com/document/d/1EJdFQuo4NbQOVzEbvqRlkafO01WRstA8Dwl39WaL7gI/edit">RFP</a>.
-          </p>
-          <p>
-            The Transform proposal due date is <b>February 1<sup>st</sup>, 2018</b>.
-          </p>
-        {% endif %}
+        <p>
+          The Seed grant is a collboratively-written paper that describes the core features of the idea.
+          Your proposal should address four key concepts: Inquiry, Innovation, Impact, and Interdisciplinarity.
+          We go into greater detail of what we're expecting in the <a href="#" target="_blank">RFP</a>.
+        </p>
         <h3>
           When you're ready to submit, drop it here:
         </h3>
@@ -212,58 +191,15 @@ function browseTimeline() {
             <img src="img/pdf-file.png">
           </p>
           <p id="message-proposal">
-            Drag and drop to upload your proposal.
+            Drag and drop to upload your pre-proposal.
           </p>
           <a href="#" onClick="event.preventDefault(); browseProposal();">Or browse files</a>
         </div>
         {% if paper_url %}
           <p>
-            <a href="{{ paper_url }}">Download your previously submitted proposal</a>
+            <a href="{{ paper_url }}">Download your previously submitted pre-proposal</a>
           </p>
         {% endif %}
-        <h3>
-          Also submit your budget spreadsheet:
-        </h3>
-        <div class="drop-area" id="drop-area-budget">
-          <p>
-            <img src="img/blank-file.png">
-          </p>
-          <p id="message-budget">
-            Drag and drop to upload your budget.
-          </p>
-          <a href="#" onClick="event.preventDefault(); browseBudget();">Or browse files</a>
-        </div>
-        {% if budget_url %}
-          <p>
-            <a href="{{ budget_url }}">Download your previously submitted budget</a>
-          </p>
-        {% endif %}
-        <h3>
-          Also submit your timeline:
-        </h3>
-        <div class="drop-area" id="drop-area-timeline">
-          <p>
-            <img src="img/blank-file.png">
-          </p>
-          <p id="message-timeline">
-            Drag and drop to upload your timeline.
-          </p>
-          <a href="#" onClick="event.preventDefault(); browseTimeline();">Or browse files</a>
-        </div>
-        {% if timeline_url %}
-          <p>
-            <a href="{{ timeline_url }}">Download your previously submitted timeline</a>
-          </p>
-        {% endif %}
-        <p>
-          The Grand Challenges Transform Review Process includes evaluation by a
-          national expert outside of UW-Madison. Please nominate up to four
-          experts in your field who are qualified to provide arms-length
-          feedback on the strength of your proposal. If you have already
-          submitted your nominations via email, please write "Previously
-          Submitted" below.
-        </p>
-        <textarea id="experts">{{ experts }}</textarea>
         <p>
           <label>
             {% if certify_complete %}
@@ -271,7 +207,7 @@ function browseTimeline() {
             {% else %}
               <input type="checkbox" id="certify-complete" name="certify_complete">
             {% endif %}
-            I certify that this proposal is complete and am ready to submit it for review.
+            I certify that this pre-proposal is complete and am ready to submit it for review.
           </label>
         </p>
         <p>
@@ -281,7 +217,7 @@ function browseTimeline() {
             {% else %}
               <input type="checkbox" id="certify-team" name="certify_team">
             {% endif %}
-            I certify that all team members have read and approve the full proposal.
+            I certify that all team members have read and approve the full pre-proposal.
           </label>
         </p>
         <p>
@@ -289,20 +225,9 @@ function browseTimeline() {
         </p>
       </div>
       <div class="concept-column concept-column-right">
-        {% if data.line == 'engage' %}
-          <h3>What about the poster fair?</h3>
-          <img class="divider" src="img/divider.png">
-          <p>
-            We look forward to working with you to create a 24x36 visual representation of your project to be displayed at the poster fair. We will contact you upon receipt of your proposal to facilitate this collaboration.
-          </p>
-        {% else %}
-          <h3>What are we looking for?</h3>
-          <img class="divider" src="img/divider.png">
-          <h4><a href="https://docs.google.com/document/d/1EJdFQuo4NbQOVzEbvqRlkafO01WRstA8Dwl39WaL7gI/edit" target="_blank">Download the RFP (request for proposal)</a></h4>
-          <h4><a href="https://drive.google.com/file/d/0B49SOkXBGNxMdHFCYlRvMS1WZU0/view" target="_blank">Budget spreadsheet</a></h4>
-          <h4><a href="https://docs.google.com/document/d/1we6wx4PptwGKtfdB2dTpwMR0wfpARk-K7E9Dz_U3ZsE/edit" target="_blank">Transform Guidelines for Use of Funds</a></h4>
-          <h4><a href="https://drive.google.com/file/d/0B3bFHX1q3Ck1TG5CaTZvUFdadTg/view" target="_blank">Timeline Template</a></h4>
-        {% endif %}
+        <h3>What are we looking for?</h3>
+        <img class="divider" src="img/divider.png">
+        <h4><a href="#" target="_blank">Link here</a></h4>
       </div>
     </div>
   </div>

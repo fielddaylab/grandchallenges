@@ -125,10 +125,6 @@ function can_access($page) {
   if ($level >= 7 &&
     (  !array_key_exists('submitted', $user_data)
     || !$user_data['submitted']
-    || !array_key_exists('submitted_budget', $user_data)
-    || !$user_data['submitted_budget']
-    || !array_key_exists('submitted_timeline', $user_data)
-    || !$user_data['submitted_timeline']
     || !$user_data['certify_complete']
     || !$user_data['certify_team']
     )) return false;
@@ -144,16 +140,8 @@ function render_page($twig_name) {
     'data' => $user_data,
     'paper_status' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
-      ? 'Proposal uploaded'
-      : 'Proposal not uploaded',
-    'budget_status' =>
-      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
-      ? 'Budget uploaded'
-      : 'Budget not uploaded',
-    'timeline_status' =>
-      (array_key_exists('submitted_timeline', $user_data) && $user_data['submitted_timeline'])
-      ? 'Timeline uploaded'
-      : 'Timeline not uploaded',
+      ? 'Pre-proposal uploaded'
+      : 'Pre-proposal not uploaded',
     'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
       ? 'red'
       : 'blue',
@@ -162,15 +150,6 @@ function render_page($twig_name) {
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? paper_url($logged_in_netid)
       : null,
-    'budget_url' =>
-      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
-      ? budget_url($logged_in_netid, $user_data['submitted_budget'])
-      : null,
-    'timeline_url' =>
-      (array_key_exists('submitted_timeline', $user_data) && $user_data['submitted_timeline'])
-      ? timeline_url($logged_in_netid, $user_data['submitted_timeline'])
-      : null,
-    'experts' => array_key_exists('experts', $user_data) ? $user_data['experts'] : '',
     'certify_complete' => array_key_exists('certify_complete', $user_data) && $user_data['certify_complete'],
     'certify_team' => array_key_exists('certify_team', $user_data) && $user_data['certify_team'],
   ));
@@ -264,30 +243,12 @@ if (count($parts) === 0) {
         );
       $user_data['submitted'] = true;
     }
-    if (isset($_FILES['budget']) && $_FILES['budget']['tmp_name']) {
-      rename
-        ( $_FILES['budget']['tmp_name']
-        , budget_location($logged_in_netid, $_FILES['budget'])
-        );
-      $ext = pathinfo($_FILES['budget']['name'], PATHINFO_EXTENSION);
-      $user_data['submitted_budget'] = $ext;
-    }
-    if (isset($_FILES['timeline']) && $_FILES['timeline']['tmp_name']) {
-      rename
-        ( $_FILES['timeline']['tmp_name']
-        , timeline_location($logged_in_netid, $_FILES['timeline'])
-        );
-      $ext = pathinfo($_FILES['timeline']['name'], PATHINFO_EXTENSION);
-      $user_data['submitted_timeline'] = $ext;
-    }
     $user_data['experts'] = $_POST['experts'];
     $user_data['certify_complete'] = $_POST['certify_complete'];
     $user_data['certify_team'] = $_POST['certify_team'];
     save_user_data($user_data);
 
     if ( isset($user_data['submitted']) && $user_data['submitted']
-      && isset($user_data['submitted_budget']) && $user_data['submitted_budget']
-      && isset($user_data['submitted_timeline']) && $user_data['submitted_timeline']
       && $user_data['certify_complete']
       && $user_data['certify_team']) {
 
@@ -377,8 +338,6 @@ if (count($parts) === 0) {
       , 'Need extra support?'
       , 'Line'
       , 'Proposal'
-      , 'Budget'
-      , 'Timeline'
       , 'Experts'
       , 'Submission is final'
       ));
@@ -419,8 +378,6 @@ if (count($parts) === 0) {
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
           , ($json['submitted'] ? paper_url($netid) : '')
-          , ($json['submitted_budget'] ? budget_url($netid, $json['submitted_budget']) : '')
-          , ($json['submitted_timeline'] ? timeline_url($netid, $json['submitted_timeline']) : '')
           , $json['experts']
           , ($json['certify_complete'] && $json['certify_team'] ? 'X' : '')
           ));
