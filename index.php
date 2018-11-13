@@ -150,6 +150,7 @@ function render_page($twig_name) {
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? paper_url($logged_in_netid)
       : null,
+    'request_outside' => array_key_exists('request_outside', $user_data) && $user_data['request_outside'],
     'certify_complete' => array_key_exists('certify_complete', $user_data) && $user_data['certify_complete'],
     'certify_team' => array_key_exists('certify_team', $user_data) && $user_data['certify_team'],
   ));
@@ -244,6 +245,7 @@ if (count($parts) === 0) {
       $user_data['submitted'] = true;
     }
     $user_data['experts'] = $_POST['experts'];
+    $user_data['request_outside'] = $_POST['request_outside'];
     $user_data['certify_complete'] = $_POST['certify_complete'];
     $user_data['certify_team'] = $_POST['certify_team'];
     save_user_data($user_data);
@@ -338,7 +340,7 @@ if (count($parts) === 0) {
       , 'Need extra support?'
       , 'Line'
       , 'Proposal'
-      , 'Experts'
+      , 'Request outside review'
       , 'Submission is final'
       ));
     foreach (scandir(__DIR__ . '/data/') as $f) {
@@ -378,7 +380,7 @@ if (count($parts) === 0) {
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
           , ($json['submitted'] ? paper_url($netid) : '')
-          , $json['experts']
+          , ($json['request_outside'] ? 'X' : '')
           , ($json['certify_complete'] && $json['certify_team'] ? 'X' : '')
           ));
       }

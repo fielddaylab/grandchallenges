@@ -70,6 +70,7 @@ $(function(){
 
 function submitDocs() {
   $('#hidden-experts').val($('#experts').val());
+  $('#hidden-request-outside').prop('checked', $('#request-outside').prop('checked'));
   $('#hidden-certify-complete').prop('checked', $('#certify-complete').prop('checked'));
   $('#hidden-certify-team').prop('checked', $('#certify-team').prop('checked'));
   $('#hidden-form').submit();
@@ -202,6 +203,16 @@ function browseTimeline() {
         {% endif %}
         <p>
           <label>
+            {% if request_outside %}
+              <input type="checkbox" id="request-outside" name="request_outside" checked>
+            {% else %}
+              <input type="checkbox" id="request-outside" name="request_outside">
+            {% endif %}
+            I request review of my proposal from an expert in a field outside of the {{ data.line|capitalize }} review committee.
+          </label>
+        </p>
+        <p>
+          <label>
             {% if certify_complete %}
               <input type="checkbox" id="certify-complete" name="certify_complete" checked>
             {% else %}
@@ -239,6 +250,7 @@ function browseTimeline() {
     <input type="file" id="hidden-budget" name="budget">
     <input type="file" id="hidden-timeline" name="timeline">
     <input type="text" id="hidden-experts" name="experts">
+    <input type="checkbox" id="hidden-request-outside" name="request_outside">
     <input type="checkbox" id="hidden-certify-complete" name="certify_complete">
     <input type="checkbox" id="hidden-certify-team" name="certify_team">
   </p>
