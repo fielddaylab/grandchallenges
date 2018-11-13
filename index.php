@@ -104,8 +104,9 @@ function can_access($page) {
     case         'save-support': $level = 4; break;
     case      'save-no-support': $level = 4; break;
     case                 'line': $level = 5; break;
-    case          'save-engage': $level = 5; break;
-    case       'save-transform': $level = 5; break;
+    case             'save-art': $level = 5; break;
+    case          'save-health': $level = 5; break;
+    case       'save-education': $level = 5; break;
     case                'paper': $level = 6; break;
     case           'save-paper': $level = 6; break;
     case                 'gala': $level = 7; break;
@@ -241,12 +242,16 @@ if (count($parts) === 0) {
     redirect_to('line');
   } else if ($parts[0] === 'line') {
     render_page('line.twig');
-  } else if ($parts[0] === 'save-engage') {
-    $user_data['line'] = 'engage';
+  } else if ($parts[0] === 'save-art') {
+    $user_data['line'] = 'art';
     save_user_data($user_data);
     redirect_to('paper');
-  } else if ($parts[0] === 'save-transform') {
-    $user_data['line'] = 'transform';
+  } else if ($parts[0] === 'save-health') {
+    $user_data['line'] = 'health';
+    save_user_data($user_data);
+    redirect_to('paper');
+  } else if ($parts[0] === 'save-education') {
+    $user_data['line'] = 'education';
     save_user_data($user_data);
     redirect_to('paper');
   } else if ($parts[0] === 'paper') {
