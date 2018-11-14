@@ -96,29 +96,29 @@ function can_access($page) {
   switch ($page) {
     case         'save-meeting': $level = 1; break;
     case              'meeting': $level = 1; break;
-    case                  'bio': $level = 2; break;
-    case             'save-bio': $level = 2; break;
-    case              'support': $level = 3; break;
-    case         'save-support': $level = 3; break;
-    case      'save-no-support': $level = 3; break;
-    case                 'line': $level = 4; break;
-    case             'save-art': $level = 4; break;
-    case          'save-health': $level = 4; break;
-    case       'save-education': $level = 4; break;
+    case                 'line': $level = 2; break;
+    case             'save-art': $level = 2; break;
+    case          'save-health': $level = 2; break;
+    case       'save-education': $level = 2; break;
+    case                  'bio': $level = 3; break;
+    case             'save-bio': $level = 3; break;
+    case              'support': $level = 4; break;
+    case         'save-support': $level = 4; break;
+    case      'save-no-support': $level = 4; break;
     case                'paper': $level = 5; break;
     case           'save-paper': $level = 5; break;
-    case                 'gala': $level = 6; break;
+    case             'complete': $level = 6; break;
     default                    : return true;
   }
   if ($level >= 1 && $logged_in_netid === null) return false;
   if ($level >= 2 && $user_data['code'] !== $meeting_code) return false;
-  if ($level >= 3 &&
+  if ($level >= 3 && !array_key_exists('line', $user_data)) return false;
+  if ($level >= 4 &&
     (  !array_key_exists('bio', $user_data)
     || !array_key_exists('project_description', $user_data)
     || !array_key_exists('project_title', $user_data)
     )) return false;
-  if ($level >= 4 && !array_key_exists('support', $user_data)) return false;
-  if ($level >= 5 && !array_key_exists('line', $user_data)) return false;
+  if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
   if ($level >= 6 &&
     (  !array_key_exists('submitted', $user_data)
     || !$user_data['submitted']
@@ -139,9 +139,6 @@ function render_page($twig_name) {
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? 'Pre-proposal uploaded'
       : 'Pre-proposal not uploaded',
-    'color' => (array_key_exists('line', $user_data) && $user_data['line'] == 'engage')
-      ? 'red'
-      : 'blue',
     'correct_code' => $meeting_code,
     'paper_url' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
@@ -159,7 +156,7 @@ function index_then_key($array, $index, $key) {
 
 $matched = true;
 if (count($parts) === 0) {
-  if (can_access('gala')) redirect_to('gala');
+  if (can_access('complete')) redirect_to('complete');
   if (can_access('paper')) redirect_to('paper');
   if (can_access('line')) redirect_to('line');
   if (can_access('support')) redirect_to('support');
@@ -191,6 +188,20 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-meeting') {
     $user_data['code'] = $_POST['code'];
     save_user_data($user_data);
+    redirect_to('line');
+  } else if ($parts[0] === 'line') {
+    render_page('line.twig');
+  } else if ($parts[0] === 'save-art') {
+    $user_data['line'] = 'art';
+    save_user_data($user_data);
+    redirect_to('bio');
+  } else if ($parts[0] === 'save-health') {
+    $user_data['line'] = 'health';
+    save_user_data($user_data);
+    redirect_to('bio');
+  } else if ($parts[0] === 'save-education') {
+    $user_data['line'] = 'education';
+    save_user_data($user_data);
     redirect_to('bio');
   } else if ($parts[0] === 'bio') {
     render_page('bio.twig');
@@ -205,23 +216,9 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'save-support') {
     $user_data['support'] = $_POST['support'];
     save_user_data($user_data);
-    redirect_to('line');
+    redirect_to('paper');
   } else if ($parts[0] === 'save-no-support') {
     $user_data['support'] = false;
-    save_user_data($user_data);
-    redirect_to('line');
-  } else if ($parts[0] === 'line') {
-    render_page('line.twig');
-  } else if ($parts[0] === 'save-art') {
-    $user_data['line'] = 'art';
-    save_user_data($user_data);
-    redirect_to('paper');
-  } else if ($parts[0] === 'save-health') {
-    $user_data['line'] = 'health';
-    save_user_data($user_data);
-    redirect_to('paper');
-  } else if ($parts[0] === 'save-education') {
-    $user_data['line'] = 'education';
     save_user_data($user_data);
     redirect_to('paper');
   } else if ($parts[0] === 'paper') {
@@ -265,9 +262,9 @@ if (count($parts) === 0) {
 
     }
 
-    redirect_to('gala');
-  } else if ($parts[0] === 'gala') {
-    render_page('gala.twig');
+    redirect_to('complete');
+  } else if ($parts[0] === 'complete') {
+    render_page('complete.twig');
   } else if ($parts[0] === 'informed') {
     render_page('informed.twig');
   } else if ($parts[0] === 'submit-informed') {

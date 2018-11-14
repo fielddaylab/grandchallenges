@@ -118,49 +118,37 @@ function browseTimeline() {
     </div>
     <div class="concept-map-chunk concept-map-current">
       <img src="img/map-checked.png">
+      <a href="line"><span>Choose Area</span></a>
+    </div>
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-checked.png">
       <a href="bio"><span>Project Info</span></a>
     </div>
     <div class="concept-map-chunk concept-map-current">
       <img src="img/map-checked.png">
       <a href="support"><span>Optional Support</span></a>
     </div>
-    <div class="concept-map-chunk concept-map-line-start concept-map-line-start-{{ data.line }}">
-      <img src="img/map-{{ color }}-1.png">
-      <a href="line"><span>{{ data.line|capitalize }} Line</span></a>
-    </div>
-    <div class="concept-map-chunk concept-map-line-current">
-      <img src="img/map-{{ color }}-2.png">
+    <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-orange.png">
       <a href="paper"><span>Submit Pre-Proposal</span></a>
     </div>
-    <div class="concept-map-chunk concept-map-line-current">
-      <img src="img/map-{{ color }}-3.png">
-      <a href="gala">
-        <span>
-          {% if data.line == 'engage' %}
-            Attend Poster Fair
-          {% else %}
-            Attend Poster Fair
-          {% endif %}
-        </span>
-      </a>
+    <div class="concept-map-chunk">
+      <img src="img/map-gray-end.png">
+      <a href="complete"><span>Complete!</span></a>
     </div>
   </div>
   <div style="width: 100%">
     <div class="concept-columns-nav">
-      <a href="line">
+      <a href="support">
         <div class="concept-columns-nav-side concept-columns-nav-side-left">
           <img src="img/arrow-gold-left.png">
-          <span>Choose Your Path</span>
+          <span>Optional Support</span>
         </div>
       </a>
-      <a href="gala">
+      <a href="complete">
         <div class="concept-columns-nav-side concept-columns-nav-side-right">
           <span>
-            {% if data.line == 'engage' %}
-              Attend Poster Fair
-            {% else %}
-              Attend Poster Fair
-            {% endif %}
+            Complete!
           </span>
           <img src="img/arrow-gold-right.png">
         </div>

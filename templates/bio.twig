@@ -7,30 +7,6 @@
 <script type="text/javascript" src="js/zepto.min.js"></script>
 <script type="text/javascript">
 
-var faculty = {% if data.team.faculty %}
-  {{ data.team.faculty|json_encode()|raw }}
-{% else %}
-  {}
-{% endif %};
-var community = {% if data.team.community %}
-  {{ data.team.community|json_encode()|raw }}
-{% else %}
-  []
-{% endif %};
-
-function showList() {
-  $('#members-list').html((function(){
-    var str = '';
-    Object.keys(faculty).forEach(function(fac){
-      str += '<p class="member-entry"><a class="member-x" onClick="return false;" style="opacity: 0;"><img src="img/x.png"></a><span>'+fac+'</span></p>';
-    });
-    community.forEach(function(com, i){
-      str += '<p class="member-entry"><a class="member-x" onClick="return false;" style="opacity: 0;"><img src="img/x.png"></a><span>' + com.last_name + ', ' + com.first_name + '</span></p>';
-    });
-    return str;
-  })());
-}
-
 function saveAndGo(destination) {
   if (destination) {
     $('#hidden-redirect').val(destination);
@@ -43,8 +19,6 @@ function countWords(str) {
 }
 
 $(function(){
-
-  showList();
 
   $('#text-bio').on('input', function(e){
     var maxLength = 200;
@@ -110,6 +84,10 @@ $(function(){
       <a href="meeting" onclick="saveAndGo('meeting'); return false;"><span>Meet with Network</span></a>
     </div>
     <div class="concept-map-chunk concept-map-current">
+      <img src="img/map-checked.png">
+      <a href="line" onclick="saveAndGo('line'); return false;"><span>Choose Area</span></a>
+    </div>
+    <div class="concept-map-chunk concept-map-current">
       <img src="img/map-orange.png">
       <a href="bio" onclick="saveAndGo('bio'); return false;"><span>Project Info</span></a>
     </div>
@@ -118,16 +96,20 @@ $(function(){
       <a href="support" onclick="saveAndGo('support'); return false;"><span>Optional Support</span></a>
     </div>
     <div class="concept-map-chunk">
+      <img src="img/map-gray.png">
+      <a href="paper" onclick="saveAndGo('paper'); return false;"><span>Submit Pre-Proposal</span></a>
+    </div>
+    <div class="concept-map-chunk">
       <img src="img/map-gray-end.png">
-      <a href="line" onclick="saveAndGo('line'); return false;"><span>Choose Your Path</span></a>
+      <a href="complete" onclick="saveAndGo('complete'); return false;"><span>Complete!</span></a>
     </div>
   </div>
   <div style="width: 100%;">
     <div class="concept-columns-nav">
-      <a href="meeting" onclick="saveAndGo('meeting'); return false;">
+      <a href="line" onclick="saveAndGo('line'); return false;">
         <div class="concept-columns-nav-side concept-columns-nav-side-left">
           <img src="img/arrow-gold-left.png">
-          <span>Meet With Network</span>
+          <span>Choose Area</span>
         </div>
       </a>
       <a href="support" onclick="saveAndGo('support'); return false;">
@@ -145,7 +127,10 @@ $(function(){
         </h2>
         <p>Please use this page to tell us more about you, your team, and your idea. This information will be used by Grand Challenges staff but will not be included in the final grant proposal. You must also include your project title, short description, and team information in your final submission.</p>
         <p>
-          Let's get your team all set up. We'll start with you! Write a short description about yourself:
+          You've selected the <strong>{{ data.line|capitalize }}</strong> area for your project.
+        </p>
+        <p>
+          Write a short description about yourself:
         </p>
         <p>
           <span>Principal investigator: a short bio about yourself (<span id="chars-bio">200</span> words left)</span><br>
