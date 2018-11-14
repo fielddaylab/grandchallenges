@@ -98,18 +98,16 @@ function can_access($page) {
     case              'meeting': $level = 1; break;
     case                  'bio': $level = 2; break;
     case             'save-bio': $level = 2; break;
-    case                 'team': $level = 3; break;
-    case            'save-team': $level = 3; break;
-    case              'support': $level = 4; break;
-    case         'save-support': $level = 4; break;
-    case      'save-no-support': $level = 4; break;
-    case                 'line': $level = 5; break;
-    case             'save-art': $level = 5; break;
-    case          'save-health': $level = 5; break;
-    case       'save-education': $level = 5; break;
-    case                'paper': $level = 6; break;
-    case           'save-paper': $level = 6; break;
-    case                 'gala': $level = 7; break;
+    case              'support': $level = 3; break;
+    case         'save-support': $level = 3; break;
+    case      'save-no-support': $level = 3; break;
+    case                 'line': $level = 4; break;
+    case             'save-art': $level = 4; break;
+    case          'save-health': $level = 4; break;
+    case       'save-education': $level = 4; break;
+    case                'paper': $level = 5; break;
+    case           'save-paper': $level = 5; break;
+    case                 'gala': $level = 6; break;
     default                    : return true;
   }
   if ($level >= 1 && $logged_in_netid === null) return false;
@@ -119,10 +117,9 @@ function can_access($page) {
     || !array_key_exists('project_description', $user_data)
     || !array_key_exists('project_title', $user_data)
     )) return false;
-  if ($level >= 4 && !array_key_exists('team', $user_data)) return false;
-  if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
-  if ($level >= 6 && !array_key_exists('line', $user_data)) return false;
-  if ($level >= 7 &&
+  if ($level >= 4 && !array_key_exists('support', $user_data)) return false;
+  if ($level >= 5 && !array_key_exists('line', $user_data)) return false;
+  if ($level >= 6 &&
     (  !array_key_exists('submitted', $user_data)
     || !$user_data['submitted']
     || !$user_data['certify_complete']
@@ -166,7 +163,6 @@ if (count($parts) === 0) {
   if (can_access('paper')) redirect_to('paper');
   if (can_access('line')) redirect_to('line');
   if (can_access('support')) redirect_to('support');
-  if (can_access('team')) redirect_to('team');
   if (can_access('bio')) redirect_to('bio');
   if (can_access('meeting')) redirect_to('meeting');
   render_page('login.twig');
@@ -202,12 +198,6 @@ if (count($parts) === 0) {
     $user_data['bio'] = $_POST['bio'];
     $user_data['project_title'] = $_POST['project_title'];
     $user_data['project_description'] = $_POST['project_description'];
-    save_user_data($user_data);
-    redirect_to(isset($_POST['redirect']) && $_POST['redirect'] ? $_POST['redirect'] : 'team');
-  } else if ($parts[0] === 'team') {
-    render_page('team.twig');
-  } else if ($parts[0] === 'save-team') {
-    $user_data['team'] = json_decode($_POST['json']);
     save_user_data($user_data);
     redirect_to(isset($_POST['redirect']) && $_POST['redirect'] ? $_POST['redirect'] : 'support');
   } else if ($parts[0] === 'support') {
@@ -316,27 +306,6 @@ if (count($parts) === 0) {
       , 'Bio'
       , 'Project title'
       , 'Project description'
-      , 'Team 1 first name'
-      , 'Team 1 last name'
-      , 'Team 1 email'
-      , 'Team 1 contribution'
-      , 'Team 2 first name'
-      , 'Team 2 last name'
-      , 'Team 2 email'
-      , 'Team 2 contribution'
-      , 'Team 3 first name'
-      , 'Team 3 last name'
-      , 'Team 3 email'
-      , 'Team 3 contribution'
-      , 'Team 4 first name'
-      , 'Team 4 last name'
-      , 'Team 4 email'
-      , 'Team 4 contribution'
-      , 'Team 5 first name'
-      , 'Team 5 last name'
-      , 'Team 5 email'
-      , 'Team 5 contribution'
-      , 'Team other members'
       , 'Need extra support?'
       , 'Line'
       , 'Proposal'
@@ -356,27 +325,6 @@ if (count($parts) === 0) {
           , $json['bio']
           , $json['project_title']
           , $json['project_description']
-          , index_then_key($json['team']['community'], 0, 'first_name')
-          , index_then_key($json['team']['community'], 0, 'last_name')
-          , index_then_key($json['team']['community'], 0, 'email')
-          , index_then_key($json['team']['community'], 0, 'bio')
-          , index_then_key($json['team']['community'], 1, 'first_name')
-          , index_then_key($json['team']['community'], 1, 'last_name')
-          , index_then_key($json['team']['community'], 1, 'email')
-          , index_then_key($json['team']['community'], 1, 'bio')
-          , index_then_key($json['team']['community'], 2, 'first_name')
-          , index_then_key($json['team']['community'], 2, 'last_name')
-          , index_then_key($json['team']['community'], 2, 'email')
-          , index_then_key($json['team']['community'], 2, 'bio')
-          , index_then_key($json['team']['community'], 3, 'first_name')
-          , index_then_key($json['team']['community'], 3, 'last_name')
-          , index_then_key($json['team']['community'], 3, 'email')
-          , index_then_key($json['team']['community'], 3, 'bio')
-          , index_then_key($json['team']['community'], 4, 'first_name')
-          , index_then_key($json['team']['community'], 4, 'last_name')
-          , index_then_key($json['team']['community'], 4, 'email')
-          , index_then_key($json['team']['community'], 4, 'bio')
-          , json_encode(array_slice($json['team']['community'], 5))
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
           , ($json['submitted'] ? paper_url($netid) : '')

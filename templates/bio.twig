@@ -115,10 +115,6 @@ $(function(){
     </div>
     <div class="concept-map-chunk">
       <img src="img/map-gray.png">
-      <a href="team" onclick="saveAndGo('team'); return false;"><span>Your Team</span></a>
-    </div>
-    <div class="concept-map-chunk">
-      <img src="img/map-gray.png">
       <a href="support" onclick="saveAndGo('support'); return false;"><span>Optional Support</span></a>
     </div>
     <div class="concept-map-chunk">
@@ -134,9 +130,9 @@ $(function(){
           <span>Meet With Network</span>
         </div>
       </a>
-      <a href="team" onclick="saveAndGo('team'); return false;">
+      <a href="support" onclick="saveAndGo('support'); return false;">
         <div class="concept-columns-nav-side concept-columns-nav-side-right">
-          <span>Your Team</span>
+          <span>Optional Support</span>
           <img src="img/arrow-gold-right.png">
         </div>
       </a>
@@ -173,17 +169,6 @@ $(function(){
         <button type="submit">Save and Continue</button>
       </form>
       <div class="concept-column concept-column-right">
-        <h3>Your team:</h3>
-        <div class="big-form-middle-side">
-          <p class="member-entry">
-            <a class="member-x" onclick="return false;" style="opacity: 0;">
-              <img src="img/x.png">
-            </a>
-            <span>{{ netid }} (You)</span>
-          </p>
-          <div id="members-list">
-          </div>
-        </div>
       </div>
     </div>
   </div>
