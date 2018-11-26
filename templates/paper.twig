@@ -164,9 +164,7 @@ function browseTimeline() {
           {{ paper_status }}
         </h4>
         <p>
-          The Seed grant is a collboratively-written paper that describes the core features of the idea.
-          Your proposal should address four key concepts: Inquiry, Innovation, Impact, and Interdisciplinarity.
-          We go into greater detail of what we're expecting in the <a href="#" target="_blank">RFP</a>.
+          {{ paper_instructions }}
         </p>
         <h3>
           When you're ready to submit, drop it here:
@@ -197,22 +195,22 @@ function browseTimeline() {
         </p>
         <p>
           <label>
-            {% if certify_complete %}
-              <input type="checkbox" id="certify-complete" name="certify_complete" checked>
-            {% else %}
-              <input type="checkbox" id="certify-complete" name="certify_complete">
-            {% endif %}
-            I certify that this pre-proposal is complete and am ready to submit it for review.
-          </label>
-        </p>
-        <p>
-          <label>
             {% if certify_team %}
               <input type="checkbox" id="certify-team" name="certify_team" checked>
             {% else %}
               <input type="checkbox" id="certify-team" name="certify_team">
             {% endif %}
             I certify that all team members have read and approve the full pre-proposal.
+          </label>
+        </p>
+        <p>
+          <label>
+            {% if certify_complete %}
+              <input type="checkbox" id="certify-complete" name="certify_complete" checked>
+            {% else %}
+              <input type="checkbox" id="certify-complete" name="certify_complete">
+            {% endif %}
+            I certify that this pre-proposal is complete and am ready to submit it for review.
           </label>
         </p>
         <p>
