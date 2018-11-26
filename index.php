@@ -141,8 +141,8 @@ function render_page($twig_name) {
       : '',
     'paper_instructions' =>
       (array_key_exists('line', $user_data) && $user_data['line'] === 'art')
-      ? "The Seed Grant Pre-Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and specific aims, methods and approach, and impact. We go into greater detail of what we're expecting in the RFP."
-      : "The Seed Grant Pre-Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and research questions, methods and approach, and impact. We go into greater detail of what we're expecting in the RFP.",
+      ? "The Seed Grant Pre-Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and specific aims, methods and approach, and impact."
+      : "The Seed Grant Pre-Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and research questions, methods and approach, and impact.",
     'paper_status' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? 'Pre-proposal uploaded'
