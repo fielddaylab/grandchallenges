@@ -18,22 +18,32 @@ function countWords(str) {
   return str.split(/\s+/).filter(function(x){ return x !== ''; }).length;
 }
 
+function clampWords(n, str) {
+  var result = str.match(new RegExp("^((^|\\s+)\\S+){" + n + "}"));
+  if (result) {
+    return result[0];
+  } else {
+    return str; // less than n words
+  }
+}
+
 $(function(){
 
   $('#text-bio').on('input', function(e){
     var maxLength = 200;
     var len = countWords(e.target.value);
     if (len > maxLength) {
+      $(e.target).val(clampWords(maxLength, e.target.value));
       len = maxLength;
     }
     $('#chars-bio').text(maxLength - len);
   });
 
   $('#text-title').on('input', function(e){
-    var maxLength = 140;
-    var len = e.target.value.length;
+    var maxLength = 10;
+    var len = countWords(e.target.value);
     if (len > maxLength) {
-      $(e.target).val(e.target.value.substr(0, maxLength));
+      $(e.target).val(clampWords(maxLength, e.target.value));
       len = maxLength;
     }
     $('#chars-title').text(maxLength - len);
@@ -50,7 +60,7 @@ $(function(){
   });
 
   $('#chars-bio').text(200 - countWords($('#text-bio').val()));
-  $('#chars-title').text(140 - $('#text-title').val().length);
+  $('#chars-title').text(10 - countWords($('#text-title').val()));
   $('#chars-description').text(500 - $('#text-description').val().length);
 
 });
@@ -139,7 +149,7 @@ $(function(){
           Next, give your Grand Challenge a title:
         </p>
         <p>
-          <span>Project title (<span id="chars-title">140</span> characters left)</span><br>
+          <span>Project title (<span id="chars-title">10</span> words left)</span><br>
           <textarea id="text-title" name="project_title">{{ data.project_title }}</textarea>
         </p>
         <p>
