@@ -929,3 +929,55 @@ textarea#experts {
     flex-direction: column;
   }
 }
+
+.ticket-stubs {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: stretch; }
+  .ticket-stubs .ticket-stub {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 0 6px 6px rgba(0, 0, 0, 0.1); }
+    .ticket-stubs .ticket-stub h3 {
+      font-family: Halis R Bold;
+      text-transform: uppercase;
+      font-size: 20px; }
+    .ticket-stubs .ticket-stub hr {
+      height: 0;
+      width: 90%;
+      background: none;
+      border: none;
+      display: block; }
+    .ticket-stubs .ticket-stub p {
+      font-size: 13px; }
+  .ticket-stubs .ticket-stub-art h3 {
+    color: #3eb6d2; }
+  .ticket-stubs .ticket-stub-art hr {
+    border-top: 5px dotted #3eb6d2; }
+  .ticket-stubs .ticket-stub-health h3 {
+    color: #d06200; }
+  .ticket-stubs .ticket-stub-health hr {
+    border-top: 5px dotted #d06200; }
+  .ticket-stubs .ticket-stub-education h3 {
+    color: #78bb33; }
+  .ticket-stubs .ticket-stub-education hr {
+    border-top: 5px dotted #78bb33; }
+
+@media only screen and (max-width: 1200px) {
+  .ticket-stubs {
+    flex-direction: column; }
+  .ticket-stub {
+    flex: 0; } }
+
+.line-button {
+  text-transform: uppercase;
+  color: black !important;
+  font-size: 12px;
+  padding: 4px 12px;
+  border: 1px solid black;
+  border-radius: 999px;
+  display: inline-block;
+}
