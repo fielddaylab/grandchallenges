@@ -98,36 +98,15 @@ $(showSupportField);
           Optional support
         </h2>
         <p>
-          Some teams could use a bit of a boost to get going. It can be costly to set up meetings, build a team, formulate an idea, and write a proposal. Would you like to apply for $500 to get you up and running?
+          The optional support deadline has passed.
         </p>
-        <p class="controls-line">
-          <a href="#" id="button-set-up" class="button-brown" onclick="showSupportField(); return false;">Apply for support</a>
-          <a href="#" id="button-already-met" class="button-brown" onclick="showNoSupportField(); return false;">I don't need support</a>
-        </p>
-        <form id="support-section" class="support-section-hide" method="post" action="save-support">
+        <form id="support-section" method="post" action="save-support">
           <p>
-            Write a short description of how you will use this funding. Please note that all expenditures must follow University rules and procedures.
-          </p>
-          <p>
-            <textarea name="support">{{ data.support }}</textarea>
-          </p>
-          <p>
-            <button type="submit">Save and Continue</button>
-          </p>
-        </form>
-        <form id="no-support-section" class="support-section-hide" method="post" action="save-no-support">
-          <p>
-            <button type="submit">Save and Continue</button>
+            <button type="submit">Continue</button>
           </p>
         </form>
       </div>
       <div class="concept-column concept-column-right">
-        <h3>Can I use the Money for Travel?</h3>
-        <p>Sure.</p>
-        <h3>Materials?</h3>
-        <p>Works for us.</p>
-        <h3>Meetings with meals?</h3>
-        <p>Go for it.</p>
       </div>
     </div>
   </div>

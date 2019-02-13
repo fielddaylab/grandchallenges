@@ -222,7 +222,7 @@ if (count($parts) === 0) {
   } else if ($parts[0] === 'support') {
     render_page('support.twig');
   } else if ($parts[0] === 'save-support') {
-    $user_data['support'] = $_POST['support'];
+    // $user_data['support'] = $_POST['support'];
     save_user_data($user_data);
     redirect_to('paper');
   } else if ($parts[0] === 'save-no-support') {
