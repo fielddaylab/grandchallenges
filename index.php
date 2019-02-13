@@ -118,7 +118,7 @@ function can_access($page) {
     || !array_key_exists('project_description', $user_data)
     || !array_key_exists('project_title', $user_data)
     )) return false;
-  if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
+  // if ($level >= 5 && !array_key_exists('support', $user_data)) return false;
   if ($level >= 6 &&
     (  !array_key_exists('submitted', $user_data)
     || !$user_data['submitted']
