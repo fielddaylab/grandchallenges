@@ -141,12 +141,12 @@ function render_page($twig_name) {
       : '',
     'paper_instructions' =>
       (array_key_exists('line', $user_data) && $user_data['line'] === 'art')
-      ? "The Seed Grant Pre-Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and specific aims, methods and approach, and impact."
-      : "The Seed Grant Pre-Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and research questions, methods and approach, and impact.",
+      ? "The Seed Grant Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and specific aims, methods and approach, and impact."
+      : "The Seed Grant Proposal is a collboratively-written paper that describes the core features of the idea. Your proposal should include sections on your team, project rationale and research questions, methods and approach, and impact.",
     'paper_status' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
-      ? 'Pre-proposal uploaded'
-      : 'Pre-proposal not uploaded',
+      ? 'Proposal uploaded'
+      : 'Proposal not uploaded',
     'correct_code' => $meeting_code,
     'paper_url' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
@@ -251,7 +251,7 @@ if (count($parts) === 0) {
 
       $subject = "Grand Challenges Submission";
 
-      $body = "Thank you for submitting your Seed Grant Pre-Proposal to Grand Challenges!";
+      $body = "Thank you for submitting your Seed Grant Proposal to Grand Challenges!";
       $body .= "\r\n";
       $body .= "\r\n" . paper_url($logged_in_netid);
       $body .= "\r\n";

@@ -130,7 +130,7 @@ function browseTimeline() {
     </div>
     <div class="concept-map-chunk concept-map-current">
       <img src="img/map-orange.png">
-      <a href="paper"><span>Submit Pre-Proposal</span></a>
+      <a href="paper"><span>Submit Proposal</span></a>
     </div>
     <div class="concept-map-chunk">
       <img src="img/map-gray-end.png">
@@ -158,14 +158,14 @@ function browseTimeline() {
       <div class="concept-column concept-column-middle">
         <h2>
           <img src="img/connect-dot.png">
-          Submit Pre-Proposal
+          Submit Proposal
         </h2>
         <h4>
           {{ paper_status }}
         </h4>
         <p>
           {{ paper_instructions }}
-          We go into greater detail of what we're expecting in <a href="../docs/GC_Seed_Grants_in_{{ line|replace({' ': '_'}) }}_-_Request_for_Pre-Proposals.pdf" target="_blank">the RFP</a>.
+          We go into greater detail of what we're expecting in <a href="../docs/GC_Seed_Grants_in_{{ line|replace({' ': '_'}) }}_-_Request_for_Proposals.pdf" target="_blank">the RFP</a>.
         </p>
         <h3>
           When you're ready to submit, drop it here:
@@ -175,13 +175,13 @@ function browseTimeline() {
             <img src="img/pdf-file.png">
           </p>
           <p id="message-proposal">
-            Drag and drop to upload your pre-proposal.
+            Drag and drop to upload your proposal.
           </p>
           <a href="#" onClick="event.preventDefault(); browseProposal();">Or browse files</a>
         </div>
         {% if paper_url %}
           <p>
-            <a href="{{ paper_url }}">Download your previously submitted pre-proposal</a>
+            <a href="{{ paper_url }}">Download your previously submitted proposal</a>
           </p>
         {% endif %}
         <p>
@@ -201,7 +201,7 @@ function browseTimeline() {
             {% else %}
               <input type="checkbox" id="certify-team" name="certify_team">
             {% endif %}
-            I certify that all team members have read and approve the full pre-proposal.
+            I certify that all team members have read and approve the full proposal.
           </label>
         </p>
         <p>
@@ -211,7 +211,7 @@ function browseTimeline() {
             {% else %}
               <input type="checkbox" id="certify-complete" name="certify_complete">
             {% endif %}
-            I certify that this pre-proposal is complete and am ready to submit it for review.
+            I certify that this proposal is complete and am ready to submit it for review.
           </label>
         </p>
         <p>
@@ -221,7 +221,7 @@ function browseTimeline() {
       <div class="concept-column concept-column-right">
         <h3>What are we looking for?</h3>
         <img class="divider" src="img/divider.png">
-        <h4><a href="../docs/GC_Seed_Grants_in_{{ line|replace({' ': '_'}) }}_-_Request_for_Pre-Proposals.pdf" target="_blank">Request for Pre-Proposals</a></h4>
+        <h4><a href="../docs/GC_Seed_Grants_in_{{ line|replace({' ': '_'}) }}_-_Request_for_Proposals.pdf" target="_blank">Request for Proposals</a></h4>
         <h4><a href="../docs/Grand_Challenges_FY20_Funding_Guidelines.pdf" target="_blank">Funding Guidelines</a></h4>
       </div>
     </div>
