@@ -206,16 +206,6 @@ function browseTimeline() {
         {% endif %}
         <p>
           <label>
-            {% if request_outside %}
-              <input type="checkbox" id="request-outside" name="request_outside" checked>
-            {% else %}
-              <input type="checkbox" id="request-outside" name="request_outside">
-            {% endif %}
-            I request review of my proposal from an expert in a field outside of the {{ data.line|capitalize }} review committee.
-          </label>
-        </p>
-        <p>
-          <label>
             {% if certify_team %}
               <input type="checkbox" id="certify-team" name="certify_team" checked>
             {% else %}
