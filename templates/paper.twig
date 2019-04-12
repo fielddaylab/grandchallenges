@@ -163,6 +163,9 @@ function browseTimeline() {
         <h4>
           {{ paper_status }}
         </h4>
+        <h4>
+          {{ budget_status }}
+        </h4>
         <p>
           {{ paper_instructions }}
           We go into greater detail of what we're expecting in <a href="../docs/GC_Seed_Grants_in_{{ line|replace({' ': '_'}) }}_-_Request_for_Proposals.pdf" target="_blank">the RFP</a>.
@@ -182,6 +185,23 @@ function browseTimeline() {
         {% if paper_url %}
           <p>
             <a href="{{ paper_url }}">Download your previously submitted proposal</a>
+          </p>
+        {% endif %}
+        <h3>
+          Also submit your budget spreadsheet:
+        </h3>
+        <div class="drop-area" id="drop-area-budget">
+          <p>
+            <img src="img/blank-file.png">
+          </p>
+          <p id="message-budget">
+            Drag and drop to upload your budget.
+          </p>
+          <a href="#" onClick="event.preventDefault(); browseBudget();">Or browse files</a>
+        </div>
+        {% if budget_url %}
+          <p>
+            <a href="{{ budget_url }}">Download your previously submitted budget</a>
           </p>
         {% endif %}
         <p>
@@ -223,6 +243,7 @@ function browseTimeline() {
         <img class="divider" src="img/divider.png">
         <h4><a href="../docs/GC_Seed_Grants_in_{{ line|replace({' ': '_'}) }}_-_Request_for_Proposals.pdf" target="_blank">Request for Proposals</a></h4>
         <h4><a href="../docs/Grand_Challenges_FY20_Funding_Guidelines.pdf" target="_blank">Funding Guidelines</a></h4>
+        <h4><a href="https://docs.google.com/spreadsheets/d/1icsjXQ5hNbps1TqoWslvnw9MdQGT0qCPSl6yim9KBa0/edit#gid=1477693884" target="_blank">Budget Template</a></h4>
       </div>
     </div>
   </div>

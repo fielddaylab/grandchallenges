@@ -122,6 +122,8 @@ function can_access($page) {
   if ($level >= 6 &&
     (  !array_key_exists('submitted', $user_data)
     || !$user_data['submitted']
+    || !array_key_exists('submitted_budget', $user_data)
+    || !$user_data['submitted_budget']
     || !$user_data['certify_complete']
     || !$user_data['certify_team']
     )) return false;
@@ -147,10 +149,18 @@ function render_page($twig_name) {
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? 'Proposal uploaded'
       : 'Proposal not uploaded',
+    'budget_status' =>
+      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
+      ? 'Budget uploaded'
+      : 'Budget not uploaded',
     'correct_code' => $meeting_code,
     'paper_url' =>
       (array_key_exists('submitted', $user_data) && $user_data['submitted'])
       ? paper_url($logged_in_netid)
+      : null,
+    'budget_url' =>
+      (array_key_exists('submitted_budget', $user_data) && $user_data['submitted_budget'])
+      ? budget_url($logged_in_netid, $user_data['submitted_budget'])
       : null,
     'request_outside' => array_key_exists('request_outside', $user_data) && $user_data['request_outside'],
     'certify_complete' => array_key_exists('certify_complete', $user_data) && $user_data['certify_complete'],
@@ -239,6 +249,14 @@ if (count($parts) === 0) {
         );
       $user_data['submitted'] = true;
     }
+    if (isset($_FILES['budget']) && $_FILES['budget']['tmp_name']) {
+      rename
+        ( $_FILES['budget']['tmp_name']
+        , budget_location($logged_in_netid, $_FILES['budget'])
+        );
+      $ext = pathinfo($_FILES['budget']['name'], PATHINFO_EXTENSION);
+      $user_data['submitted_budget'] = $ext;
+    }
     $user_data['experts'] = $_POST['experts'];
     $user_data['request_outside'] = $_POST['request_outside'];
     $user_data['certify_complete'] = $_POST['certify_complete'];
@@ -246,6 +264,7 @@ if (count($parts) === 0) {
     save_user_data($user_data);
 
     if ( isset($user_data['submitted']) && $user_data['submitted']
+      && isset($user_data['submitted_budget']) && $user_data['submitted_budget']
       && $user_data['certify_complete']
       && $user_data['certify_team']) {
 
@@ -314,6 +333,7 @@ if (count($parts) === 0) {
       , 'Need extra support?'
       , 'Line'
       , 'Proposal'
+      , 'Budget'
       , 'Request outside review'
       , 'Submission is final'
       ));
@@ -333,6 +353,7 @@ if (count($parts) === 0) {
           , ($json['support'] !== false ? $json['support'] : '')
           , $json['line']
           , ($json['submitted'] ? paper_url($netid) : '')
+          , ($json['submitted_budget'] ? budget_url($netid, $json['submitted_budget']) : '')
           , ($json['request_outside'] ? 'X' : '')
           , ($json['certify_complete'] && $json['certify_team'] ? 'X' : '')
           ));
