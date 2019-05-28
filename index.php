@@ -173,7 +173,9 @@ function index_then_key($array, $index, $key) {
 }
 
 $matched = true;
-if (count($parts) === 0) {
+if (true) {
+  render_page('closed.twig');
+} else if (count($parts) === 0) {
   if (can_access('complete')) redirect_to('complete');
   if (can_access('paper')) redirect_to('paper');
   if (can_access('line')) redirect_to('line');
